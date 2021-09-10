@@ -44,6 +44,24 @@ The included `demo_script` script utilizes the provided datasets to make a compl
 4. step 4
 5. step n
 
+## Reference
+
+If you use this software in your own work, please cite the following paper:
+```
+@inproceedings{,
+  title = "",
+  author = "",
+  booktitle = "",
+  month = ,
+  year = "",
+  address = "",
+  publisher = "",
+  url = "",
+  doi = "",
+  pages = "",
+}
+```
+
 ## License
 
 All source code, documentation, and data contained in this package are distributed under the terms in the LICENSE file (modified BSD).
