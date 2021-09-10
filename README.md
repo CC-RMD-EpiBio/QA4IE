@@ -6,6 +6,20 @@ This system was described in the following paper:
 
 + paper link.
 
+## Setup/Installation
+
+The `requirements.txt` file lists all required Python packages installable with pip. Just run
+```
+pip install -r requirements.txt
+```
+to install all packages.
+
+## Package components
+
+- **Error Checks:** description.
++ See ```script```
+
+
 ## License
 
 All source code, documentation, and data contained in this package are distributed under the terms in the LICENSE file (modified BSD).
