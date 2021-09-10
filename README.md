@@ -17,7 +17,7 @@ to install all packages.
 ## Package components
 
 - **Error Checks:** description.
-+ See ```script```
+- + See ```script```
 
 
 ## License
