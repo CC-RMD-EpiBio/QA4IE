@@ -27,6 +27,15 @@ to install all packages.
 - **Discrepancy Analysis:** description.
   + See ```script```
 
+## Demo script/data
+
+This package includes `n` small datasets for code demonstration purposes:
+
+- ```demo_data/demo_dataset_1``` dataset description
+- ```demo_data/demo_dataset_2``` dataset description
+- ```demo_data/demo_dataset_3``` dataset description
+- ```demo_data/demo_dataset_n``` dataset description
+
 ## License
 
 All source code, documentation, and data contained in this package are distributed under the terms in the LICENSE file (modified BSD).
