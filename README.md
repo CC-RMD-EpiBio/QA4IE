@@ -17,8 +17,15 @@ to install all packages.
 ## Package components
 
 - **Error Checks:** description.
-- + See ```script```
-
+  + See ```script```
+- **Validations:** description.
+  + See ```script```
+- **Statistics:** description.
+  + See ```script```
+- **Evaluation:** description.
+  + See ```script```
+- **Discrepancy Analysis:** description.
+  + See ```script```
 
 ## License
 
