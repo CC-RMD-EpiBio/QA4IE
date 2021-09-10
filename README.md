@@ -42,7 +42,7 @@ The included `demo_script` script utilizes the provided datasets to make a compl
 2. step 2
 3. step 3
 4. step 4
-n. step n
+5. step n
 
 ## License
 
