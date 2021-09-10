@@ -36,6 +36,14 @@ This package includes `n` small datasets for code demonstration purposes:
 - ```demo_data/demo_dataset_3``` dataset description
 - ```demo_data/demo_dataset_n``` dataset description
 
+The included `demo_script` script utilizes the provided datasets to make a complete complete end-to-end quality assurance process, with the following steps:
+
+1. step 1
+2. step 2
+3. step 3
+4. step 4
+n. step n
+
 ## License
 
 All source code, documentation, and data contained in this package are distributed under the terms in the LICENSE file (modified BSD).
