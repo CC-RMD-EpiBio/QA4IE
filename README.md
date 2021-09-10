@@ -8,9 +8,9 @@ This system was described in the following paper:
 
 ## Setup/Installation
 
-The `requirements.txt` file lists all required Python packages installable with pip. Just run
+The `requirements.txt` file lists all required Python3 packages installable with pip. Just run
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 to install all packages.
 
