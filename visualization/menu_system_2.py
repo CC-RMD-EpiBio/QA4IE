@@ -77,6 +77,67 @@ class KeyboardReader():
         finally:
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
+
+class MenuAction():
+    def __init__(self, title=None, action=None):
+        self.title = 'default_option_title' if not title else title
+        self.action = action
+
+    def __repr__(self):
+        """
+        :type: MenuAction
+        """
+        return '{}'.format(self.title.title())
+
+    @property
+    def title(self):
+        """
+        :type: MenuAction
+        """
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        assert isinstance(value, str), 'assigned menu title is not str'
+        self._title = value
+
+    @title.deleter
+    def title(self):
+        """
+        :type: MenuAction title
+        """
+        del self._title
+
+    @property
+    def action(self):
+        """
+        :type: MenuAction
+        """
+        return self._action
+
+    @action.setter
+    def action(self, value):
+       
+        self._action = value
+
+    @action.deleter
+    def action(self):
+        """
+        :type: MenuAction 
+        """
+        del self._function
+
+
+
+    def execute_action(self):
+        assert hasattr(self.action, '__call__') or self.action is None, 'menu action is not a function'
+        if self.action is None:
+            pass
+        else:
+            self.action()
+
+
+
 class Menu():
     """
     A representation of a simple command line menu system.
@@ -91,15 +152,14 @@ class Menu():
     :type child_menus: dict
 
     """
-
-    os.system('clear')
     def __init__(self, title=None, options=None):
         self.title = title
-        self.options = options
+        self.options = {x.title:x for x in options}
         self.parent_menu = None
         self.child_menus = {}
-        self.previous_execution = None
-        self.highlighted_option = {list(self.options.keys())[0]:self.options[list(self.options.keys())[0]]} if not self.options is None else None
+        self.previous_execution = MenuAction()
+
+        self.highlighted_option = self.options[list(self.options.keys())[0]]
         
         # links parents and children based on the contents of the options dict
         self.create_links()
@@ -131,6 +191,7 @@ class Menu():
 
     @options.setter
     def options(self, value):
+        assert len(value) <= 15, 'option limit exceeded in {}'.format(self.title)
         self._options = value
 
     @options.deleter
@@ -212,7 +273,7 @@ class Menu():
         return len(self.options) < 1
 
     def add_option(self, new_option):
-        assert isinstance(new_option, dict)
+        assert isinstance(new_option, MenuAction), 'menu options can only be of type MenuAction'
         self.options.update(new_option)
 
     def create_links(self):
@@ -238,7 +299,6 @@ class Menu():
         for x, y in descendants.items():
             if self.title in list(y.keys()):
                 return {x:y[self.title]}
-
 
     def ascendants(self, reverse=False):
         def gather_ascendants(menu, d):
@@ -278,7 +338,6 @@ class Menu():
 
         return {x:y for x, y in self.parent_menu.child_menus.items() if not self == y} if self.has_parent() else {}
 
-
     def return_root(self):
 
         def root_search(m):
@@ -287,35 +346,27 @@ class Menu():
 
         return root_search(self)
         
-
     def run_menu(self):
         '''
             Runs the current menu
-
         '''
-        os.system('clear')
+        self.clear_screen()
 
         print('{}'.format(self.title.title()))
         print('Please select an option:\n')
 
-        self.add_option({})
-        labels = list(self.options.keys())
-        menu_actions = {x+1:self.options[labels[x]] for x in range(len(labels))}
-
-        for option, i in zip(labels, menu_actions.keys()):
-            try:
-                self.highlighted_option[option]
+        for option in self.options.keys():
+            if option == self.highlighted_option.title:
                 print('  \x1b[1;30;47m{}\x1b[0m'.format(option))
-            except KeyError as e:
+            else:
                 print('  {}'.format(option))
 
         if not self.has_parent():
-            if self.highlighted_option == {'Exit':None}:
+            if self.highlighted_option.title == 'Exit':
                 print('\n  \x1b[1;30;47m{}\x1b[0m'.format('Exit'))
             else:
                 print('\n  {}'.format('Exit'))
 
-        
         print('\nUse the up and down arrow keys to move the highligh to your choice.')
 
         if self.has_parent():
@@ -324,30 +375,23 @@ class Menu():
         else:
             print('Press enter to execute the option.')
         print('\n')
-        if not self.previous_execution is None:
-            if not isinstance(self.previous_execution, Menu):
-                self.previous_execution()
+        if isinstance(self.previous_execution, MenuAction):
+            self.previous_execution.execute_action()
 
         self.read_input()
 
     def read_input(self):
         '''
             Reads user input
-
         '''
-        reader = KeyboardReader()
-   
         while(True):
-            key = reader.read_key()
+            key = KeyboardReader().read_key()
             self.validate_user_input(key)
-
 
     def remove_option(self, selection):
         '''
             Removes an item from the options dictionary
-
         '''
-
         assert selection in list(self.options.keys()), 'Selection not found in the options of this menu'
 
         if isinstance(self.options[selection], Menu):
@@ -360,86 +404,78 @@ class Menu():
                         del self.child_menus[selection]
         else:
             del self.options[selection]
-        
+
+    def update_movement(self, key):
+
+        x = {'up':-1, 'down':1}[key]
+            
+        options_keys = list(self.options.keys())
+
+        try:
+            current_option_index = options_keys.index(self.highlighted_option.title)
+        except ValueError as e: # if current option is exit
+            current_option_index = len(options_keys) 
+
+        if current_option_index  == len(options_keys) - 1: # last item in the options list
+            if x > 0:
+                current_option_index = 0
+                self.highlighted_option = self.options[options_keys[current_option_index]]
+                if not self.has_parent():
+                    self.highlighted_option = MenuAction('Exit',self.exit)
+                self.refresh()
+
+            elif x < 0:
+                current_option_index += x
+                self.highlighted_option = self.options[options_keys[current_option_index]]
+                self.refresh()
+
+        if current_option_index == 0: # first item in the options list
+            if x < 0:
+                current_option_index = len(options_keys) - 1
+                current_menu_action = self.options[options_keys[current_option_index]]
+                self.highlighted_option = self.options[options_keys[current_option_index]]
+                if not self.has_parent():
+                    self.highlighted_option = MenuAction('Exit', self.exit)
+                self.refresh()
+
+        if current_option_index == len(options_keys): # if in exit go back to top or bottom
+            if x > 0:
+                current_option_index = 0
+                self.highlighted_option = self.options[options_keys[current_option_index]]
+                self.refresh()
+
+            if x < 0:
+                current_option_index = len(options_keys) - 1
+                self.highlighted_option = self.options[options_keys[current_option_index]]
+                self.refresh()
+                
+        if current_option_index + x in range(0, len(options_keys)):
+            current_option_index += x
+            self.highlighted_option = self.options[options_keys[current_option_index]]
+            self.refresh()
 
     def validate_user_input(self, key):
-        if key in ['up', 'down', 'left', 'right']:
-            
+        '''
+            Validates the key pressed by the user
 
-            x = {'up':-1, 'down':1, 'left':0, 'right':0}[key]
-                
-
-            current_option_name = list(self.highlighted_option.keys())[0]
-            options_keys = list(self.options.keys())
-
-            try:
-                current_option_index = options_keys.index(current_option_name)
-            except ValueError as e:
-                current_option_index = len(options_keys) 
-
-            if current_option_index  == len(options_keys) - 1:
-                if x > 0:
-                    current_option_index = 0
-                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                    if not self.has_parent():
-                        self.highlighted_option = {'Exit':None}
-                    self.refresh()
-                elif x < 0:
-                    current_option_index += x
-                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                    self.refresh()
-            if current_option_index == 0:
-                if x < 0:
-                    current_option_index = len(options_keys) - 1
-                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                    if not self.has_parent():
-                        self.highlighted_option = {'Exit':None}
-                    self.refresh()
-            if current_option_index == len(options_keys):
-                if x > 0:
-                    current_option_index = 0
-                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                    self.refresh()
-
-                if x < 0:
-                    current_option_index = len(options_keys) - 1
-                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                    self.refresh()
-
-            if current_option_index + x in range(0, len(options_keys)):
-                current_option_index += x
-                self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                self.refresh()
-
-        elif key == 'space':
-            
-            self.previous_execution = None
+        '''
+        if key in ['up', 'down']:
+            self.update_movement(key)
+        elif key == 'space': 
+            self.previous_execution = MenuAction()
             self.refresh()
-            
-        elif key == 'tab' and not self.has_parent(): # exit
-            self.previous_execution = None
+        elif key == 'esc' and not self.has_parent(): 
             self.exit()
         elif key == 'backspace':
-            self.previous_execution = None
+            self.previous_execution = MenuAction() # clears the output every time one goes back and forth menus
             self.back()
         elif key == 'enter':
-            if self.highlighted_option == {'Exit': None}:
-                self.exit()
-            else:
-                key = list(self.highlighted_option.keys())[0]
-                if isinstance(self.options[key], Menu):
-                    self.options[key].run_menu()
-                else:
-                    self.previous_execution = self.options[key]
-
-            if not isinstance(self.previous_execution, Menu):
-                self.refresh()
-            self.previous_execution()
-
+            if isinstance(self.highlighted_option, Menu): # checks if selection is menu
+                self.highlighted_option.run_menu()
+            self.previous_execution = self.highlighted_option
+            self.refresh()
         else:
-            # gets other keys that are not used for this menu
-            pass
-
+            pass # if other keys are found, do nothing
                    
     def refresh(self):
         '''
@@ -457,6 +493,12 @@ class Menu():
             self.parent_menu.run_menu()
         else:
             self.refresh()
+
+    def clear_screen(self):
+        '''
+            Deletes all contents in screen
+        '''
+        os.system('clear')
 
     def exit(self):
         '''
