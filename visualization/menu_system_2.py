@@ -53,19 +53,29 @@ import os, sys, tty ,termios
 from termcolor import colored
 
 
-class _Getch:
-    def __init__(self, i):
-        self.i = i
-
-    def __call__(self):
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
+class KeyboardReader():
+    def __init__(self):
+        self.key_mappings = {
+                        127:'backspace',
+                        10: 'enter',
+                        32: 'space',
+                        9: 'tab',
+                        27: 'esc',
+                        65: 'up',
+                        66: 'down',
+                        67: 'right',
+                        68: 'left'
+                           }
+    def read_key(self):
+        old_settings = termios.tcgetattr(sys.stdin)
+        tty.setcbreak(sys.stdin.fileno())
         try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(self.i)
+            while True:
+                b = os.read(sys.stdin.fileno(), 3).decode()
+                k = ord(b[2]) if len(b) == 3 else ord(b)
+                return self.key_mappings.get(k, chr(k))
         finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
+            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
 class Menu():
     """
@@ -279,11 +289,14 @@ class Menu():
         
 
     def run_menu(self):
+        '''
+            Runs the current menu
+
+        '''
         os.system('clear')
-        
 
         print('{}'.format(self.title.title()))
-        print('Please choose an option:\n')
+        print('Please select an option:\n')
 
         self.add_option({})
         labels = list(self.options.keys())
@@ -292,24 +305,25 @@ class Menu():
         for option, i in zip(labels, menu_actions.keys()):
             try:
                 self.highlighted_option[option]
-                print('\x1b[1;30;47m{}){}\x1b[0m'.format(i, option))
+                print('  \x1b[1;30;47m{}\x1b[0m'.format(option))
             except KeyError as e:
-                print('{}){}'.format(i, option))
+                print('  {}'.format(option))
 
         if not self.has_parent():
             if self.highlighted_option == {'Exit':None}:
-                print('\x1b[1;30;47m{}){}\x1b[0m'.format(0, 'Exit'))
+                print('\n  \x1b[1;30;47m{}\x1b[0m'.format('Exit'))
             else:
-                print('{}){}'.format(0, 'Exit'))
+                print('\n  {}'.format('Exit'))
 
-        print('\n')
         
-        if self.has_parent():
-            print('Press spacebar to refresh the screen')
-            print('Press backspace to go back to {}'.format(self.parent_menu.title.title()))
-        else:
-            print('Press spacebar to refresh the screen')
+        print('\nUse the up and down arrow keys to move the highligh to your choice.')
 
+        if self.has_parent():
+            print('Press enter to execute the option.\n')
+            print('Press backspace to go back to {}.'.format(self.parent_menu.title.title()))
+        else:
+            print('Press enter to execute the option.')
+        print('\n')
         if not self.previous_execution is None:
             if not isinstance(self.previous_execution, Menu):
                 self.previous_execution()
@@ -317,93 +331,22 @@ class Menu():
         self.read_input()
 
     def read_input(self):
+        '''
+            Reads user input
 
-        def get_user_input():
-            key = _Getch(i=1) 
+        '''
+        reader = KeyboardReader()
    
-            while(True):
-
-                k = key()
-                if k == '\x1b':
-                    movement = {"[A": "up", "[B": "down", "[C": "right", "[D": "left"}[_Getch(i=1)() + _Getch(i=1)()]
-                    try:
-
-                        x = {'up':-1, 'down':1}[movement]
-                        
-
-                    except KeyError as e:
-                        self.refresh()
-                        continue
-
-                    current_option_name = list(self.highlighted_option.keys())[0]
-                    options_keys = list(self.options.keys())
-
-                    try:
-                        current_option_index = options_keys.index(current_option_name)
-                    except ValueError as e:
-                        current_option_index = len(options_keys) 
-
-                    if current_option_index  == len(options_keys) - 1:
-                            if x > 0:
-                                current_option_index = 0
-                                self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                                if not self.has_parent():
-                                    self.highlighted_option = {'Exit':None}
-                                self.refresh()
-                            elif x < 0:
-                                current_option_index += x
-                                self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                                self.refresh()
-                    if current_option_index == 0:
-                        if x < 0:
-                            current_option_index = len(options_keys) - 1
-                            self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                            if not self.has_parent():
-                                self.highlighted_option = {'Exit':None}
-                            self.refresh()
-                    if current_option_index == len(options_keys):
-                        if x > 0:
-                            current_option_index = 0
-                            self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                            self.refresh()
-
-                        if x < 0:
-                            current_option_index = len(options_keys) - 1
-                            self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                            self.refresh()
-
-
-                    if current_option_index + x in range(0, len(options_keys)):
-                        current_option_index += x
-                        self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
-                        self.refresh()
-
-                elif k == ' ':
-                    #print('spacebar') # refresh
-                    self.previous_execution = None
-                    self.validate_user_input(k)
-                    
-                elif k == '\t': # exit
-                    self.previous_execution = None
-                    self.validate_user_input(k)
-                elif k == '\x7f':
-                    #print('backspace')
-                    self.previous_execution = None
-                    self.validate_user_input(k)
-                elif k == '\r':
-
-                    self.previous_execution = self.validate_user_input(k)
-                    if not isinstance(self.previous_execution, Menu):
-                        self.refresh()
-                    self.previous_execution()
-  
-                else:
-                    pass
-                    
-        get_user_input()
+        while(True):
+            key = reader.read_key()
+            self.validate_user_input(key)
 
 
     def remove_option(self, selection):
+        '''
+            Removes an item from the options dictionary
+
+        '''
 
         assert selection in list(self.options.keys()), 'Selection not found in the options of this menu'
 
@@ -419,35 +362,88 @@ class Menu():
             del self.options[selection]
         
 
-    def validate_user_input(self, i):
+    def validate_user_input(self, key):
+        if key in ['up', 'down', 'left', 'right']:
+            
 
-        
-        if i == '\x7f':
-            self.back()
+            x = {'up':-1, 'down':1, 'left':0, 'right':0}[key]
+                
 
-        if i == ' ':
-            self.refresh() # refresh
+            current_option_name = list(self.highlighted_option.keys())[0]
+            options_keys = list(self.options.keys())
 
-        if i == '\t' and not self.has_parent():
+            try:
+                current_option_index = options_keys.index(current_option_name)
+            except ValueError as e:
+                current_option_index = len(options_keys) 
+
+            if current_option_index  == len(options_keys) - 1:
+                if x > 0:
+                    current_option_index = 0
+                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
+                    if not self.has_parent():
+                        self.highlighted_option = {'Exit':None}
+                    self.refresh()
+                elif x < 0:
+                    current_option_index += x
+                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
+                    self.refresh()
+            if current_option_index == 0:
+                if x < 0:
+                    current_option_index = len(options_keys) - 1
+                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
+                    if not self.has_parent():
+                        self.highlighted_option = {'Exit':None}
+                    self.refresh()
+            if current_option_index == len(options_keys):
+                if x > 0:
+                    current_option_index = 0
+                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
+                    self.refresh()
+
+                if x < 0:
+                    current_option_index = len(options_keys) - 1
+                    self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
+                    self.refresh()
+
+            if current_option_index + x in range(0, len(options_keys)):
+                current_option_index += x
+                self.highlighted_option = {options_keys[current_option_index]:self.options[options_keys[current_option_index]]}
+                self.refresh()
+
+        elif key == 'space':
+            
+            self.previous_execution = None
+            self.refresh()
+            
+        elif key == 'tab' and not self.has_parent(): # exit
+            self.previous_execution = None
             self.exit()
-
-        if i =='\r':
-
+        elif key == 'backspace':
+            self.previous_execution = None
+            self.back()
+        elif key == 'enter':
             if self.highlighted_option == {'Exit': None}:
                 self.exit()
             else:
-
                 key = list(self.highlighted_option.keys())[0]
                 if isinstance(self.options[key], Menu):
                     self.options[key].run_menu()
                 else:
-                    return self.options[key]
+                    self.previous_execution = self.options[key]
+
+            if not isinstance(self.previous_execution, Menu):
                 self.refresh()
-        
+            self.previous_execution()
+
+        else:
+            # gets other keys that are not used for this menu
+            pass
+
                    
     def refresh(self):
         '''
-            Refreshes the screen contents
+            Refreshes the screen 
 
         '''
         self.run_menu()
