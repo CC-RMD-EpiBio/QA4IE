@@ -136,7 +136,13 @@ class MenuAction():
         else:
             self.action()
 
+class MenuSettings():
+    def __init__(self, color=None, attributes=None):
+        self.color = 'white' if color is None else color
+        self.attributes = [] if attributes is None else attributes
 
+    def format_str(self, string):
+        return colored(string, color=self.color, attrs=self.attributes)
 
 class Menu():
     """
@@ -152,17 +158,60 @@ class Menu():
     :type child_menus: dict
 
     """
-    def __init__(self, title=None, options=None):
+    def __init__(self, title=None, options=None, selection_settings=None, text_settings=None, inherit_settings=False):
         self.title = title
         self.options = {x.title:x for x in options}
         self.parent_menu = None
         self.child_menus = {}
         self.previous_execution = MenuAction()
-
-        self.highlighted_option = self.options[list(self.options.keys())[0]]
+        self.inherit_settings = inherit_settings
+        self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
+        self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
         
-        # links parents and children based on the contents of the options dict
+        self.highlighted_option = self.options[list(self.options.keys())[0]]
+
         self.create_links()
+
+        self.update_inherited_settings()
+
+
+    @property
+    def selection_settings(self):
+        """
+        :type: Menu
+        """
+        return self._selection_settings
+
+    @selection_settings.setter
+    def selection_settings(self, value):
+
+        self._selection_settings = value
+
+    @selection_settings.deleter
+    def selection_settings(self):
+        """
+        :type: Menu
+        """
+        del self._selection_settings  
+    @property
+    def text_settings(self):
+        """
+        :type: Menu
+        """
+        return self._text_settings 
+
+    @text_settings.setter
+    def text_settings (self, value):
+        # for child in self.child_menus.values():
+        self._text_settings = value
+
+    @text_settings.deleter
+    def text_settings(self):
+        """
+        :type: Menu
+        """
+        del self._text_settings  
+
 
     @property
     def title(self):
@@ -276,6 +325,16 @@ class Menu():
         assert isinstance(new_option, MenuAction), 'menu options can only be of type MenuAction'
         self.options.update(new_option)
 
+    def update_inherited_settings(self):
+        root = self.return_root()
+
+        def update_children(menu):
+            menu.text_settings = menu.parent_menu.text_settings
+            menu.selection_settings = menu.parent_menu.selection_settings
+            return([update_children(child) for child in menu.child_menus.values() if child.inherit_settings])
+
+        [update_children(child) for child in root.child_menus.values() if child.inherit_settings]
+
     def create_links(self):
         """
         Creates parent/child relationships based on options dictionary
@@ -283,11 +342,14 @@ class Menu():
 
         :type: Menu
         """
-        for v in self.options.values():
-            if isinstance(v, Menu):
-                if not v.title in self.child_menus.keys():
-                    self.child_menus[v.title] = v
-                    v.parent_menu = self
+        def link_menus(menu, sub_menu):
+
+            menu.child_menus[sub_menu.title] = sub_menu
+            sub_menu.parent_menu = menu
+
+            [link_menus(sub_menu, o) for o in sub_menu.options.values() if isinstance(o, Menu)]
+
+        [link_menus(self, o) for o in self.options.values() if isinstance(o, Menu)]
 
     def generation(self):
 
@@ -341,9 +403,7 @@ class Menu():
     def return_root(self):
 
         def root_search(m):
-
             return m if m.parent_menu is None else root_search(m.parent_menu)
-
         return root_search(self)
         
     def run_menu(self):
@@ -352,28 +412,27 @@ class Menu():
         '''
         self.clear_screen()
 
-        print('{}'.format(self.title.title()))
-        print('Please select an option:\n')
+        print(self.text_settings.format_str('{}'.format(self.title.title())))
+        print(self.text_settings.format_str('Please select an option:\n'))
 
         for option in self.options.keys():
             if option == self.highlighted_option.title:
-                print('  \x1b[1;30;47m{}\x1b[0m'.format(option))
+                print('  {}'.format(self.selection_settings.format_str(option)))
             else:
-                print('  {}'.format(option))
-
+                print('  {}'.format(self.text_settings.format_str(option)))
         if not self.has_parent():
             if self.highlighted_option.title == 'Exit':
-                print('\n  \x1b[1;30;47m{}\x1b[0m'.format('Exit'))
+                print('\n  {}'.format(self.selection_settings.format_str('Exit')))
             else:
-                print('\n  {}'.format('Exit'))
+                print('\n  {}'.format(self.text_settings.format_str('Exit')))
 
-        print('\nUse the up and down arrow keys to move the highligh to your choice.')
+        print(self.text_settings.format_str('\nUse the up and down arrow keys to move the highligh to your choice.'))
 
         if self.has_parent():
-            print('Press enter to execute the option.\n')
-            print('Press backspace to go back to {}.'.format(self.parent_menu.title.title()))
+            print(self.text_settings.format_str('Press enter to execute the option.\n'))
+            print(self.text_settings.format_str('Press backspace to go back to {}.'.format(self.parent_menu.title.title())))
         else:
-            print('Press enter to execute the option.')
+            print(self.text_settings.format_str('Press enter to execute the option.'))
         print('\n')
         if isinstance(self.previous_execution, MenuAction):
             self.previous_execution.execute_action()
@@ -448,7 +507,7 @@ class Menu():
                 current_option_index = len(options_keys) - 1
                 self.highlighted_option = self.options[options_keys[current_option_index]]
                 self.refresh()
-                
+
         if current_option_index + x in range(0, len(options_keys)):
             current_option_index += x
             self.highlighted_option = self.options[options_keys[current_option_index]]
@@ -480,17 +539,17 @@ class Menu():
     def refresh(self):
         '''
             Refreshes the screen 
-
         '''
+
         self.run_menu()
 
     def back(self):
         '''
             Goes to the previous menu, if current menu does not have any previous menus then it refreshes the page
-
         '''
+
         if self.has_parent():
-            self.parent_menu.run_menu()
+            self.parent_menu.refresh()
         else:
             self.refresh()
 
@@ -504,4 +563,6 @@ class Menu():
         '''
             Quits the menu
         '''
+        self.clear_screen()
         sys.exit()
+
