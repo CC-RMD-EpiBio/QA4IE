@@ -54,6 +54,9 @@ from termcolor import colored
 import copy
 import string
 
+CURRENT_FILTERS = []
+
+
 class KeyboardReader():
     def __init__(self):
         self.key_mappings = {
@@ -192,7 +195,7 @@ class MenuAction():
         """
         :type: MenuAction
         """
-        return '{}'.format(self.title.title())
+        return '{}'.format(self.title)
 
 
 
@@ -410,7 +413,7 @@ class Menu():
         """
         :type: Menu
         """
-        return '{}'.format(self.title.title())
+        return '{}'.format(self.title)
 
     def has_parent(self):
         """
@@ -422,7 +425,7 @@ class Menu():
         return not self.child_menus is None
 
     def list_parent(self):
-        return self.parent_menu.title.title() if self.has_parent() else None
+        return self.parent_menu.title if self.has_parent() else None
 
     def list_children(self):
         return list(self.child_menus.keys())
@@ -706,10 +709,13 @@ class Menu():
     
                             if current_option_index == 0:
                                 if x < 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[- 1]
+                                    self.tool_bar.highlighted_option.title = current_option_stack[-1]
                                     self.run_menu(input_ = False)
                                 if x > 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
+                                    try:
+                                        self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
+                                    except IndexError as e:
+                                        self.tool_bar.highlighted_option.title = current_option_stack[-1]
                                     self.run_menu(input_ = False)
  
                             elif current_option_index  == len(current_option_stack) - 1:
