@@ -78,9 +78,9 @@ def compare_texts(text_a = None, text_b = None):
         b_tokens = [t[2] for t in tokenizer(text_b)]
         diff_texts = dl.context_diff(a_tokens, b_tokens)
         
-        conflicts = [str(d) for d in diff_texts]
+        #conflicts = [str(d) for d in diff_texts]
 
-    return conflicts
+        return [d for d in diff_texts][3:]
 
 
 def compare_set_names(sets_a, sets_b):
@@ -95,6 +95,8 @@ def compare_set_names(sets_a, sets_b):
 
     '''
     assert sets_a or sets_b, 'please provide set names to compare'
+    # print(sets_a)
+    # print(sets_b)
     conflicts = set(sets_a) - set(sets_b)
     conflicts = conflicts.union(set(sets_b) - set(sets_a))
 
