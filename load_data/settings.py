@@ -49,73 +49,41 @@
 #
 ###############################################################################
 
-'''
-    Functions for creating a representation of a corpus
-'''
-
-from load_data.read_annotations import read_gate_xml
+import os, sys
+from pathlib import Path
+from load_data import config_reader_test, create_corpus
 
 
-def create_corpus(annotations_dir = None, strict_matches=False):
-    '''
-    Creates a corpus structure using nested dictionaries
-    :param annotations_dir: the path object to the annotated files
-    :type Pathlib
-    :param strict_matches: will match the documents that the annotators have in common, 
-                           if false this would grab all annotations in the dir
-    :type bool
-    :return corpus
-    :type dict
-    '''
+def init():
 
-    assert annotations_dir, 'please provide a directory for the annotation'
-    assert annotations_dir.is_dir(), 'please provide a valid directory'
+    global task 
+    global corpus
+    global schema
+    global hierarchy
+    global set_name
+    global key_annotator
+    global output_dir
 
-    annotations = match_file_ids(files=[x for x in annotations_dir.glob('**/*.xml')], strict_matches=strict_matches)
-    corpus = {}
-    # for loop to populate the entire corpus into a nested dictionary using the glob approach 
-    for file_name, paths in annotations.items():
-        content = {}
-        for path in paths:
-            current_annotator = path.parts[len(annotations_dir.parts)] # getting the annotator's name
-            content[current_annotator] = read_gate_xml(file_path = path, annotator=current_annotator) 
+    global logger
 
-        corpus[file_name] = dict(sorted(content.items(), key=lambda x: x[0].lower()))
-
-
-
-    return corpus
-
-def match_file_ids(files, strict_matches = True, filter_documents = []):
-    """
-    Given a list of document paths, match all documents by their file id
-    :param files: list of document paths
-    :type list:
-    :strict_matches: used to test if the function shoulf return the complete set of documents or only those that had
-    a pair
-    :type boolean
-    :filter_documents: list of document ids to keep
-    :type list
+    # load config file
+    base_dir = Path(__file__)
     
-    :return a dictionary that contains the file names as keys and all it's matching files as values
-    :type dict
-    """
-    temp = {}
+    try:
+        config_info = config_reader_test.read_config_file_information(base_dir.parent/'config.config')
 
-    for file in files:
-        try:
-            temp[file.stem].append(file)
-        except KeyError as e:
-            temp[file.stem] = [file]
+        schema = config_info['schema']
+        
+        corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
+                                             strict_matches=True)
+        key_annotator = config_info['key_annotator']
+        task = config_info['task']
+        output_dir = Path(config_info['output_dir'])
+    except AssertionError as e:
+        raise 
 
-    # filtering out documents that did not match
-    if strict_matches:
-        matches = {x[0].stem : x for x in temp.values() if len(x) > 1}
-    else:
-        matches = {x[0].stem : x for x in temp.values()}
-
-    if filter_documents:
-        matches = {k : v for k, v in matches.items() if v in filter_out}
+  
 
 
-    return(matches)
+
+    
