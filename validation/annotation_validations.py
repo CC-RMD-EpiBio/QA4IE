@@ -70,7 +70,8 @@ def annotation_overlaps(annotations = [], annotation_types = []):
         :return conflicts: the conflicts found for this check
 
     '''
-    assert annotations, 'please provide a list of annotations'
+    #print(annotations)
+    #assert annotations, 'please provide a list of annotations'
     def overlap(a, l):
         '''
             finds overlaps between a list of annotations and a single annotation
@@ -82,8 +83,8 @@ def annotation_overlaps(annotations = [], annotation_types = []):
 
             :return conflicts: the conflicts found for this check       
         '''
-        assert a, 'please provide an annotationn'
-        assert l, 'please provide a list of annotations'
+        #assert a, 'please provide an annotationn'
+        #assert l, 'please provide a list of annotations'
         
         res = []
         for t in l:
@@ -108,7 +109,7 @@ def annotation_overlaps(annotations = [], annotation_types = []):
     return conflict_types
 
 
-def outbound_subentities(annotations, hierarchy = {}):
+def outbound_subentities(annotations, main_type = '', sub_entities = []):
     '''
         looks for subentities that are not contained inside of an entity as stablished by the guideline
 
@@ -120,30 +121,23 @@ def outbound_subentities(annotations, hierarchy = {}):
     '''
     assert annotations, 'please provide a list of annotations'
     conflicts = {}
-    for _type in hierarchy:
-        main_type = _type
-        try:
-            sub_entities_types = list(hierarchy[_type]['sub_entities'].keys()) # this trigger the try/except
-            # get all subentities in current file
-            sub_entities_in_file = [a for a in annotations if a['mention'] in sub_entities_types]
-            entities_in_file = [a for a in annotations if a['mention'] == main_type]
 
-            hierarchical_violations = []
-            for s_e in sub_entities_in_file:
-                res = []
-                for e in entities_in_file:
-                    if(e['end'] >= s_e['start'] and e['start'] <= s_e['end']):
-                        res.append(e)                                           
+    # get all entities/subentities in current file
+    sub_entities_in_file = [a for a in annotations if a['mention'] in sub_entities]
+    entities_in_file = [a for a in annotations if a['mention'] == main_type]
 
-                if not res:
-                    try:
-                        conflicts[s_e['mention']].append(s_e)
-                    except KeyError as e:
-                        conflicts[s_e['mention']] = [s_e]
+    for s_e in sub_entities_in_file:
+        res = []
+        for e in entities_in_file:
+            if(e['end'] >= s_e['start'] and e['start'] <= s_e['end']):
+                res.append(e)                                           
 
-        except KeyError as e:
-            # capture entities that don't have subentities
-            pass
+        if not res:
+            try:
+                conflicts[s_e['mention']].append(s_e)
+            except KeyError as e:
+                conflicts[s_e['mention']] = [s_e]
+
 
     return conflicts
 
