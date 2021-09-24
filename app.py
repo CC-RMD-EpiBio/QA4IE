@@ -52,7 +52,7 @@
 import os, sys
 from itertools import combinations
 from load_data import settings
-from menu import menu_system
+from visualization import menu_system
 from validation import validation_menu_functions 
 from error_checks import error_checks_menu_functions
 
@@ -79,7 +79,6 @@ for k, v in settings.schema.items():
     except KeyError as e:
         pass 
 
-#[file, annotator, annotation_type]
 file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
 set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
 annotator_options = menu_system.MenuToolBarOptions(option_rack=annotators)
@@ -199,53 +198,4 @@ main_menu =  menu_system.Menu(title='QA4IE Main Menu',
 
 main_menu.run_menu()
 
-# simple menu demo
-
-
-# def option_3(x=None):
-#     return x
-# def option_4(x=None):
-#     return x
-# def option_5(x=None):
-#     return x
-
-
-# tool_bar_option_a = menu_system.MenuToolBarOptions(option_rack=['A', 'B', 'C'])
-# tool_bar_option_b = menu_system.MenuToolBarOptions(option_rack=['D', 'E', 'F'])
-
-
-# tool_bar = menu_system.MenuToolBar(title = 'Sub Menu 1 Tool Bar',
-#                        options=[menu_system.MenuAction(tool_bar_option_a.title, tool_bar_option_a.return_options),
-#                                 menu_system.MenuAction(tool_bar_option_b.title, tool_bar_option_b.return_options)],
-#                        selection_settings=menu_system.MenuSettings(color='green'))
-
-
-# tool_bar_option_b = menu_system.MenuToolBarOptions(option_rack=['ms', 'psh', 'jcm'])
-# tool_bar_option_c = menu_system.MenuToolBarOptions(option_rack=['Q', 'W', 'E', 'R', 'T', 'Y'])
-# tool_bar_option_d = menu_system.MenuToolBarOptions(option_rack=['a', 's', 'x', 'g', 'r'])
-
-
-# tool_bar_2 = menu_system.MenuToolBar(title = 'Sub Menu 2 Tool Bar',
-#                          options=[menu_system.MenuAction(tool_bar_option_a.title, tool_bar_option_a.return_options),
-#                                   menu_system.MenuAction(tool_bar_option_b.title, tool_bar_option_b.return_options),
-#                                   menu_system.MenuAction(tool_bar_option_d.title, tool_bar_option_d.return_options)],
-#                          slots = ['Key', 'Response', ''],
-#                          selection_settings=menu_system.MenuSettings(color='red'))
-
-# sub_menu_2 = menu_system.Menu(title='Sub Menu 2', 
-#                   options=[menu_system.MenuAction('Option 5', option_5),
-#                            menu_system.MenuAction('Option 3', option_3)], 
-#                   tool_bar=tool_bar_2,
-#                   inherit_settings=True)
-
-# sub_menu_1 = menu_system.Menu(title='Sub Menu 1', 
-#                   options=[menu_system.MenuAction('Option 4', option_4)],
-#                   tool_bar=tool_bar,
-#                   inherit_settings=True)
-
-# main_menu =  menu_system.Menu(title='Main Menu', 
-#                   options=[sub_menu_1, sub_menu_2], 
-#                   selection_settings=menu_system.MenuSettings(color='green'))
-
-# main_menu.run_menu()
 
