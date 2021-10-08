@@ -7,3 +7,8 @@ itertools
 lxml
 difflib
 xlsxwriter
+termcolor
+time
+string
+temios
+configparser
