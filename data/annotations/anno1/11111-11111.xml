@@ -1,0 +1,2157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<GateDocument version="3">
+<!-- The document's features-->
+
+<GateDocumentFeatures>
+<Feature>
+  <Name className="java.lang.String">gate.SourceURL</Name>
+  <Value className="java.lang.String">file:/Users/jimenezsilvara/Downloads/mobility_data/originals/txt/11111-11111.txt</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">MimeType</Name>
+  <Value className="java.lang.String">text/plain</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">docNewLineType</Name>
+  <Value className="java.lang.String">LF</Value>
+</Feature>
+</GateDocumentFeatures>
+<!-- The document content area with serialized nodes -->
+
+<TextWithNodes><Node id="0"/> <Node id="1"/>SUBJECTIVE<Node id="11"/>:<Node id="12"/>
+<Node id="13"/>Patient<Node id="20"/> <Node id="21"/>reports<Node id="28"/> <Node id="29"/>his<Node id="32"/> <Node id="33"/>joints<Node id="39"/>,<Node id="40"/> <Node id="41"/>back<Node id="45"/> <Node id="46"/>and<Node id="49"/> <Node id="50"/>knees<Node id="55"/> <Node id="56"/>ar<Node id="58"/>e<Node id="59"/> <Node id="60"/>hurting<Node id="67"/> <Node id="68"/>more<Node id="72"/>.<Node id="73"/>  <Node id="75"/>He<Node id="77"/> <Node id="78"/>states<Node id="84"/> <Node id="85"/>his<Node id="88"/> <Node id="89"/>join<Node id="93"/>ts<Node id="95"/> <Node id="96"/>became<Node id="102"/> <Node id="103"/>swollen<Node id="110"/> <Node id="111"/>at<Node id="113"/> <Node id="114"/>the<Node id="117"/> <Node id="118"/>end<Node id="121"/> <Node id="122"/>of<Node id="124"/> <Node id="125"/>Jan.<Node id="129"/> <Node id="130"/>and<Node id="133"/> <Node id="134"/>had<Node id="137"/> <Node id="138"/>to<Node id="140"/> <Node id="141"/>stop<Node id="145"/> <Node id="146"/>his<Node id="149"/> <Node id="150"/>home<Node id="154"/> <Node id="155"/>exercise<Node id="163"/> <Node id="164"/>program<Node id="171"/> <Node id="172"/>since<Node id="177"/> <Node id="178"/>then<Node id="182"/>.<Node id="183"/>  <Node id="185"/>Patient<Node id="192"/> <Node id="193"/>also<Node id="197"/> <Node id="198"/>reports<Node id="205"/> <Node id="206"/>he<Node id="208"/> <Node id="209"/>has<Node id="212"/> <Node id="213"/>not<Node id="216"/> <Node id="217"/>attempted<Node id="226"/> <Node id="227"/>to<Node id="229"/> <Node id="230"/>start<Node id="235"/> <Node id="236"/>a<Node id="237"/> <Node id="238"/>pool<Node id="242"/> <Node id="243"/>exercise<Node id="251"/> <Node id="252"/>program<Node id="259"/>.<Node id="260"/>  <Node id="262"/>Patient<Node id="269"/> <Node id="270"/>reports<Node id="277"/> <Node id="278"/>he<Node id="280"/> <Node id="281"/>is<Node id="283"/> <Node id="284"/>taking<Node id="290"/> <Node id="291"/>Methotrexate<Node id="303"/>,<Node id="304"/> <Node id="305"/>25<Node id="307"/> <Node id="308"/>mg<Node id="310"/>,<Node id="311"/> <Node id="312"/>2x<Node id="314"/>/<Node id="315"/>day<Node id="318"/>,<Node id="319"/> <Node id="320"/>and<Node id="323"/> <Node id="324"/>tylenol<Node id="331"/> <Node id="332"/>with<Node id="336"/> <Node id="337"/>codeine<Node id="344"/> <Node id="345"/>2x<Node id="347"/>/<Node id="348"/>day<Node id="351"/>.<Node id="352"/> <Node id="353"/>Patient<Node id="360"/> <Node id="361"/>reports<Node id="368"/> <Node id="369"/>he<Node id="371"/> <Node id="372"/>will<Node id="376"/> <Node id="377"/>follow<Node id="383"/> <Node id="384"/>up<Node id="386"/> <Node id="387"/>with<Node id="391"/> <Node id="392"/>his<Node id="395"/> <Node id="396"/>rheumatologist<Node id="410"/> <Node id="411"/>in<Node id="413"/> <Node id="414"/>May.<Node id="418"/>  <Node id="420"/>Patient<Node id="427"/> <Node id="428"/>reports<Node id="435"/> <Node id="436"/>he<Node id="438"/> <Node id="439"/>tries<Node id="444"/> <Node id="445"/>attempts<Node id="453"/> <Node id="454"/>house<Node id="459"/> <Node id="460"/>work<Node id="464"/> <Node id="465"/>when<Node id="469"/> <Node id="470"/>he<Node id="472"/> <Node id="473"/>is<Node id="475"/> <Node id="476"/>not<Node id="479"/> <Node id="480"/>having<Node id="486"/> <Node id="487"/>major<Node id="492"/> <Node id="493"/>pain<Node id="497"/>.<Node id="498"/> 
+
+
+<Node id="502"/>Patient<Node id="509"/> <Node id="510"/>Goals<Node id="515"/>:<Node id="516"/> <Node id="517"/>0<Node id="518"/>-<Node id="519"/>10<Node id="521"/> <Node id="522"/>Scale<Node id="527"/>  <Node id="529"/>(<Node id="530"/>0<Node id="531"/>=<Node id="532"/>no<Node id="534"/> <Node id="535"/>problem<Node id="542"/>  <Node id="544"/>10<Node id="546"/>=<Node id="547"/>unable<Node id="553"/> <Node id="554"/>to<Node id="556"/> <Node id="557"/>perform<Node id="564"/>)<Node id="565"/>
+<Node id="566"/>-<Node id="567"/>Going<Node id="572"/> <Node id="573"/>down<Node id="577"/> <Node id="578"/>steps<Node id="583"/> <Node id="584"/>8<Node id="585"/>
+<Node id="586"/>-<Node id="587"/>Squatting<Node id="596"/> <Node id="597"/>10<Node id="599"/>
+<Node id="600"/>-<Node id="601"/>Sitting<Node id="608"/> <Node id="609"/>15<Node id="611"/> <Node id="612"/>min<Node id="615"/>.<Node id="616"/> <Node id="617"/>9<Node id="618"/>
+<Node id="619"/>Pain<Node id="623"/>:<Node id="624"/>  <Node id="626"/>7/10<Node id="630"/>
+
+<Node id="632"/>(<Node id="633"/>3/5/14<Node id="639"/>)<Node id="640"/>
+<Node id="641"/>-<Node id="642"/>Going<Node id="647"/> <Node id="648"/>down<Node id="652"/> <Node id="653"/>steps<Node id="658"/> <Node id="659"/>4<Node id="660"/> 
+<Node id="662"/>-<Node id="663"/>Squatting<Node id="672"/> <Node id="673"/>5<Node id="674"/>
+<Node id="675"/>-<Node id="676"/>Sitting<Node id="683"/> <Node id="684"/>15<Node id="686"/> <Node id="687"/>min<Node id="690"/>.<Node id="691"/> <Node id="692"/>6<Node id="693"/> 
+<Node id="695"/>Pain<Node id="699"/>:<Node id="700"/>  <Node id="702"/>1/10<Node id="706"/>
+
+<Node id="708"/>(<Node id="709"/>10/3/14<Node id="716"/>)<Node id="717"/>
+<Node id="718"/>-<Node id="719"/>Going<Node id="724"/> <Node id="725"/>down<Node id="729"/> <Node id="730"/>steps<Node id="735"/> <Node id="736"/>8<Node id="737"/>
+<Node id="738"/>-<Node id="739"/>Squatting<Node id="748"/> <Node id="749"/>9<Node id="750"/>
+<Node id="751"/>-<Node id="752"/>S<Node id="753"/>itting<Node id="759"/> <Node id="760"/>15<Node id="762"/> <Node id="763"/>min<Node id="766"/>.<Node id="767"/> <Node id="768"/>7<Node id="769"/>
+<Node id="770"/>Pain<Node id="774"/>:<Node id="775"/>  <Node id="777"/>6/10<Node id="781"/>
+
+<Node id="783"/>OBJECTIVE<Node id="792"/>:<Node id="793"/>
+
+<Node id="795"/>-MRI<Node id="799"/> <Node id="800"/>of<Node id="802"/> <Node id="803"/>lumbar<Node id="809"/> <Node id="810"/>spine<Node id="815"/> <Node id="816"/>shows<Node id="821"/> <Node id="822"/>severe<Node id="828"/> <Node id="829"/>lumbar<Node id="835"/> <Node id="836"/>facet<Node id="841"/> <Node id="842"/>arthritis<Node id="851"/> <Node id="852"/>L4<Node id="854"/>-<Node id="855"/>5<Node id="856"/>
+
+<Node id="858"/>Observation<Node id="869"/>:<Node id="870"/>
+<Node id="871"/>-Weak<Node id="876"/> <Node id="877"/>core<Node id="881"/> <Node id="882"/>musculature<Node id="893"/>
+<Node id="894"/>-Patient<Node id="902"/> <Node id="903"/>with<Node id="907"/> <Node id="908"/>weakness<Node id="916"/> <Node id="917"/>to<Node id="919"/> <Node id="920"/>bilateral<Node id="929"/> <Node id="930"/>hip<Node id="933"/> <Node id="934"/>and<Node id="937"/> <Node id="938"/>quad<Node id="942"/> <Node id="943"/>musculature<Node id="954"/>
+<Node id="955"/>-Patient<Node id="963"/> <Node id="964"/>with<Node id="968"/> <Node id="969"/>tightness<Node id="978"/> <Node id="979"/>to<Node id="981"/> <Node id="982"/>bilateral<Node id="991"/> <Node id="992"/>quad<Node id="996"/> <Node id="997"/>musculature<Node id="1008"/>
+<Node id="1009"/>-<Node id="1010"/> <Node id="1011"/>Patient<Node id="1018"/> <Node id="1019"/>able<Node id="1023"/> <Node id="1024"/>to<Node id="1026"/> <Node id="1027"/>ambulate<Node id="1035"/> <Node id="1036"/>with<Node id="1040"/> <Node id="1041"/>assistive<Node id="1050"/> <Node id="1051"/>device<Node id="1057"/>
+
+<Node id="1059"/>Shoulder<Node id="1067"/> <Node id="1068"/>active<Node id="1074"/> <Node id="1075"/>range<Node id="1080"/> <Node id="1081"/>of<Node id="1083"/> <Node id="1084"/>motion<Node id="1090"/>:<Node id="1091"/>
+<Node id="1092"/>-Right<Node id="1098"/>:<Node id="1099"/> <Node id="1100"/>flexion<Node id="1107"/> <Node id="1108"/>120<Node id="1111"/>    <Node id="1115"/>extension<Node id="1124"/> <Node id="1125"/>30<Node id="1127"/>    <Node id="1131"/>abduction<Node id="1140"/> <Node id="1141"/>120<Node id="1144"/>    <Node id="1148"/>external<Node id="1156"/> <Node id="1157"/>rotation<Node id="1165"/> <Node id="1166"/>60<Node id="1168"/>    <Node id="1172"/>internal<Node id="1180"/> <Node id="1181"/>rotation<Node id="1189"/> <Node id="1190"/>L1<Node id="1192"/>
+<Node id="1193"/>-Left<Node id="1198"/>:<Node id="1199"/>    <Node id="1203"/>flexion<Node id="1210"/> <Node id="1211"/>110<Node id="1214"/>    <Node id="1218"/>extension<Node id="1227"/> <Node id="1228"/>40<Node id="1230"/>    <Node id="1234"/>abduction<Node id="1243"/> <Node id="1244"/>115<Node id="1247"/>    <Node id="1251"/>external<Node id="1259"/> <Node id="1260"/>rotation<Node id="1268"/> <Node id="1269"/>50<Node id="1271"/>    <Node id="1275"/>internal<Node id="1283"/> <Node id="1284"/>rotation<Node id="1292"/> <Node id="1293"/>L1<Node id="1295"/>
+
+<Node id="1297"/>Shoulder<Node id="1305"/> <Node id="1306"/>strength<Node id="1314"/>:<Node id="1315"/> <Node id="1316"/>4-/5<Node id="1320"/> <Node id="1321"/>to<Node id="1323"/> <Node id="1324"/>all<Node id="1327"/> <Node id="1328"/>planes<Node id="1334"/> <Node id="1335"/>bilaterally<Node id="1346"/>
+
+<Node id="1348"/>Palpation<Node id="1357"/>:<Node id="1358"/>
+<Node id="1359"/>-Pain<Node id="1364"/> <Node id="1365"/>to<Node id="1367"/> <Node id="1368"/>bilateral<Node id="1377"/> <Node id="1378"/>IT<Node id="1380"/> <Node id="1381"/>band<Node id="1385"/>
+<Node id="1386"/>-Pain<Node id="1391"/> <Node id="1392"/>around<Node id="1398"/> <Node id="1399"/>L<Node id="1400"/> <Node id="1401"/>patella<Node id="1408"/>
+<Node id="1409"/>-Crepitus<Node id="1418"/> <Node id="1419"/>around<Node id="1425"/> <Node id="1426"/>L<Node id="1427"/> <Node id="1428"/>patella<Node id="1435"/>
+<Node id="1436"/>-Pain<Node id="1441"/> <Node id="1442"/>to<Node id="1444"/> <Node id="1445"/>supraspinatus<Node id="1458"/>
+
+<Node id="1460"/>Sensation<Node id="1469"/>:<Node id="1470"/>
+<Node id="1471"/>-intact<Node id="1478"/>
+
+<Node id="1480"/>Outcome<Node id="1487"/> <Node id="1488"/>Measures<Node id="1496"/>:<Node id="1497"/>
+<Node id="1498"/>Mobility<Node id="1506"/>:<Node id="1507"/>
+<Node id="1508"/>-Scoring<Node id="1516"/>:<Node id="1517"/> <Node id="1518"/>1<Node id="1519"/>-<Node id="1520"/>4<Node id="1521"/>;<Node id="1522"/> <Node id="1523"/>    <Node id="1527"/>1<Node id="1528"/>=<Node id="1529"/>Totally<Node id="1536"/> <Node id="1537"/>Dependent<Node id="1546"/>  <Node id="1548"/>2<Node id="1549"/>=<Node id="1550"/>Requires<Node id="1558"/> <Node id="1559"/>assistance<Node id="1569"/> <Node id="1570"/>of<Node id="1572"/> <Node id="1573"/>a<Node id="1574"/> <Node id="1575"/>person<Node id="1581"/> <Node id="1582"/>(<Node id="1583"/>with<Node id="1587"/> <Node id="1588"/>or<Node id="1590"/> <Node id="1591"/>without<Node id="1598"/> <Node id="1599"/>appliance<Node id="1608"/>)<Node id="1609"/>,<Node id="1610"/>  <Node id="1612"/>3<Node id="1613"/>=<Node id="1614"/>Requires<Node id="1622"/> <Node id="1623"/>appliances<Node id="1633"/>,<Node id="1634"/> <Node id="1635"/>orthosis<Node id="1643"/> <Node id="1644"/>or<Node id="1646"/> <Node id="1647"/>prosthesis<Node id="1657"/> <Node id="1658"/>for<Node id="1661"/> <Node id="1662"/>independence<Node id="1674"/>,<Node id="1675"/>  <Node id="1677"/>4<Node id="1678"/>=<Node id="1679"/>Totally<Node id="1686"/> <Node id="1687"/>independent<Node id="1698"/> <Node id="1699"/>(<Node id="1700"/>indoors<Node id="1707"/>/<Node id="1708"/>outdoors<Node id="1716"/>)<Node id="1717"/>,<Node id="1718"/>  
+<Node id="1721"/>-<Node id="1722"/>Ambulation<Node id="1732"/>:<Node id="1733"/> <Node id="1734"/>2<Node id="1735"/>
+<Node id="1736"/>-<Node id="1737"/>Transfers<Node id="1746"/>:<Node id="1747"/> <Node id="1748"/>1<Node id="1749"/>
+<Node id="1750"/>-<Node id="1751"/>Wheelchair<Node id="1761"/>:<Node id="1762"/> <Node id="1763"/>1<Node id="1764"/>
+<Node id="1765"/>-Total<Node id="1771"/>:<Node id="1772"/> <Node id="1773"/>4/12<Node id="1777"/>
+
+<Node id="1779"/>Education<Node id="1788"/> <Node id="1789"/>Provided<Node id="1797"/>:<Node id="1798"/>
+<Node id="1799"/>-Standing<Node id="1808"/> <Node id="1809"/>straight<Node id="1817"/> <Node id="1818"/>leg<Node id="1821"/> <Node id="1822"/>raise<Node id="1827"/> <Node id="1828"/>flexion<Node id="1835"/> <Node id="1836"/>abduction<Node id="1845"/> <Node id="1846"/>extension<Node id="1855"/>,<Node id="1856"/> <Node id="1857"/>supine<Node id="1863"/> <Node id="1864"/>pelvic<Node id="1870"/> <Node id="1871"/>tilt<Node id="1875"/>,<Node id="1876"/> <Node id="1877"/>supine<Node id="1883"/> <Node id="1884"/>lumbar<Node id="1890"/> <Node id="1891"/>rotations<Node id="1900"/>,<Node id="1901"/> <Node id="1902"/>supine<Node id="1908"/> <Node id="1909"/>bridging<Node id="1917"/>,<Node id="1918"/> <Node id="1919"/>long<Node id="1923"/> <Node id="1924"/>arc<Node id="1927"/> <Node id="1928"/>quads<Node id="1933"/>,<Node id="1934"/> <Node id="1935"/>standing<Node id="1943"/> <Node id="1944"/>calf<Node id="1948"/> <Node id="1949"/>raises<Node id="1955"/>,<Node id="1956"/> <Node id="1957"/>prone<Node id="1962"/> <Node id="1963"/>quadricep<Node id="1972"/> <Node id="1973"/>stretching<Node id="1983"/> <Node id="1984"/>(<Node id="1985"/>patient<Node id="1992"/> <Node id="1993"/>reeducated<Node id="2003"/> <Node id="2004"/>on<Node id="2006"/> <Node id="2007"/>how<Node id="2010"/> <Node id="2011"/>to<Node id="2013"/> <Node id="2014"/>perform<Node id="2021"/> <Node id="2022"/>her<Node id="2025"/> <Node id="2026"/>home<Node id="2030"/> <Node id="2031"/>exercise<Node id="2039"/> <Node id="2040"/>program<Node id="2047"/> 
+<Node id="2049"/>-Upper<Node id="2055"/> <Node id="2056"/>trap<Node id="2060"/> <Node id="2061"/>and<Node id="2064"/> <Node id="2065"/>pec<Node id="2068"/>.<Node id="2069"/> <Node id="2070"/>minor<Node id="2075"/> <Node id="2076"/>stretching<Node id="2086"/>,<Node id="2087"/> <Node id="2088"/>shoulder<Node id="2096"/> <Node id="2097"/>range<Node id="2102"/> <Node id="2103"/>of<Node id="2105"/> <Node id="2106"/>motion<Node id="2112"/>,<Node id="2113"/> <Node id="2114"/>scapular<Node id="2122"/> <Node id="2123"/>retraction<Node id="2133"/>,<Node id="2134"/> <Node id="2135"/>and<Node id="2138"/> <Node id="2139"/>shoulder<Node id="2147"/> <Node id="2148"/>shrugs<Node id="2154"/> <Node id="2155"/>added<Node id="2160"/> <Node id="2161"/>to<Node id="2163"/> <Node id="2164"/>home<Node id="2168"/> <Node id="2169"/>exercise<Node id="2177"/> <Node id="2178"/>program<Node id="2185"/> 
+
+<Node id="2188"/>Patient<Node id="2195"/>/<Node id="2196"/>Caregiver<Node id="2205"/> <Node id="2206"/>demonstrated<Node id="2218"/> <Node id="2219"/>understanding<Node id="2232"/> <Node id="2233"/>of<Node id="2235"/> <Node id="2236"/>the<Node id="2239"/> <Node id="2240"/>education<Node id="2249"/>:<Node id="2250"/> <Node id="2251"/>Yes<Node id="2254"/>
+
+<Node id="2256"/>ASSESSMENT<Node id="2266"/>:<Node id="2267"/>
+<Node id="2268"/>Patient<Node id="2275"/> <Node id="2276"/>presents<Node id="2284"/> <Node id="2285"/>with<Node id="2289"/> <Node id="2290"/>acute<Node id="2295"/> <Node id="2296"/>joint<Node id="2301"/> <Node id="2302"/>pain<Node id="2306"/> <Node id="2307"/>related<Node id="2314"/> <Node id="2315"/>to<Node id="2317"/> <Node id="2318"/>his<Node id="2321"/> <Node id="2322"/>RA<Node id="2324"/>.<Node id="2325"/>  <Node id="2327"/>Patient<Node id="2334"/> <Node id="2335"/>would<Node id="2340"/> <Node id="2341"/>benefit<Node id="2348"/> <Node id="2349"/>from<Node id="2353"/> <Node id="2354"/>physical<Node id="2362"/> <Node id="2363"/>therapy<Node id="2370"/> <Node id="2371"/>for<Node id="2374"/> <Node id="2375"/>wrist<Node id="2380"/> <Node id="2381"/>range<Node id="2386"/> <Node id="2387"/>of<Node id="2389"/> <Node id="2390"/>motion<Node id="2396"/>,<Node id="2397"/> <Node id="2398"/>shoulder<Node id="2406"/> <Node id="2407"/>shrugs<Node id="2413"/>,<Node id="2414"/> <Node id="2415"/>and<Node id="2418"/> <Node id="2419"/>stretching<Node id="2429"/> <Node id="2430"/>of<Node id="2432"/> <Node id="2433"/>pec<Node id="2436"/>.<Node id="2437"/> <Node id="2438"/>minor<Node id="2443"/> <Node id="2444"/>and<Node id="2447"/> <Node id="2448"/>levator<Node id="2455"/> <Node id="2456"/>scapulae<Node id="2464"/>.<Node id="2465"/> <Node id="2466"/>Patient<Node id="2473"/> <Node id="2474"/>is<Node id="2476"/> <Node id="2477"/>unable<Node id="2483"/> <Node id="2484"/>to<Node id="2486"/> <Node id="2487"/>performe<Node id="2495"/> <Node id="2496"/>hep<Node id="2499"/>.<Node id="2500"/>  <Node id="2502"/>Patient<Node id="2509"/> <Node id="2510"/>should<Node id="2516"/> <Node id="2517"/>continue<Node id="2525"/> <Node id="2526"/>his<Node id="2529"/> <Node id="2530"/>home<Node id="2534"/> <Node id="2535"/>exercise<Node id="2543"/> <Node id="2544"/>program<Node id="2551"/> <Node id="2552"/>with<Node id="2556"/> <Node id="2557"/>assistance<Node id="2567"/> <Node id="2568"/>when<Node id="2572"/> <Node id="2573"/>his<Node id="2576"/> <Node id="2577"/>pain<Node id="2581"/> <Node id="2582"/>loweres<Node id="2589"/> <Node id="2590"/>and<Node id="2593"/> <Node id="2594"/>if<Node id="2596"/> <Node id="2597"/>he<Node id="2599"/> <Node id="2600"/>does<Node id="2604"/> <Node id="2605"/>not<Node id="2608"/> <Node id="2609"/>have<Node id="2613"/> <Node id="2614"/>some<Node id="2618"/> <Node id="2619"/>improvement<Node id="2630"/> <Node id="2631"/>in<Node id="2633"/> <Node id="2634"/>the<Node id="2637"/> <Node id="2638"/>next<Node id="2642"/> <Node id="2643"/>month<Node id="2648"/>,<Node id="2649"/> <Node id="2650"/>he<Node id="2652"/> <Node id="2653"/>should<Node id="2659"/> <Node id="2660"/>ask<Node id="2663"/> <Node id="2664"/>his<Node id="2667"/> <Node id="2668"/>local<Node id="2673"/> <Node id="2674"/>PCP<Node id="2677"/> <Node id="2678"/>to<Node id="2680"/> <Node id="2681"/>refer<Node id="2686"/>  <Node id="2688"/>him<Node id="2691"/> <Node id="2692"/>to<Node id="2694"/> <Node id="2695"/>local<Node id="2700"/> <Node id="2701"/>physical<Node id="2709"/> <Node id="2710"/>therapy<Node id="2717"/> <Node id="2718"/>services<Node id="2726"/>.<Node id="2727"/>
+
+<Node id="2729"/>Need<Node id="2733"/> <Node id="2734"/>for<Node id="2737"/> <Node id="2738"/>Physical<Node id="2746"/> <Node id="2747"/>Therapy<Node id="2754"/> <Node id="2755"/>services<Node id="2763"/>:<Node id="2764"/> <Node id="2765"/>Yes<Node id="2768"/>,<Node id="2769"/> <Node id="2770"/>3<Node id="2771"/> <Node id="2772"/>more<Node id="2776"/> <Node id="2777"/>visits<Node id="2783"/>
+
+<Node id="2785"/>Prognosis<Node id="2794"/> <Node id="2795"/>with<Node id="2799"/> <Node id="2800"/>Physical<Node id="2808"/> <Node id="2809"/>Therapy<Node id="2816"/>:<Node id="2817"/> <Node id="2818"/>Fair<Node id="2822"/> <Node id="2823"/>to<Node id="2825"/> <Node id="2826"/>Good<Node id="2830"/>
+
+<Node id="2832"/>Need<Node id="2836"/> <Node id="2837"/>for<Node id="2840"/> <Node id="2841"/>other<Node id="2846"/> <Node id="2847"/>Rehabilitation<Node id="2861"/> <Node id="2862"/>Medicine<Node id="2870"/> <Node id="2871"/>Department<Node id="2881"/> <Node id="2882"/>services<Node id="2890"/>:<Node id="2891"/> <Node id="2892"/>Yes<Node id="2895"/> <Node id="2896"/>;<Node id="2897"/>
+
+<Node id="2899"/>Need<Node id="2903"/> <Node id="2904"/>for<Node id="2907"/> <Node id="2908"/>rehabilitation<Node id="2922"/> <Node id="2923"/>services<Node id="2931"/> <Node id="2932"/>post<Node id="2936"/> <Node id="2937"/>discharge<Node id="2946"/>:<Node id="2947"/> <Node id="2948"/>Yes<Node id="2951"/> <Node id="2952"/>;<Node id="2953"/>
+
+<Node id="2955"/>PLAN<Node id="2959"/>:<Node id="2960"/>
+<Node id="2961"/>Follow<Node id="2967"/> <Node id="2968"/>up<Node id="2970"/> <Node id="2971"/>1/20/15<Node id="2978"/> <Node id="2979"/>due<Node id="2982"/> <Node id="2983"/>to<Node id="2985"/> <Node id="2986"/>patients<Node id="2994"/> <Node id="2995"/>schedule<Node id="3003"/> <Node id="3004"/>and<Node id="3007"/> <Node id="3008"/>distance<Node id="3016"/> <Node id="3017"/>from<Node id="3021"/> <Node id="3022"/>clinic<Node id="3028"/>.<Node id="3029"/>  <Node id="3031"/>Patient<Node id="3038"/> <Node id="3039"/>to<Node id="3041"/> <Node id="3042"/>perform<Node id="3049"/> <Node id="3050"/>the<Node id="3053"/> <Node id="3054"/>above<Node id="3059"/> <Node id="3060"/>home<Node id="3064"/> <Node id="3065"/>exercise<Node id="3073"/> <Node id="3074"/>program<Node id="3081"/> <Node id="3082"/>daily<Node id="3087"/>.<Node id="3088"/>  <Node id="3090"/>Recheck<Node id="3097"/> <Node id="3098"/>patients<Node id="3106"/> <Node id="3107"/>progress<Node id="3115"/> <Node id="3116"/>at<Node id="3118"/> <Node id="3119"/>the<Node id="3122"/> <Node id="3123"/>next<Node id="3127"/> <Node id="3128"/>visit<Node id="3133"/>.<Node id="3134"/>  <Node id="3136"/>If<Node id="3138"/> <Node id="3139"/>improvement<Node id="3150"/> <Node id="3151"/>is<Node id="3153"/> <Node id="3154"/>seen<Node id="3158"/> <Node id="3159"/>then<Node id="3163"/> <Node id="3164"/>home<Node id="3168"/> <Node id="3169"/>exercise<Node id="3177"/> <Node id="3178"/>program<Node id="3185"/> <Node id="3186"/>should<Node id="3192"/> <Node id="3193"/>be<Node id="3195"/> <Node id="3196"/>adjusted<Node id="3204"/>.<Node id="3205"/>  <Node id="3207"/>Patient<Node id="3214"/> <Node id="3215"/>to<Node id="3217"/> <Node id="3218"/>have<Node id="3222"/> <Node id="3223"/>translator<Node id="3233"/> <Node id="3234"/>present<Node id="3241"/> <Node id="3242"/>at<Node id="3244"/> <Node id="3245"/>next<Node id="3249"/> <Node id="3250"/>visit<Node id="3255"/>.<Node id="3256"/>
+
+<Node id="3258"/>Goals<Node id="3263"/>:<Node id="3264"/> <Node id="3265"/>(<Node id="3266"/>3/13/15<Node id="3273"/>)<Node id="3274"/>
+<Node id="3275"/>-Going<Node id="3281"/> <Node id="3282"/>down<Node id="3286"/> <Node id="3287"/>steps<Node id="3292"/> <Node id="3293"/>4<Node id="3294"/>
+<Node id="3295"/>-Squatting<Node id="3305"/> <Node id="3306"/>6<Node id="3307"/>
+<Node id="3308"/>-Sitting<Node id="3316"/> <Node id="3317"/>15<Node id="3319"/> <Node id="3320"/>min<Node id="3323"/>.<Node id="3324"/> <Node id="3325"/>2<Node id="3326"/>
+
+<Node id="3328"/>Pain<Node id="3332"/>:<Node id="3333"/>  <Node id="3335"/>5/10<Node id="3339"/>
+
+<Node id="3341"/>Patient<Node id="3348"/>/<Node id="3349"/>Caregiver<Node id="3358"/> <Node id="3359"/>participated<Node id="3371"/> <Node id="3372"/>in<Node id="3374"/> <Node id="3375"/>and<Node id="3378"/> <Node id="3379"/>agreed<Node id="3385"/> <Node id="3386"/>to<Node id="3388"/> <Node id="3389"/>the<Node id="3392"/> <Node id="3393"/>development<Node id="3404"/> <Node id="3405"/>of<Node id="3407"/> <Node id="3408"/>the<Node id="3411"/> <Node id="3412"/>plan<Node id="3416"/> <Node id="3417"/>of<Node id="3419"/> <Node id="3420"/>care<Node id="3424"/> <Node id="3425"/>and<Node id="3428"/> <Node id="3429"/>treatment<Node id="3438"/> <Node id="3439"/>goals<Node id="3444"/>.<Node id="3445"/>
+
+<Node id="3447"/>Patient<Node id="3454"/>/<Node id="3455"/>Caregiver<Node id="3464"/> <Node id="3465"/>to<Node id="3467"/> <Node id="3468"/>contact<Node id="3475"/> <Node id="3476"/>physical<Node id="3484"/> <Node id="3485"/>therapist<Node id="3494"/> <Node id="3495"/>with<Node id="3499"/> <Node id="3500"/>any<Node id="3503"/> <Node id="3504"/>questions<Node id="3513"/> <Node id="3514"/>or<Node id="3516"/> <Node id="3517"/>concerns<Node id="3525"/> <Node id="3526"/>regarding<Node id="3535"/> <Node id="3536"/>physical<Node id="3544"/> <Node id="3545"/>therapy<Node id="3552"/> <Node id="3553"/>assessment<Node id="3563"/> <Node id="3564"/>and<Node id="3567"/> <Node id="3568"/>treatment<Node id="3577"/>.<Node id="3578"/>
+
+
+<Node id="3581"/>Electronic<Node id="3591"/> <Node id="3592"/>Signatures<Node id="3602"/>:<Node id="3603"/>
+<Node id="3604"/>Baggins<Node id="3611"/>,<Node id="3612"/> <Node id="3613"/>Bilbo<Node id="3618"/> <Node id="3619"/>(<Node id="3620"/>PT<Node id="3622"/>)<Node id="3623"/>  <Node id="3625"/>(<Node id="3626"/>Signed<Node id="3632"/> <Node id="3633"/>on<Node id="3635"/> <Node id="3636"/>02/05/2015<Node id="3646"/> <Node id="3647"/>11:22<Node id="3652"/>)<Node id="3653"/>
+    <Node id="3658"/>Authored<Node id="3666"/>
+
+<Node id="3668"/>Last<Node id="3672"/> <Node id="3673"/>Updated<Node id="3680"/>:<Node id="3681"/> <Node id="3682"/>02/05/2015<Node id="3692"/> <Node id="3693"/>11:22<Node id="3698"/> <Node id="3699"/>by<Node id="3701"/> <Node id="3702"/>Baggins<Node id="3709"/>,<Node id="3710"/> <Node id="3711"/>Bilbo<Node id="3716"/> <Node id="3717"/>(<Node id="3718"/>PT<Node id="3720"/>)<Node id="3721"/> </TextWithNodes>
+<!-- The default annotation set -->
+
+<AnnotationSet>
+<Annotation Id="722" Type="Instructions/Questions" StartNode="58" EndNode="93">
+</Annotation>
+</AnnotationSet>
+
+<!-- Named annotation set -->
+
+<AnnotationSet Name="MOBILITY">
+<Annotation Id="704" Type="Score Definition" StartNode="1508" EndNode="1717">
+</Annotation>
+<Annotation Id="705" Type="Mobility" StartNode="1722" EndNode="1735">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="706" Type="Mobility" StartNode="1737" EndNode="1749">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="707" Type="Mobility" StartNode="1751" EndNode="1764">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="708" Type="Action" StartNode="1722" EndNode="1732">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d435</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="709" Type="Action" StartNode="1737" EndNode="1746">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d435</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="710" Type="Action" StartNode="1751" EndNode="1761">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d415</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Unable</Value>
+</Feature>
+</Annotation>
+<Annotation Id="711" Type="Quantification" StartNode="1734" EndNode="1735">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="712" Type="Quantification" StartNode="1748" EndNode="1749">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="713" Type="Quantification" StartNode="1763" EndNode="1764">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="714" Type="Mobility" StartNode="2466" EndNode="2499">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="715" Type="Action" StartNode="2477" EndNode="2499">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Unable</Value>
+</Feature>
+</Annotation>
+<Annotation Id="716" Type="Mobility" StartNode="3031" EndNode="3087">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Future</Value>
+</Feature>
+</Annotation>
+<Annotation Id="718" Type="Assistance" StartNode="2517" EndNode="2567">
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">True</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Source</Name>
+  <Value className="java.lang.String">Person Only</Value>
+</Feature>
+</Annotation>
+<Annotation Id="719" Type="Action" StartNode="445" EndNode="464">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d440</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Unable</Value>
+</Feature>
+</Annotation>
+<Annotation Id="720" Type="Mobility" StartNode="2650" EndNode="2726">
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Other</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Subjective</Value>
+</Feature>
+</Annotation>
+<Annotation Id="721" Type="Mobility" StartNode="3136" EndNode="3204">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="673" Type="Mobility" StartNode="567" EndNode="585">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="674" Type="Mobility" StartNode="587" EndNode="599">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="675" Type="Mobility" StartNode="601" EndNode="618">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="676" Type="Score Definition" StartNode="502" EndNode="565">
+</Annotation>
+<Annotation Id="677" Type="Action" StartNode="567" EndNode="583">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="678" Type="Action" StartNode="587" EndNode="596">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="679" Type="Action" StartNode="601" EndNode="616">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="680" Type="Quantification" StartNode="584" EndNode="585">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="681" Type="Quantification" StartNode="597" EndNode="599">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="682" Type="Quantification" StartNode="617" EndNode="618">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="683" Type="Mobility" StartNode="642" EndNode="660">
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="684" Type="Action" StartNode="642" EndNode="658">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="685" Type="Mobility" StartNode="663" EndNode="674">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="686" Type="Mobility" StartNode="676" EndNode="693">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="687" Type="Action" StartNode="663" EndNode="672">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="688" Type="Quantification" StartNode="673" EndNode="674">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="689" Type="Quantification" StartNode="659" EndNode="660">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="690" Type="Mobility" StartNode="185" EndNode="259">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Past</Value>
+</Feature>
+</Annotation>
+<Annotation Id="691" Type="Mobility" StartNode="719" EndNode="737">
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+</Annotation>
+<Annotation Id="692" Type="Mobility" StartNode="739" EndNode="750">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="693" Type="Mobility" StartNode="752" EndNode="769">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+</Annotation>
+<Annotation Id="694" Type="Action" StartNode="739" EndNode="753">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d420</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="695" Type="Action" StartNode="719" EndNode="735">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d440</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="696" Type="Quantification" StartNode="749" EndNode="750">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Distance</Value>
+</Feature>
+</Annotation>
+<Annotation Id="697" Type="Quantification" StartNode="736" EndNode="737">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="698" Type="Action" StartNode="676" EndNode="683">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d450</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="699" Type="Quantification" StartNode="692" EndNode="693">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Scale</Value>
+</Feature>
+</Annotation>
+<Annotation Id="700" Type="Quantification" StartNode="684" EndNode="690">
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Time</Value>
+</Feature>
+</Annotation>
+<Annotation Id="701" Type="Mobility" StartNode="1011" EndNode="1057">
+<Feature>
+  <Name className="java.lang.String">Timeline</Name>
+  <Value className="java.lang.String">Present</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Subject</Name>
+  <Value className="java.lang.String">Patient</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Type</Name>
+  <Value className="java.lang.String">Objective</Value>
+</Feature>
+</Annotation>
+<Annotation Id="702" Type="Action" StartNode="1019" EndNode="1035">
+<Feature>
+  <Name className="java.lang.String">Subdomain Code</Name>
+  <Value className="java.lang.String">d440</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">Able</Value>
+</Feature>
+</Annotation>
+<Annotation Id="703" Type="Assistance" StartNode="1036" EndNode="1057">
+<Feature>
+  <Name className="java.lang.String">Polarity</Name>
+  <Value className="java.lang.String">True</Value>
+</Feature>
+<Feature>
+  <Name className="java.lang.String">Source</Name>
+  <Value className="java.lang.String">Device Only</Value>
+</Feature>
+</Annotation>
+</AnnotationSet>
+
+<!-- Named annotation set -->
+
+<AnnotationSet Name="sentences">
+<Annotation Id="1" Type="sentence" StartNode="0" EndNode="12">
+</Annotation>
+<Annotation Id="2" Type="sentence" StartNode="13" EndNode="73">
+</Annotation>
+<Annotation Id="3" Type="sentence" StartNode="75" EndNode="183">
+</Annotation>
+<Annotation Id="4" Type="sentence" StartNode="185" EndNode="260">
+</Annotation>
+<Annotation Id="5" Type="sentence" StartNode="262" EndNode="352">
+</Annotation>
+<Annotation Id="6" Type="sentence" StartNode="353" EndNode="413">
+</Annotation>
+<Annotation Id="7" Type="sentence" StartNode="414" EndNode="498">
+</Annotation>
+<Annotation Id="8" Type="sentence" StartNode="502" EndNode="516">
+</Annotation>
+<Annotation Id="9" Type="sentence" StartNode="517" EndNode="565">
+</Annotation>
+<Annotation Id="10" Type="sentence" StartNode="566" EndNode="585">
+</Annotation>
+<Annotation Id="11" Type="sentence" StartNode="586" EndNode="599">
+</Annotation>
+<Annotation Id="12" Type="sentence" StartNode="600" EndNode="616">
+</Annotation>
+<Annotation Id="13" Type="sentence" StartNode="617" EndNode="618">
+</Annotation>
+<Annotation Id="14" Type="sentence" StartNode="619" EndNode="640">
+</Annotation>
+<Annotation Id="15" Type="sentence" StartNode="641" EndNode="652">
+</Annotation>
+<Annotation Id="16" Type="sentence" StartNode="653" EndNode="660">
+</Annotation>
+<Annotation Id="17" Type="sentence" StartNode="662" EndNode="674">
+</Annotation>
+<Annotation Id="18" Type="sentence" StartNode="675" EndNode="691">
+</Annotation>
+<Annotation Id="19" Type="sentence" StartNode="692" EndNode="693">
+</Annotation>
+<Annotation Id="20" Type="sentence" StartNode="695" EndNode="717">
+</Annotation>
+<Annotation Id="21" Type="sentence" StartNode="718" EndNode="737">
+</Annotation>
+<Annotation Id="22" Type="sentence" StartNode="738" EndNode="750">
+</Annotation>
+<Annotation Id="23" Type="sentence" StartNode="751" EndNode="767">
+</Annotation>
+<Annotation Id="24" Type="sentence" StartNode="768" EndNode="769">
+</Annotation>
+<Annotation Id="25" Type="sentence" StartNode="770" EndNode="781">
+</Annotation>
+<Annotation Id="26" Type="sentence" StartNode="783" EndNode="793">
+</Annotation>
+<Annotation Id="27" Type="sentence" StartNode="795" EndNode="856">
+</Annotation>
+<Annotation Id="28" Type="sentence" StartNode="858" EndNode="870">
+</Annotation>
+<Annotation Id="29" Type="sentence" StartNode="871" EndNode="893">
+</Annotation>
+<Annotation Id="30" Type="sentence" StartNode="894" EndNode="954">
+</Annotation>
+<Annotation Id="31" Type="sentence" StartNode="955" EndNode="1008">
+</Annotation>
+<Annotation Id="32" Type="sentence" StartNode="1009" EndNode="1057">
+</Annotation>
+<Annotation Id="33" Type="sentence" StartNode="1059" EndNode="1091">
+</Annotation>
+<Annotation Id="34" Type="sentence" StartNode="1092" EndNode="1127">
+</Annotation>
+<Annotation Id="35" Type="sentence" StartNode="1131" EndNode="1144">
+</Annotation>
+<Annotation Id="36" Type="sentence" StartNode="1148" EndNode="1192">
+</Annotation>
+<Annotation Id="37" Type="sentence" StartNode="1193" EndNode="1199">
+</Annotation>
+<Annotation Id="38" Type="sentence" StartNode="1203" EndNode="1247">
+</Annotation>
+<Annotation Id="39" Type="sentence" StartNode="1251" EndNode="1295">
+</Annotation>
+<Annotation Id="40" Type="sentence" StartNode="1297" EndNode="1315">
+</Annotation>
+<Annotation Id="41" Type="sentence" StartNode="1316" EndNode="1346">
+</Annotation>
+<Annotation Id="42" Type="sentence" StartNode="1348" EndNode="1358">
+</Annotation>
+<Annotation Id="43" Type="sentence" StartNode="1359" EndNode="1385">
+</Annotation>
+<Annotation Id="44" Type="sentence" StartNode="1386" EndNode="1408">
+</Annotation>
+<Annotation Id="45" Type="sentence" StartNode="1409" EndNode="1435">
+</Annotation>
+<Annotation Id="46" Type="sentence" StartNode="1436" EndNode="1458">
+</Annotation>
+<Annotation Id="47" Type="sentence" StartNode="1460" EndNode="1470">
+</Annotation>
+<Annotation Id="48" Type="sentence" StartNode="1471" EndNode="1478">
+</Annotation>
+<Annotation Id="49" Type="sentence" StartNode="1480" EndNode="1497">
+</Annotation>
+<Annotation Id="50" Type="sentence" StartNode="1498" EndNode="1507">
+</Annotation>
+<Annotation Id="51" Type="sentence" StartNode="1508" EndNode="1522">
+</Annotation>
+<Annotation Id="52" Type="sentence" StartNode="1523" EndNode="1718">
+</Annotation>
+<Annotation Id="53" Type="sentence" StartNode="1721" EndNode="1735">
+</Annotation>
+<Annotation Id="54" Type="sentence" StartNode="1736" EndNode="1749">
+</Annotation>
+<Annotation Id="55" Type="sentence" StartNode="1750" EndNode="1764">
+</Annotation>
+<Annotation Id="56" Type="sentence" StartNode="1765" EndNode="1777">
+</Annotation>
+<Annotation Id="57" Type="sentence" StartNode="1779" EndNode="1798">
+</Annotation>
+<Annotation Id="58" Type="sentence" StartNode="1799" EndNode="2047">
+</Annotation>
+<Annotation Id="59" Type="sentence" StartNode="2049" EndNode="2069">
+</Annotation>
+<Annotation Id="60" Type="sentence" StartNode="2070" EndNode="2185">
+</Annotation>
+<Annotation Id="61" Type="sentence" StartNode="2188" EndNode="2254">
+</Annotation>
+<Annotation Id="62" Type="sentence" StartNode="2256" EndNode="2267">
+</Annotation>
+<Annotation Id="63" Type="sentence" StartNode="2268" EndNode="2325">
+</Annotation>
+<Annotation Id="64" Type="sentence" StartNode="2327" EndNode="2465">
+</Annotation>
+<Annotation Id="65" Type="sentence" StartNode="2466" EndNode="2500">
+</Annotation>
+<Annotation Id="66" Type="sentence" StartNode="2502" EndNode="2727">
+</Annotation>
+<Annotation Id="67" Type="sentence" StartNode="2729" EndNode="2783">
+</Annotation>
+<Annotation Id="68" Type="sentence" StartNode="2785" EndNode="2830">
+</Annotation>
+<Annotation Id="69" Type="sentence" StartNode="2832" EndNode="2897">
+</Annotation>
+<Annotation Id="70" Type="sentence" StartNode="2899" EndNode="2953">
+</Annotation>
+<Annotation Id="71" Type="sentence" StartNode="2955" EndNode="2960">
+</Annotation>
+<Annotation Id="72" Type="sentence" StartNode="2960" EndNode="2994">
+</Annotation>
+<Annotation Id="73" Type="sentence" StartNode="2995" EndNode="3029">
+</Annotation>
+<Annotation Id="74" Type="sentence" StartNode="3031" EndNode="3088">
+</Annotation>
+<Annotation Id="75" Type="sentence" StartNode="3090" EndNode="3134">
+</Annotation>
+<Annotation Id="76" Type="sentence" StartNode="3136" EndNode="3205">
+</Annotation>
+<Annotation Id="77" Type="sentence" StartNode="3207" EndNode="3256">
+</Annotation>
+<Annotation Id="78" Type="sentence" StartNode="3258" EndNode="3274">
+</Annotation>
+<Annotation Id="79" Type="sentence" StartNode="3275" EndNode="3286">
+</Annotation>
+<Annotation Id="80" Type="sentence" StartNode="3287" EndNode="3294">
+</Annotation>
+<Annotation Id="81" Type="sentence" StartNode="3295" EndNode="3307">
+</Annotation>
+<Annotation Id="82" Type="sentence" StartNode="3308" EndNode="3326">
+</Annotation>
+<Annotation Id="83" Type="sentence" StartNode="3328" EndNode="3339">
+</Annotation>
+<Annotation Id="84" Type="sentence" StartNode="3341" EndNode="3445">
+</Annotation>
+<Annotation Id="85" Type="sentence" StartNode="3447" EndNode="3578">
+</Annotation>
+<Annotation Id="86" Type="sentence" StartNode="3581" EndNode="3603">
+</Annotation>
+<Annotation Id="87" Type="sentence" StartNode="3604" EndNode="3653">
+</Annotation>
+<Annotation Id="88" Type="sentence" StartNode="3658" EndNode="3666">
+</Annotation>
+<Annotation Id="89" Type="sentence" StartNode="3668" EndNode="3721">
+</Annotation>
+</AnnotationSet>
+
+<!-- Named annotation set -->
+
+<AnnotationSet Name="tokens">
+<Annotation Id="1" Type="token" StartNode="1" EndNode="11">
+</Annotation>
+<Annotation Id="2" Type="token" StartNode="11" EndNode="12">
+</Annotation>
+<Annotation Id="3" Type="token" StartNode="13" EndNode="20">
+</Annotation>
+<Annotation Id="4" Type="token" StartNode="21" EndNode="28">
+</Annotation>
+<Annotation Id="5" Type="token" StartNode="29" EndNode="32">
+</Annotation>
+<Annotation Id="6" Type="token" StartNode="33" EndNode="39">
+</Annotation>
+<Annotation Id="7" Type="token" StartNode="39" EndNode="40">
+</Annotation>
+<Annotation Id="8" Type="token" StartNode="41" EndNode="45">
+</Annotation>
+<Annotation Id="9" Type="token" StartNode="46" EndNode="49">
+</Annotation>
+<Annotation Id="10" Type="token" StartNode="50" EndNode="55">
+</Annotation>
+<Annotation Id="11" Type="token" StartNode="56" EndNode="59">
+</Annotation>
+<Annotation Id="12" Type="token" StartNode="60" EndNode="67">
+</Annotation>
+<Annotation Id="13" Type="token" StartNode="68" EndNode="72">
+</Annotation>
+<Annotation Id="14" Type="token" StartNode="72" EndNode="73">
+</Annotation>
+<Annotation Id="15" Type="token" StartNode="75" EndNode="77">
+</Annotation>
+<Annotation Id="16" Type="token" StartNode="78" EndNode="84">
+</Annotation>
+<Annotation Id="17" Type="token" StartNode="85" EndNode="88">
+</Annotation>
+<Annotation Id="18" Type="token" StartNode="89" EndNode="95">
+</Annotation>
+<Annotation Id="19" Type="token" StartNode="96" EndNode="102">
+</Annotation>
+<Annotation Id="20" Type="token" StartNode="103" EndNode="110">
+</Annotation>
+<Annotation Id="21" Type="token" StartNode="111" EndNode="113">
+</Annotation>
+<Annotation Id="22" Type="token" StartNode="114" EndNode="117">
+</Annotation>
+<Annotation Id="23" Type="token" StartNode="118" EndNode="121">
+</Annotation>
+<Annotation Id="24" Type="token" StartNode="122" EndNode="124">
+</Annotation>
+<Annotation Id="25" Type="token" StartNode="125" EndNode="129">
+</Annotation>
+<Annotation Id="26" Type="token" StartNode="130" EndNode="133">
+</Annotation>
+<Annotation Id="27" Type="token" StartNode="134" EndNode="137">
+</Annotation>
+<Annotation Id="28" Type="token" StartNode="138" EndNode="140">
+</Annotation>
+<Annotation Id="29" Type="token" StartNode="141" EndNode="145">
+</Annotation>
+<Annotation Id="30" Type="token" StartNode="146" EndNode="149">
+</Annotation>
+<Annotation Id="31" Type="token" StartNode="150" EndNode="154">
+</Annotation>
+<Annotation Id="32" Type="token" StartNode="155" EndNode="163">
+</Annotation>
+<Annotation Id="33" Type="token" StartNode="164" EndNode="171">
+</Annotation>
+<Annotation Id="34" Type="token" StartNode="172" EndNode="177">
+</Annotation>
+<Annotation Id="35" Type="token" StartNode="178" EndNode="182">
+</Annotation>
+<Annotation Id="36" Type="token" StartNode="182" EndNode="183">
+</Annotation>
+<Annotation Id="37" Type="token" StartNode="185" EndNode="192">
+</Annotation>
+<Annotation Id="38" Type="token" StartNode="193" EndNode="197">
+</Annotation>
+<Annotation Id="39" Type="token" StartNode="198" EndNode="205">
+</Annotation>
+<Annotation Id="40" Type="token" StartNode="206" EndNode="208">
+</Annotation>
+<Annotation Id="41" Type="token" StartNode="209" EndNode="212">
+</Annotation>
+<Annotation Id="42" Type="token" StartNode="213" EndNode="216">
+</Annotation>
+<Annotation Id="43" Type="token" StartNode="217" EndNode="226">
+</Annotation>
+<Annotation Id="44" Type="token" StartNode="227" EndNode="229">
+</Annotation>
+<Annotation Id="45" Type="token" StartNode="230" EndNode="235">
+</Annotation>
+<Annotation Id="46" Type="token" StartNode="236" EndNode="237">
+</Annotation>
+<Annotation Id="47" Type="token" StartNode="238" EndNode="242">
+</Annotation>
+<Annotation Id="48" Type="token" StartNode="243" EndNode="251">
+</Annotation>
+<Annotation Id="49" Type="token" StartNode="252" EndNode="259">
+</Annotation>
+<Annotation Id="50" Type="token" StartNode="259" EndNode="260">
+</Annotation>
+<Annotation Id="51" Type="token" StartNode="262" EndNode="269">
+</Annotation>
+<Annotation Id="52" Type="token" StartNode="270" EndNode="277">
+</Annotation>
+<Annotation Id="53" Type="token" StartNode="278" EndNode="280">
+</Annotation>
+<Annotation Id="54" Type="token" StartNode="281" EndNode="283">
+</Annotation>
+<Annotation Id="55" Type="token" StartNode="284" EndNode="290">
+</Annotation>
+<Annotation Id="56" Type="token" StartNode="291" EndNode="303">
+</Annotation>
+<Annotation Id="57" Type="token" StartNode="303" EndNode="304">
+</Annotation>
+<Annotation Id="58" Type="token" StartNode="305" EndNode="307">
+</Annotation>
+<Annotation Id="59" Type="token" StartNode="308" EndNode="310">
+</Annotation>
+<Annotation Id="60" Type="token" StartNode="310" EndNode="311">
+</Annotation>
+<Annotation Id="61" Type="token" StartNode="312" EndNode="314">
+</Annotation>
+<Annotation Id="62" Type="token" StartNode="314" EndNode="315">
+</Annotation>
+<Annotation Id="63" Type="token" StartNode="315" EndNode="318">
+</Annotation>
+<Annotation Id="64" Type="token" StartNode="318" EndNode="319">
+</Annotation>
+<Annotation Id="65" Type="token" StartNode="320" EndNode="323">
+</Annotation>
+<Annotation Id="66" Type="token" StartNode="324" EndNode="331">
+</Annotation>
+<Annotation Id="67" Type="token" StartNode="332" EndNode="336">
+</Annotation>
+<Annotation Id="68" Type="token" StartNode="337" EndNode="344">
+</Annotation>
+<Annotation Id="69" Type="token" StartNode="345" EndNode="347">
+</Annotation>
+<Annotation Id="70" Type="token" StartNode="347" EndNode="348">
+</Annotation>
+<Annotation Id="71" Type="token" StartNode="348" EndNode="351">
+</Annotation>
+<Annotation Id="72" Type="token" StartNode="351" EndNode="352">
+</Annotation>
+<Annotation Id="73" Type="token" StartNode="353" EndNode="360">
+</Annotation>
+<Annotation Id="74" Type="token" StartNode="361" EndNode="368">
+</Annotation>
+<Annotation Id="75" Type="token" StartNode="369" EndNode="371">
+</Annotation>
+<Annotation Id="76" Type="token" StartNode="372" EndNode="376">
+</Annotation>
+<Annotation Id="77" Type="token" StartNode="377" EndNode="383">
+</Annotation>
+<Annotation Id="78" Type="token" StartNode="384" EndNode="386">
+</Annotation>
+<Annotation Id="79" Type="token" StartNode="387" EndNode="391">
+</Annotation>
+<Annotation Id="80" Type="token" StartNode="392" EndNode="395">
+</Annotation>
+<Annotation Id="81" Type="token" StartNode="396" EndNode="410">
+</Annotation>
+<Annotation Id="82" Type="token" StartNode="411" EndNode="413">
+</Annotation>
+<Annotation Id="83" Type="token" StartNode="414" EndNode="418">
+</Annotation>
+<Annotation Id="84" Type="token" StartNode="420" EndNode="427">
+</Annotation>
+<Annotation Id="85" Type="token" StartNode="428" EndNode="435">
+</Annotation>
+<Annotation Id="86" Type="token" StartNode="436" EndNode="438">
+</Annotation>
+<Annotation Id="87" Type="token" StartNode="439" EndNode="444">
+</Annotation>
+<Annotation Id="88" Type="token" StartNode="445" EndNode="453">
+</Annotation>
+<Annotation Id="89" Type="token" StartNode="454" EndNode="459">
+</Annotation>
+<Annotation Id="90" Type="token" StartNode="460" EndNode="464">
+</Annotation>
+<Annotation Id="91" Type="token" StartNode="465" EndNode="469">
+</Annotation>
+<Annotation Id="92" Type="token" StartNode="470" EndNode="472">
+</Annotation>
+<Annotation Id="93" Type="token" StartNode="473" EndNode="475">
+</Annotation>
+<Annotation Id="94" Type="token" StartNode="476" EndNode="479">
+</Annotation>
+<Annotation Id="95" Type="token" StartNode="480" EndNode="486">
+</Annotation>
+<Annotation Id="96" Type="token" StartNode="487" EndNode="492">
+</Annotation>
+<Annotation Id="97" Type="token" StartNode="493" EndNode="497">
+</Annotation>
+<Annotation Id="98" Type="token" StartNode="497" EndNode="498">
+</Annotation>
+<Annotation Id="99" Type="token" StartNode="502" EndNode="509">
+</Annotation>
+<Annotation Id="100" Type="token" StartNode="510" EndNode="515">
+</Annotation>
+<Annotation Id="101" Type="token" StartNode="515" EndNode="516">
+</Annotation>
+<Annotation Id="102" Type="token" StartNode="517" EndNode="518">
+</Annotation>
+<Annotation Id="103" Type="token" StartNode="518" EndNode="519">
+</Annotation>
+<Annotation Id="104" Type="token" StartNode="519" EndNode="521">
+</Annotation>
+<Annotation Id="105" Type="token" StartNode="522" EndNode="527">
+</Annotation>
+<Annotation Id="106" Type="token" StartNode="529" EndNode="530">
+</Annotation>
+<Annotation Id="107" Type="token" StartNode="530" EndNode="531">
+</Annotation>
+<Annotation Id="108" Type="token" StartNode="531" EndNode="532">
+</Annotation>
+<Annotation Id="109" Type="token" StartNode="532" EndNode="534">
+</Annotation>
+<Annotation Id="110" Type="token" StartNode="535" EndNode="542">
+</Annotation>
+<Annotation Id="111" Type="token" StartNode="544" EndNode="546">
+</Annotation>
+<Annotation Id="112" Type="token" StartNode="546" EndNode="547">
+</Annotation>
+<Annotation Id="113" Type="token" StartNode="547" EndNode="553">
+</Annotation>
+<Annotation Id="114" Type="token" StartNode="554" EndNode="556">
+</Annotation>
+<Annotation Id="115" Type="token" StartNode="557" EndNode="564">
+</Annotation>
+<Annotation Id="116" Type="token" StartNode="564" EndNode="565">
+</Annotation>
+<Annotation Id="117" Type="token" StartNode="566" EndNode="572">
+</Annotation>
+<Annotation Id="118" Type="token" StartNode="573" EndNode="577">
+</Annotation>
+<Annotation Id="119" Type="token" StartNode="578" EndNode="583">
+</Annotation>
+<Annotation Id="120" Type="token" StartNode="584" EndNode="585">
+</Annotation>
+<Annotation Id="121" Type="token" StartNode="586" EndNode="596">
+</Annotation>
+<Annotation Id="122" Type="token" StartNode="597" EndNode="599">
+</Annotation>
+<Annotation Id="123" Type="token" StartNode="600" EndNode="608">
+</Annotation>
+<Annotation Id="124" Type="token" StartNode="609" EndNode="611">
+</Annotation>
+<Annotation Id="125" Type="token" StartNode="612" EndNode="615">
+</Annotation>
+<Annotation Id="126" Type="token" StartNode="615" EndNode="616">
+</Annotation>
+<Annotation Id="127" Type="token" StartNode="617" EndNode="618">
+</Annotation>
+<Annotation Id="128" Type="token" StartNode="619" EndNode="623">
+</Annotation>
+<Annotation Id="129" Type="token" StartNode="623" EndNode="624">
+</Annotation>
+<Annotation Id="130" Type="token" StartNode="626" EndNode="630">
+</Annotation>
+<Annotation Id="131" Type="token" StartNode="632" EndNode="633">
+</Annotation>
+<Annotation Id="132" Type="token" StartNode="633" EndNode="639">
+</Annotation>
+<Annotation Id="133" Type="token" StartNode="639" EndNode="640">
+</Annotation>
+<Annotation Id="134" Type="token" StartNode="641" EndNode="647">
+</Annotation>
+<Annotation Id="135" Type="token" StartNode="648" EndNode="652">
+</Annotation>
+<Annotation Id="136" Type="token" StartNode="653" EndNode="658">
+</Annotation>
+<Annotation Id="137" Type="token" StartNode="659" EndNode="660">
+</Annotation>
+<Annotation Id="138" Type="token" StartNode="662" EndNode="672">
+</Annotation>
+<Annotation Id="139" Type="token" StartNode="673" EndNode="674">
+</Annotation>
+<Annotation Id="140" Type="token" StartNode="675" EndNode="683">
+</Annotation>
+<Annotation Id="141" Type="token" StartNode="684" EndNode="686">
+</Annotation>
+<Annotation Id="142" Type="token" StartNode="687" EndNode="690">
+</Annotation>
+<Annotation Id="143" Type="token" StartNode="690" EndNode="691">
+</Annotation>
+<Annotation Id="144" Type="token" StartNode="692" EndNode="693">
+</Annotation>
+<Annotation Id="145" Type="token" StartNode="695" EndNode="699">
+</Annotation>
+<Annotation Id="146" Type="token" StartNode="699" EndNode="700">
+</Annotation>
+<Annotation Id="147" Type="token" StartNode="702" EndNode="706">
+</Annotation>
+<Annotation Id="148" Type="token" StartNode="708" EndNode="709">
+</Annotation>
+<Annotation Id="149" Type="token" StartNode="709" EndNode="716">
+</Annotation>
+<Annotation Id="150" Type="token" StartNode="716" EndNode="717">
+</Annotation>
+<Annotation Id="151" Type="token" StartNode="718" EndNode="724">
+</Annotation>
+<Annotation Id="152" Type="token" StartNode="725" EndNode="729">
+</Annotation>
+<Annotation Id="153" Type="token" StartNode="730" EndNode="735">
+</Annotation>
+<Annotation Id="154" Type="token" StartNode="736" EndNode="737">
+</Annotation>
+<Annotation Id="155" Type="token" StartNode="738" EndNode="748">
+</Annotation>
+<Annotation Id="156" Type="token" StartNode="749" EndNode="750">
+</Annotation>
+<Annotation Id="157" Type="token" StartNode="751" EndNode="759">
+</Annotation>
+<Annotation Id="158" Type="token" StartNode="760" EndNode="762">
+</Annotation>
+<Annotation Id="159" Type="token" StartNode="763" EndNode="766">
+</Annotation>
+<Annotation Id="160" Type="token" StartNode="766" EndNode="767">
+</Annotation>
+<Annotation Id="161" Type="token" StartNode="768" EndNode="769">
+</Annotation>
+<Annotation Id="162" Type="token" StartNode="770" EndNode="774">
+</Annotation>
+<Annotation Id="163" Type="token" StartNode="774" EndNode="775">
+</Annotation>
+<Annotation Id="164" Type="token" StartNode="777" EndNode="781">
+</Annotation>
+<Annotation Id="165" Type="token" StartNode="783" EndNode="792">
+</Annotation>
+<Annotation Id="166" Type="token" StartNode="792" EndNode="793">
+</Annotation>
+<Annotation Id="167" Type="token" StartNode="795" EndNode="799">
+</Annotation>
+<Annotation Id="168" Type="token" StartNode="800" EndNode="802">
+</Annotation>
+<Annotation Id="169" Type="token" StartNode="803" EndNode="809">
+</Annotation>
+<Annotation Id="170" Type="token" StartNode="810" EndNode="815">
+</Annotation>
+<Annotation Id="171" Type="token" StartNode="816" EndNode="821">
+</Annotation>
+<Annotation Id="172" Type="token" StartNode="822" EndNode="828">
+</Annotation>
+<Annotation Id="173" Type="token" StartNode="829" EndNode="835">
+</Annotation>
+<Annotation Id="174" Type="token" StartNode="836" EndNode="841">
+</Annotation>
+<Annotation Id="175" Type="token" StartNode="842" EndNode="851">
+</Annotation>
+<Annotation Id="176" Type="token" StartNode="852" EndNode="854">
+</Annotation>
+<Annotation Id="177" Type="token" StartNode="854" EndNode="855">
+</Annotation>
+<Annotation Id="178" Type="token" StartNode="855" EndNode="856">
+</Annotation>
+<Annotation Id="179" Type="token" StartNode="858" EndNode="869">
+</Annotation>
+<Annotation Id="180" Type="token" StartNode="869" EndNode="870">
+</Annotation>
+<Annotation Id="181" Type="token" StartNode="871" EndNode="876">
+</Annotation>
+<Annotation Id="182" Type="token" StartNode="877" EndNode="881">
+</Annotation>
+<Annotation Id="183" Type="token" StartNode="882" EndNode="893">
+</Annotation>
+<Annotation Id="184" Type="token" StartNode="894" EndNode="902">
+</Annotation>
+<Annotation Id="185" Type="token" StartNode="903" EndNode="907">
+</Annotation>
+<Annotation Id="186" Type="token" StartNode="908" EndNode="916">
+</Annotation>
+<Annotation Id="187" Type="token" StartNode="917" EndNode="919">
+</Annotation>
+<Annotation Id="188" Type="token" StartNode="920" EndNode="929">
+</Annotation>
+<Annotation Id="189" Type="token" StartNode="930" EndNode="933">
+</Annotation>
+<Annotation Id="190" Type="token" StartNode="934" EndNode="937">
+</Annotation>
+<Annotation Id="191" Type="token" StartNode="938" EndNode="942">
+</Annotation>
+<Annotation Id="192" Type="token" StartNode="943" EndNode="954">
+</Annotation>
+<Annotation Id="193" Type="token" StartNode="955" EndNode="963">
+</Annotation>
+<Annotation Id="194" Type="token" StartNode="964" EndNode="968">
+</Annotation>
+<Annotation Id="195" Type="token" StartNode="969" EndNode="978">
+</Annotation>
+<Annotation Id="196" Type="token" StartNode="979" EndNode="981">
+</Annotation>
+<Annotation Id="197" Type="token" StartNode="982" EndNode="991">
+</Annotation>
+<Annotation Id="198" Type="token" StartNode="992" EndNode="996">
+</Annotation>
+<Annotation Id="199" Type="token" StartNode="997" EndNode="1008">
+</Annotation>
+<Annotation Id="200" Type="token" StartNode="1009" EndNode="1010">
+</Annotation>
+<Annotation Id="201" Type="token" StartNode="1011" EndNode="1018">
+</Annotation>
+<Annotation Id="202" Type="token" StartNode="1019" EndNode="1023">
+</Annotation>
+<Annotation Id="203" Type="token" StartNode="1024" EndNode="1026">
+</Annotation>
+<Annotation Id="204" Type="token" StartNode="1027" EndNode="1035">
+</Annotation>
+<Annotation Id="205" Type="token" StartNode="1036" EndNode="1040">
+</Annotation>
+<Annotation Id="206" Type="token" StartNode="1041" EndNode="1050">
+</Annotation>
+<Annotation Id="207" Type="token" StartNode="1051" EndNode="1057">
+</Annotation>
+<Annotation Id="208" Type="token" StartNode="1059" EndNode="1067">
+</Annotation>
+<Annotation Id="209" Type="token" StartNode="1068" EndNode="1074">
+</Annotation>
+<Annotation Id="210" Type="token" StartNode="1075" EndNode="1080">
+</Annotation>
+<Annotation Id="211" Type="token" StartNode="1081" EndNode="1083">
+</Annotation>
+<Annotation Id="212" Type="token" StartNode="1084" EndNode="1090">
+</Annotation>
+<Annotation Id="213" Type="token" StartNode="1090" EndNode="1091">
+</Annotation>
+<Annotation Id="214" Type="token" StartNode="1092" EndNode="1098">
+</Annotation>
+<Annotation Id="215" Type="token" StartNode="1098" EndNode="1099">
+</Annotation>
+<Annotation Id="216" Type="token" StartNode="1100" EndNode="1107">
+</Annotation>
+<Annotation Id="217" Type="token" StartNode="1108" EndNode="1111">
+</Annotation>
+<Annotation Id="218" Type="token" StartNode="1115" EndNode="1124">
+</Annotation>
+<Annotation Id="219" Type="token" StartNode="1125" EndNode="1127">
+</Annotation>
+<Annotation Id="220" Type="token" StartNode="1131" EndNode="1140">
+</Annotation>
+<Annotation Id="221" Type="token" StartNode="1141" EndNode="1144">
+</Annotation>
+<Annotation Id="222" Type="token" StartNode="1148" EndNode="1156">
+</Annotation>
+<Annotation Id="223" Type="token" StartNode="1157" EndNode="1165">
+</Annotation>
+<Annotation Id="224" Type="token" StartNode="1166" EndNode="1168">
+</Annotation>
+<Annotation Id="225" Type="token" StartNode="1172" EndNode="1180">
+</Annotation>
+<Annotation Id="226" Type="token" StartNode="1181" EndNode="1189">
+</Annotation>
+<Annotation Id="227" Type="token" StartNode="1190" EndNode="1192">
+</Annotation>
+<Annotation Id="228" Type="token" StartNode="1193" EndNode="1198">
+</Annotation>
+<Annotation Id="229" Type="token" StartNode="1198" EndNode="1199">
+</Annotation>
+<Annotation Id="230" Type="token" StartNode="1203" EndNode="1210">
+</Annotation>
+<Annotation Id="231" Type="token" StartNode="1211" EndNode="1214">
+</Annotation>
+<Annotation Id="232" Type="token" StartNode="1218" EndNode="1227">
+</Annotation>
+<Annotation Id="233" Type="token" StartNode="1228" EndNode="1230">
+</Annotation>
+<Annotation Id="234" Type="token" StartNode="1234" EndNode="1243">
+</Annotation>
+<Annotation Id="235" Type="token" StartNode="1244" EndNode="1247">
+</Annotation>
+<Annotation Id="236" Type="token" StartNode="1251" EndNode="1259">
+</Annotation>
+<Annotation Id="237" Type="token" StartNode="1260" EndNode="1268">
+</Annotation>
+<Annotation Id="238" Type="token" StartNode="1269" EndNode="1271">
+</Annotation>
+<Annotation Id="239" Type="token" StartNode="1275" EndNode="1283">
+</Annotation>
+<Annotation Id="240" Type="token" StartNode="1284" EndNode="1292">
+</Annotation>
+<Annotation Id="241" Type="token" StartNode="1293" EndNode="1295">
+</Annotation>
+<Annotation Id="242" Type="token" StartNode="1297" EndNode="1305">
+</Annotation>
+<Annotation Id="243" Type="token" StartNode="1306" EndNode="1314">
+</Annotation>
+<Annotation Id="244" Type="token" StartNode="1314" EndNode="1315">
+</Annotation>
+<Annotation Id="245" Type="token" StartNode="1316" EndNode="1320">
+</Annotation>
+<Annotation Id="246" Type="token" StartNode="1321" EndNode="1323">
+</Annotation>
+<Annotation Id="247" Type="token" StartNode="1324" EndNode="1327">
+</Annotation>
+<Annotation Id="248" Type="token" StartNode="1328" EndNode="1334">
+</Annotation>
+<Annotation Id="249" Type="token" StartNode="1335" EndNode="1346">
+</Annotation>
+<Annotation Id="250" Type="token" StartNode="1348" EndNode="1357">
+</Annotation>
+<Annotation Id="251" Type="token" StartNode="1357" EndNode="1358">
+</Annotation>
+<Annotation Id="252" Type="token" StartNode="1359" EndNode="1364">
+</Annotation>
+<Annotation Id="253" Type="token" StartNode="1365" EndNode="1367">
+</Annotation>
+<Annotation Id="254" Type="token" StartNode="1368" EndNode="1377">
+</Annotation>
+<Annotation Id="255" Type="token" StartNode="1378" EndNode="1380">
+</Annotation>
+<Annotation Id="256" Type="token" StartNode="1381" EndNode="1385">
+</Annotation>
+<Annotation Id="257" Type="token" StartNode="1386" EndNode="1391">
+</Annotation>
+<Annotation Id="258" Type="token" StartNode="1392" EndNode="1398">
+</Annotation>
+<Annotation Id="259" Type="token" StartNode="1399" EndNode="1400">
+</Annotation>
+<Annotation Id="260" Type="token" StartNode="1401" EndNode="1408">
+</Annotation>
+<Annotation Id="261" Type="token" StartNode="1409" EndNode="1418">
+</Annotation>
+<Annotation Id="262" Type="token" StartNode="1419" EndNode="1425">
+</Annotation>
+<Annotation Id="263" Type="token" StartNode="1426" EndNode="1427">
+</Annotation>
+<Annotation Id="264" Type="token" StartNode="1428" EndNode="1435">
+</Annotation>
+<Annotation Id="265" Type="token" StartNode="1436" EndNode="1441">
+</Annotation>
+<Annotation Id="266" Type="token" StartNode="1442" EndNode="1444">
+</Annotation>
+<Annotation Id="267" Type="token" StartNode="1445" EndNode="1458">
+</Annotation>
+<Annotation Id="268" Type="token" StartNode="1460" EndNode="1469">
+</Annotation>
+<Annotation Id="269" Type="token" StartNode="1469" EndNode="1470">
+</Annotation>
+<Annotation Id="270" Type="token" StartNode="1471" EndNode="1478">
+</Annotation>
+<Annotation Id="271" Type="token" StartNode="1480" EndNode="1487">
+</Annotation>
+<Annotation Id="272" Type="token" StartNode="1488" EndNode="1496">
+</Annotation>
+<Annotation Id="273" Type="token" StartNode="1496" EndNode="1497">
+</Annotation>
+<Annotation Id="274" Type="token" StartNode="1498" EndNode="1506">
+</Annotation>
+<Annotation Id="275" Type="token" StartNode="1506" EndNode="1507">
+</Annotation>
+<Annotation Id="276" Type="token" StartNode="1508" EndNode="1516">
+</Annotation>
+<Annotation Id="277" Type="token" StartNode="1516" EndNode="1517">
+</Annotation>
+<Annotation Id="278" Type="token" StartNode="1518" EndNode="1519">
+</Annotation>
+<Annotation Id="279" Type="token" StartNode="1519" EndNode="1520">
+</Annotation>
+<Annotation Id="280" Type="token" StartNode="1520" EndNode="1521">
+</Annotation>
+<Annotation Id="281" Type="token" StartNode="1521" EndNode="1522">
+</Annotation>
+<Annotation Id="282" Type="token" StartNode="1527" EndNode="1528">
+</Annotation>
+<Annotation Id="283" Type="token" StartNode="1528" EndNode="1529">
+</Annotation>
+<Annotation Id="284" Type="token" StartNode="1529" EndNode="1536">
+</Annotation>
+<Annotation Id="285" Type="token" StartNode="1537" EndNode="1546">
+</Annotation>
+<Annotation Id="286" Type="token" StartNode="1548" EndNode="1549">
+</Annotation>
+<Annotation Id="287" Type="token" StartNode="1549" EndNode="1550">
+</Annotation>
+<Annotation Id="288" Type="token" StartNode="1550" EndNode="1558">
+</Annotation>
+<Annotation Id="289" Type="token" StartNode="1559" EndNode="1569">
+</Annotation>
+<Annotation Id="290" Type="token" StartNode="1570" EndNode="1572">
+</Annotation>
+<Annotation Id="291" Type="token" StartNode="1573" EndNode="1574">
+</Annotation>
+<Annotation Id="292" Type="token" StartNode="1575" EndNode="1581">
+</Annotation>
+<Annotation Id="293" Type="token" StartNode="1582" EndNode="1583">
+</Annotation>
+<Annotation Id="294" Type="token" StartNode="1583" EndNode="1587">
+</Annotation>
+<Annotation Id="295" Type="token" StartNode="1588" EndNode="1590">
+</Annotation>
+<Annotation Id="296" Type="token" StartNode="1591" EndNode="1598">
+</Annotation>
+<Annotation Id="297" Type="token" StartNode="1599" EndNode="1608">
+</Annotation>
+<Annotation Id="298" Type="token" StartNode="1608" EndNode="1609">
+</Annotation>
+<Annotation Id="299" Type="token" StartNode="1609" EndNode="1610">
+</Annotation>
+<Annotation Id="300" Type="token" StartNode="1612" EndNode="1613">
+</Annotation>
+<Annotation Id="301" Type="token" StartNode="1613" EndNode="1614">
+</Annotation>
+<Annotation Id="302" Type="token" StartNode="1614" EndNode="1622">
+</Annotation>
+<Annotation Id="303" Type="token" StartNode="1623" EndNode="1633">
+</Annotation>
+<Annotation Id="304" Type="token" StartNode="1633" EndNode="1634">
+</Annotation>
+<Annotation Id="305" Type="token" StartNode="1635" EndNode="1643">
+</Annotation>
+<Annotation Id="306" Type="token" StartNode="1644" EndNode="1646">
+</Annotation>
+<Annotation Id="307" Type="token" StartNode="1647" EndNode="1657">
+</Annotation>
+<Annotation Id="308" Type="token" StartNode="1658" EndNode="1661">
+</Annotation>
+<Annotation Id="309" Type="token" StartNode="1662" EndNode="1674">
+</Annotation>
+<Annotation Id="310" Type="token" StartNode="1674" EndNode="1675">
+</Annotation>
+<Annotation Id="311" Type="token" StartNode="1677" EndNode="1678">
+</Annotation>
+<Annotation Id="312" Type="token" StartNode="1678" EndNode="1679">
+</Annotation>
+<Annotation Id="313" Type="token" StartNode="1679" EndNode="1686">
+</Annotation>
+<Annotation Id="314" Type="token" StartNode="1687" EndNode="1698">
+</Annotation>
+<Annotation Id="315" Type="token" StartNode="1699" EndNode="1700">
+</Annotation>
+<Annotation Id="316" Type="token" StartNode="1700" EndNode="1707">
+</Annotation>
+<Annotation Id="317" Type="token" StartNode="1707" EndNode="1708">
+</Annotation>
+<Annotation Id="318" Type="token" StartNode="1708" EndNode="1716">
+</Annotation>
+<Annotation Id="319" Type="token" StartNode="1716" EndNode="1717">
+</Annotation>
+<Annotation Id="320" Type="token" StartNode="1717" EndNode="1718">
+</Annotation>
+<Annotation Id="321" Type="token" StartNode="1721" EndNode="1732">
+</Annotation>
+<Annotation Id="322" Type="token" StartNode="1732" EndNode="1733">
+</Annotation>
+<Annotation Id="323" Type="token" StartNode="1734" EndNode="1735">
+</Annotation>
+<Annotation Id="324" Type="token" StartNode="1736" EndNode="1746">
+</Annotation>
+<Annotation Id="325" Type="token" StartNode="1746" EndNode="1747">
+</Annotation>
+<Annotation Id="326" Type="token" StartNode="1748" EndNode="1749">
+</Annotation>
+<Annotation Id="327" Type="token" StartNode="1750" EndNode="1761">
+</Annotation>
+<Annotation Id="328" Type="token" StartNode="1761" EndNode="1762">
+</Annotation>
+<Annotation Id="329" Type="token" StartNode="1763" EndNode="1764">
+</Annotation>
+<Annotation Id="330" Type="token" StartNode="1765" EndNode="1771">
+</Annotation>
+<Annotation Id="331" Type="token" StartNode="1771" EndNode="1772">
+</Annotation>
+<Annotation Id="332" Type="token" StartNode="1773" EndNode="1777">
+</Annotation>
+<Annotation Id="333" Type="token" StartNode="1779" EndNode="1788">
+</Annotation>
+<Annotation Id="334" Type="token" StartNode="1789" EndNode="1797">
+</Annotation>
+<Annotation Id="335" Type="token" StartNode="1797" EndNode="1798">
+</Annotation>
+<Annotation Id="336" Type="token" StartNode="1799" EndNode="1808">
+</Annotation>
+<Annotation Id="337" Type="token" StartNode="1809" EndNode="1817">
+</Annotation>
+<Annotation Id="338" Type="token" StartNode="1818" EndNode="1821">
+</Annotation>
+<Annotation Id="339" Type="token" StartNode="1822" EndNode="1827">
+</Annotation>
+<Annotation Id="340" Type="token" StartNode="1828" EndNode="1835">
+</Annotation>
+<Annotation Id="341" Type="token" StartNode="1836" EndNode="1845">
+</Annotation>
+<Annotation Id="342" Type="token" StartNode="1846" EndNode="1855">
+</Annotation>
+<Annotation Id="343" Type="token" StartNode="1855" EndNode="1856">
+</Annotation>
+<Annotation Id="344" Type="token" StartNode="1857" EndNode="1863">
+</Annotation>
+<Annotation Id="345" Type="token" StartNode="1864" EndNode="1870">
+</Annotation>
+<Annotation Id="346" Type="token" StartNode="1871" EndNode="1875">
+</Annotation>
+<Annotation Id="347" Type="token" StartNode="1875" EndNode="1876">
+</Annotation>
+<Annotation Id="348" Type="token" StartNode="1877" EndNode="1883">
+</Annotation>
+<Annotation Id="349" Type="token" StartNode="1884" EndNode="1890">
+</Annotation>
+<Annotation Id="350" Type="token" StartNode="1891" EndNode="1900">
+</Annotation>
+<Annotation Id="351" Type="token" StartNode="1900" EndNode="1901">
+</Annotation>
+<Annotation Id="352" Type="token" StartNode="1902" EndNode="1908">
+</Annotation>
+<Annotation Id="353" Type="token" StartNode="1909" EndNode="1917">
+</Annotation>
+<Annotation Id="354" Type="token" StartNode="1917" EndNode="1918">
+</Annotation>
+<Annotation Id="355" Type="token" StartNode="1919" EndNode="1923">
+</Annotation>
+<Annotation Id="356" Type="token" StartNode="1924" EndNode="1927">
+</Annotation>
+<Annotation Id="357" Type="token" StartNode="1928" EndNode="1933">
+</Annotation>
+<Annotation Id="358" Type="token" StartNode="1933" EndNode="1934">
+</Annotation>
+<Annotation Id="359" Type="token" StartNode="1935" EndNode="1943">
+</Annotation>
+<Annotation Id="360" Type="token" StartNode="1944" EndNode="1948">
+</Annotation>
+<Annotation Id="361" Type="token" StartNode="1949" EndNode="1955">
+</Annotation>
+<Annotation Id="362" Type="token" StartNode="1955" EndNode="1956">
+</Annotation>
+<Annotation Id="363" Type="token" StartNode="1957" EndNode="1962">
+</Annotation>
+<Annotation Id="364" Type="token" StartNode="1963" EndNode="1972">
+</Annotation>
+<Annotation Id="365" Type="token" StartNode="1973" EndNode="1983">
+</Annotation>
+<Annotation Id="366" Type="token" StartNode="1984" EndNode="1985">
+</Annotation>
+<Annotation Id="367" Type="token" StartNode="1985" EndNode="1992">
+</Annotation>
+<Annotation Id="368" Type="token" StartNode="1993" EndNode="2003">
+</Annotation>
+<Annotation Id="369" Type="token" StartNode="2004" EndNode="2006">
+</Annotation>
+<Annotation Id="370" Type="token" StartNode="2007" EndNode="2010">
+</Annotation>
+<Annotation Id="371" Type="token" StartNode="2011" EndNode="2013">
+</Annotation>
+<Annotation Id="372" Type="token" StartNode="2014" EndNode="2021">
+</Annotation>
+<Annotation Id="373" Type="token" StartNode="2022" EndNode="2025">
+</Annotation>
+<Annotation Id="374" Type="token" StartNode="2026" EndNode="2030">
+</Annotation>
+<Annotation Id="375" Type="token" StartNode="2031" EndNode="2039">
+</Annotation>
+<Annotation Id="376" Type="token" StartNode="2040" EndNode="2047">
+</Annotation>
+<Annotation Id="377" Type="token" StartNode="2049" EndNode="2055">
+</Annotation>
+<Annotation Id="378" Type="token" StartNode="2056" EndNode="2060">
+</Annotation>
+<Annotation Id="379" Type="token" StartNode="2061" EndNode="2064">
+</Annotation>
+<Annotation Id="380" Type="token" StartNode="2065" EndNode="2068">
+</Annotation>
+<Annotation Id="381" Type="token" StartNode="2068" EndNode="2069">
+</Annotation>
+<Annotation Id="382" Type="token" StartNode="2070" EndNode="2075">
+</Annotation>
+<Annotation Id="383" Type="token" StartNode="2076" EndNode="2086">
+</Annotation>
+<Annotation Id="384" Type="token" StartNode="2086" EndNode="2087">
+</Annotation>
+<Annotation Id="385" Type="token" StartNode="2088" EndNode="2096">
+</Annotation>
+<Annotation Id="386" Type="token" StartNode="2097" EndNode="2102">
+</Annotation>
+<Annotation Id="387" Type="token" StartNode="2103" EndNode="2105">
+</Annotation>
+<Annotation Id="388" Type="token" StartNode="2106" EndNode="2112">
+</Annotation>
+<Annotation Id="389" Type="token" StartNode="2112" EndNode="2113">
+</Annotation>
+<Annotation Id="390" Type="token" StartNode="2114" EndNode="2122">
+</Annotation>
+<Annotation Id="391" Type="token" StartNode="2123" EndNode="2133">
+</Annotation>
+<Annotation Id="392" Type="token" StartNode="2133" EndNode="2134">
+</Annotation>
+<Annotation Id="393" Type="token" StartNode="2135" EndNode="2138">
+</Annotation>
+<Annotation Id="394" Type="token" StartNode="2139" EndNode="2147">
+</Annotation>
+<Annotation Id="395" Type="token" StartNode="2148" EndNode="2154">
+</Annotation>
+<Annotation Id="396" Type="token" StartNode="2155" EndNode="2160">
+</Annotation>
+<Annotation Id="397" Type="token" StartNode="2161" EndNode="2163">
+</Annotation>
+<Annotation Id="398" Type="token" StartNode="2164" EndNode="2168">
+</Annotation>
+<Annotation Id="399" Type="token" StartNode="2169" EndNode="2177">
+</Annotation>
+<Annotation Id="400" Type="token" StartNode="2178" EndNode="2185">
+</Annotation>
+<Annotation Id="401" Type="token" StartNode="2188" EndNode="2195">
+</Annotation>
+<Annotation Id="402" Type="token" StartNode="2195" EndNode="2196">
+</Annotation>
+<Annotation Id="403" Type="token" StartNode="2196" EndNode="2205">
+</Annotation>
+<Annotation Id="404" Type="token" StartNode="2206" EndNode="2218">
+</Annotation>
+<Annotation Id="405" Type="token" StartNode="2219" EndNode="2232">
+</Annotation>
+<Annotation Id="406" Type="token" StartNode="2233" EndNode="2235">
+</Annotation>
+<Annotation Id="407" Type="token" StartNode="2236" EndNode="2239">
+</Annotation>
+<Annotation Id="408" Type="token" StartNode="2240" EndNode="2249">
+</Annotation>
+<Annotation Id="409" Type="token" StartNode="2249" EndNode="2250">
+</Annotation>
+<Annotation Id="410" Type="token" StartNode="2251" EndNode="2254">
+</Annotation>
+<Annotation Id="411" Type="token" StartNode="2256" EndNode="2266">
+</Annotation>
+<Annotation Id="412" Type="token" StartNode="2266" EndNode="2267">
+</Annotation>
+<Annotation Id="413" Type="token" StartNode="2268" EndNode="2275">
+</Annotation>
+<Annotation Id="414" Type="token" StartNode="2276" EndNode="2284">
+</Annotation>
+<Annotation Id="415" Type="token" StartNode="2285" EndNode="2289">
+</Annotation>
+<Annotation Id="416" Type="token" StartNode="2290" EndNode="2295">
+</Annotation>
+<Annotation Id="417" Type="token" StartNode="2296" EndNode="2301">
+</Annotation>
+<Annotation Id="418" Type="token" StartNode="2302" EndNode="2306">
+</Annotation>
+<Annotation Id="419" Type="token" StartNode="2307" EndNode="2314">
+</Annotation>
+<Annotation Id="420" Type="token" StartNode="2315" EndNode="2317">
+</Annotation>
+<Annotation Id="421" Type="token" StartNode="2318" EndNode="2321">
+</Annotation>
+<Annotation Id="422" Type="token" StartNode="2322" EndNode="2324">
+</Annotation>
+<Annotation Id="423" Type="token" StartNode="2324" EndNode="2325">
+</Annotation>
+<Annotation Id="424" Type="token" StartNode="2327" EndNode="2334">
+</Annotation>
+<Annotation Id="425" Type="token" StartNode="2335" EndNode="2340">
+</Annotation>
+<Annotation Id="426" Type="token" StartNode="2341" EndNode="2348">
+</Annotation>
+<Annotation Id="427" Type="token" StartNode="2349" EndNode="2353">
+</Annotation>
+<Annotation Id="428" Type="token" StartNode="2354" EndNode="2362">
+</Annotation>
+<Annotation Id="429" Type="token" StartNode="2363" EndNode="2370">
+</Annotation>
+<Annotation Id="430" Type="token" StartNode="2371" EndNode="2374">
+</Annotation>
+<Annotation Id="431" Type="token" StartNode="2375" EndNode="2380">
+</Annotation>
+<Annotation Id="432" Type="token" StartNode="2381" EndNode="2386">
+</Annotation>
+<Annotation Id="433" Type="token" StartNode="2387" EndNode="2389">
+</Annotation>
+<Annotation Id="434" Type="token" StartNode="2390" EndNode="2396">
+</Annotation>
+<Annotation Id="435" Type="token" StartNode="2396" EndNode="2397">
+</Annotation>
+<Annotation Id="436" Type="token" StartNode="2398" EndNode="2406">
+</Annotation>
+<Annotation Id="437" Type="token" StartNode="2407" EndNode="2413">
+</Annotation>
+<Annotation Id="438" Type="token" StartNode="2413" EndNode="2414">
+</Annotation>
+<Annotation Id="439" Type="token" StartNode="2415" EndNode="2418">
+</Annotation>
+<Annotation Id="440" Type="token" StartNode="2419" EndNode="2429">
+</Annotation>
+<Annotation Id="441" Type="token" StartNode="2430" EndNode="2432">
+</Annotation>
+<Annotation Id="442" Type="token" StartNode="2433" EndNode="2436">
+</Annotation>
+<Annotation Id="443" Type="token" StartNode="2436" EndNode="2437">
+</Annotation>
+<Annotation Id="444" Type="token" StartNode="2438" EndNode="2443">
+</Annotation>
+<Annotation Id="445" Type="token" StartNode="2444" EndNode="2447">
+</Annotation>
+<Annotation Id="446" Type="token" StartNode="2448" EndNode="2455">
+</Annotation>
+<Annotation Id="447" Type="token" StartNode="2456" EndNode="2464">
+</Annotation>
+<Annotation Id="448" Type="token" StartNode="2464" EndNode="2465">
+</Annotation>
+<Annotation Id="449" Type="token" StartNode="2466" EndNode="2473">
+</Annotation>
+<Annotation Id="450" Type="token" StartNode="2474" EndNode="2476">
+</Annotation>
+<Annotation Id="451" Type="token" StartNode="2477" EndNode="2483">
+</Annotation>
+<Annotation Id="452" Type="token" StartNode="2484" EndNode="2486">
+</Annotation>
+<Annotation Id="453" Type="token" StartNode="2487" EndNode="2495">
+</Annotation>
+<Annotation Id="454" Type="token" StartNode="2496" EndNode="2499">
+</Annotation>
+<Annotation Id="455" Type="token" StartNode="2499" EndNode="2500">
+</Annotation>
+<Annotation Id="456" Type="token" StartNode="2502" EndNode="2509">
+</Annotation>
+<Annotation Id="457" Type="token" StartNode="2510" EndNode="2516">
+</Annotation>
+<Annotation Id="458" Type="token" StartNode="2517" EndNode="2525">
+</Annotation>
+<Annotation Id="459" Type="token" StartNode="2526" EndNode="2529">
+</Annotation>
+<Annotation Id="460" Type="token" StartNode="2530" EndNode="2534">
+</Annotation>
+<Annotation Id="461" Type="token" StartNode="2535" EndNode="2543">
+</Annotation>
+<Annotation Id="462" Type="token" StartNode="2544" EndNode="2551">
+</Annotation>
+<Annotation Id="463" Type="token" StartNode="2552" EndNode="2556">
+</Annotation>
+<Annotation Id="464" Type="token" StartNode="2557" EndNode="2567">
+</Annotation>
+<Annotation Id="465" Type="token" StartNode="2568" EndNode="2572">
+</Annotation>
+<Annotation Id="466" Type="token" StartNode="2573" EndNode="2576">
+</Annotation>
+<Annotation Id="467" Type="token" StartNode="2577" EndNode="2581">
+</Annotation>
+<Annotation Id="468" Type="token" StartNode="2582" EndNode="2589">
+</Annotation>
+<Annotation Id="469" Type="token" StartNode="2590" EndNode="2593">
+</Annotation>
+<Annotation Id="470" Type="token" StartNode="2594" EndNode="2596">
+</Annotation>
+<Annotation Id="471" Type="token" StartNode="2597" EndNode="2599">
+</Annotation>
+<Annotation Id="472" Type="token" StartNode="2600" EndNode="2604">
+</Annotation>
+<Annotation Id="473" Type="token" StartNode="2605" EndNode="2608">
+</Annotation>
+<Annotation Id="474" Type="token" StartNode="2609" EndNode="2613">
+</Annotation>
+<Annotation Id="475" Type="token" StartNode="2614" EndNode="2618">
+</Annotation>
+<Annotation Id="476" Type="token" StartNode="2619" EndNode="2630">
+</Annotation>
+<Annotation Id="477" Type="token" StartNode="2631" EndNode="2633">
+</Annotation>
+<Annotation Id="478" Type="token" StartNode="2634" EndNode="2637">
+</Annotation>
+<Annotation Id="479" Type="token" StartNode="2638" EndNode="2642">
+</Annotation>
+<Annotation Id="480" Type="token" StartNode="2643" EndNode="2648">
+</Annotation>
+<Annotation Id="481" Type="token" StartNode="2648" EndNode="2649">
+</Annotation>
+<Annotation Id="482" Type="token" StartNode="2650" EndNode="2652">
+</Annotation>
+<Annotation Id="483" Type="token" StartNode="2653" EndNode="2659">
+</Annotation>
+<Annotation Id="484" Type="token" StartNode="2660" EndNode="2663">
+</Annotation>
+<Annotation Id="485" Type="token" StartNode="2664" EndNode="2667">
+</Annotation>
+<Annotation Id="486" Type="token" StartNode="2668" EndNode="2673">
+</Annotation>
+<Annotation Id="487" Type="token" StartNode="2674" EndNode="2677">
+</Annotation>
+<Annotation Id="488" Type="token" StartNode="2678" EndNode="2680">
+</Annotation>
+<Annotation Id="489" Type="token" StartNode="2681" EndNode="2686">
+</Annotation>
+<Annotation Id="490" Type="token" StartNode="2688" EndNode="2691">
+</Annotation>
+<Annotation Id="491" Type="token" StartNode="2692" EndNode="2694">
+</Annotation>
+<Annotation Id="492" Type="token" StartNode="2695" EndNode="2700">
+</Annotation>
+<Annotation Id="493" Type="token" StartNode="2701" EndNode="2709">
+</Annotation>
+<Annotation Id="494" Type="token" StartNode="2710" EndNode="2717">
+</Annotation>
+<Annotation Id="495" Type="token" StartNode="2718" EndNode="2726">
+</Annotation>
+<Annotation Id="496" Type="token" StartNode="2726" EndNode="2727">
+</Annotation>
+<Annotation Id="497" Type="token" StartNode="2729" EndNode="2733">
+</Annotation>
+<Annotation Id="498" Type="token" StartNode="2734" EndNode="2737">
+</Annotation>
+<Annotation Id="499" Type="token" StartNode="2738" EndNode="2746">
+</Annotation>
+<Annotation Id="500" Type="token" StartNode="2747" EndNode="2754">
+</Annotation>
+<Annotation Id="501" Type="token" StartNode="2755" EndNode="2763">
+</Annotation>
+<Annotation Id="502" Type="token" StartNode="2763" EndNode="2764">
+</Annotation>
+<Annotation Id="503" Type="token" StartNode="2765" EndNode="2768">
+</Annotation>
+<Annotation Id="504" Type="token" StartNode="2768" EndNode="2769">
+</Annotation>
+<Annotation Id="505" Type="token" StartNode="2770" EndNode="2771">
+</Annotation>
+<Annotation Id="506" Type="token" StartNode="2772" EndNode="2776">
+</Annotation>
+<Annotation Id="507" Type="token" StartNode="2777" EndNode="2783">
+</Annotation>
+<Annotation Id="508" Type="token" StartNode="2785" EndNode="2794">
+</Annotation>
+<Annotation Id="509" Type="token" StartNode="2795" EndNode="2799">
+</Annotation>
+<Annotation Id="510" Type="token" StartNode="2800" EndNode="2808">
+</Annotation>
+<Annotation Id="511" Type="token" StartNode="2809" EndNode="2816">
+</Annotation>
+<Annotation Id="512" Type="token" StartNode="2816" EndNode="2817">
+</Annotation>
+<Annotation Id="513" Type="token" StartNode="2818" EndNode="2822">
+</Annotation>
+<Annotation Id="514" Type="token" StartNode="2823" EndNode="2825">
+</Annotation>
+<Annotation Id="515" Type="token" StartNode="2826" EndNode="2830">
+</Annotation>
+<Annotation Id="516" Type="token" StartNode="2832" EndNode="2836">
+</Annotation>
+<Annotation Id="517" Type="token" StartNode="2837" EndNode="2840">
+</Annotation>
+<Annotation Id="518" Type="token" StartNode="2841" EndNode="2846">
+</Annotation>
+<Annotation Id="519" Type="token" StartNode="2847" EndNode="2861">
+</Annotation>
+<Annotation Id="520" Type="token" StartNode="2862" EndNode="2870">
+</Annotation>
+<Annotation Id="521" Type="token" StartNode="2871" EndNode="2881">
+</Annotation>
+<Annotation Id="522" Type="token" StartNode="2882" EndNode="2890">
+</Annotation>
+<Annotation Id="523" Type="token" StartNode="2890" EndNode="2891">
+</Annotation>
+<Annotation Id="524" Type="token" StartNode="2892" EndNode="2895">
+</Annotation>
+<Annotation Id="525" Type="token" StartNode="2896" EndNode="2897">
+</Annotation>
+<Annotation Id="526" Type="token" StartNode="2899" EndNode="2903">
+</Annotation>
+<Annotation Id="527" Type="token" StartNode="2904" EndNode="2907">
+</Annotation>
+<Annotation Id="528" Type="token" StartNode="2908" EndNode="2922">
+</Annotation>
+<Annotation Id="529" Type="token" StartNode="2923" EndNode="2931">
+</Annotation>
+<Annotation Id="530" Type="token" StartNode="2932" EndNode="2936">
+</Annotation>
+<Annotation Id="531" Type="token" StartNode="2937" EndNode="2946">
+</Annotation>
+<Annotation Id="532" Type="token" StartNode="2946" EndNode="2947">
+</Annotation>
+<Annotation Id="533" Type="token" StartNode="2948" EndNode="2951">
+</Annotation>
+<Annotation Id="534" Type="token" StartNode="2952" EndNode="2953">
+</Annotation>
+<Annotation Id="535" Type="token" StartNode="2955" EndNode="2959">
+</Annotation>
+<Annotation Id="536" Type="token" StartNode="2959" EndNode="2960">
+</Annotation>
+<Annotation Id="537" Type="token" StartNode="2961" EndNode="2967">
+</Annotation>
+<Annotation Id="538" Type="token" StartNode="2968" EndNode="2970">
+</Annotation>
+<Annotation Id="539" Type="token" StartNode="2971" EndNode="2978">
+</Annotation>
+<Annotation Id="540" Type="token" StartNode="2979" EndNode="2982">
+</Annotation>
+<Annotation Id="541" Type="token" StartNode="2983" EndNode="2985">
+</Annotation>
+<Annotation Id="542" Type="token" StartNode="2986" EndNode="2994">
+</Annotation>
+<Annotation Id="543" Type="token" StartNode="2995" EndNode="3003">
+</Annotation>
+<Annotation Id="544" Type="token" StartNode="3004" EndNode="3007">
+</Annotation>
+<Annotation Id="545" Type="token" StartNode="3008" EndNode="3016">
+</Annotation>
+<Annotation Id="546" Type="token" StartNode="3017" EndNode="3021">
+</Annotation>
+<Annotation Id="547" Type="token" StartNode="3022" EndNode="3028">
+</Annotation>
+<Annotation Id="548" Type="token" StartNode="3028" EndNode="3029">
+</Annotation>
+<Annotation Id="549" Type="token" StartNode="3031" EndNode="3038">
+</Annotation>
+<Annotation Id="550" Type="token" StartNode="3039" EndNode="3041">
+</Annotation>
+<Annotation Id="551" Type="token" StartNode="3042" EndNode="3049">
+</Annotation>
+<Annotation Id="552" Type="token" StartNode="3050" EndNode="3053">
+</Annotation>
+<Annotation Id="553" Type="token" StartNode="3054" EndNode="3059">
+</Annotation>
+<Annotation Id="554" Type="token" StartNode="3060" EndNode="3064">
+</Annotation>
+<Annotation Id="555" Type="token" StartNode="3065" EndNode="3073">
+</Annotation>
+<Annotation Id="556" Type="token" StartNode="3074" EndNode="3081">
+</Annotation>
+<Annotation Id="557" Type="token" StartNode="3082" EndNode="3087">
+</Annotation>
+<Annotation Id="558" Type="token" StartNode="3087" EndNode="3088">
+</Annotation>
+<Annotation Id="559" Type="token" StartNode="3090" EndNode="3097">
+</Annotation>
+<Annotation Id="560" Type="token" StartNode="3098" EndNode="3106">
+</Annotation>
+<Annotation Id="561" Type="token" StartNode="3107" EndNode="3115">
+</Annotation>
+<Annotation Id="562" Type="token" StartNode="3116" EndNode="3118">
+</Annotation>
+<Annotation Id="563" Type="token" StartNode="3119" EndNode="3122">
+</Annotation>
+<Annotation Id="564" Type="token" StartNode="3123" EndNode="3127">
+</Annotation>
+<Annotation Id="565" Type="token" StartNode="3128" EndNode="3133">
+</Annotation>
+<Annotation Id="566" Type="token" StartNode="3133" EndNode="3134">
+</Annotation>
+<Annotation Id="567" Type="token" StartNode="3136" EndNode="3138">
+</Annotation>
+<Annotation Id="568" Type="token" StartNode="3139" EndNode="3150">
+</Annotation>
+<Annotation Id="569" Type="token" StartNode="3151" EndNode="3153">
+</Annotation>
+<Annotation Id="570" Type="token" StartNode="3154" EndNode="3158">
+</Annotation>
+<Annotation Id="571" Type="token" StartNode="3159" EndNode="3163">
+</Annotation>
+<Annotation Id="572" Type="token" StartNode="3164" EndNode="3168">
+</Annotation>
+<Annotation Id="573" Type="token" StartNode="3169" EndNode="3177">
+</Annotation>
+<Annotation Id="574" Type="token" StartNode="3178" EndNode="3185">
+</Annotation>
+<Annotation Id="575" Type="token" StartNode="3186" EndNode="3192">
+</Annotation>
+<Annotation Id="576" Type="token" StartNode="3193" EndNode="3195">
+</Annotation>
+<Annotation Id="577" Type="token" StartNode="3196" EndNode="3204">
+</Annotation>
+<Annotation Id="578" Type="token" StartNode="3204" EndNode="3205">
+</Annotation>
+<Annotation Id="579" Type="token" StartNode="3207" EndNode="3214">
+</Annotation>
+<Annotation Id="580" Type="token" StartNode="3215" EndNode="3217">
+</Annotation>
+<Annotation Id="581" Type="token" StartNode="3218" EndNode="3222">
+</Annotation>
+<Annotation Id="582" Type="token" StartNode="3223" EndNode="3233">
+</Annotation>
+<Annotation Id="583" Type="token" StartNode="3234" EndNode="3241">
+</Annotation>
+<Annotation Id="584" Type="token" StartNode="3242" EndNode="3244">
+</Annotation>
+<Annotation Id="585" Type="token" StartNode="3245" EndNode="3249">
+</Annotation>
+<Annotation Id="586" Type="token" StartNode="3250" EndNode="3255">
+</Annotation>
+<Annotation Id="587" Type="token" StartNode="3255" EndNode="3256">
+</Annotation>
+<Annotation Id="588" Type="token" StartNode="3258" EndNode="3263">
+</Annotation>
+<Annotation Id="589" Type="token" StartNode="3263" EndNode="3264">
+</Annotation>
+<Annotation Id="590" Type="token" StartNode="3265" EndNode="3266">
+</Annotation>
+<Annotation Id="591" Type="token" StartNode="3266" EndNode="3273">
+</Annotation>
+<Annotation Id="592" Type="token" StartNode="3273" EndNode="3274">
+</Annotation>
+<Annotation Id="593" Type="token" StartNode="3275" EndNode="3281">
+</Annotation>
+<Annotation Id="594" Type="token" StartNode="3282" EndNode="3286">
+</Annotation>
+<Annotation Id="595" Type="token" StartNode="3287" EndNode="3292">
+</Annotation>
+<Annotation Id="596" Type="token" StartNode="3293" EndNode="3294">
+</Annotation>
+<Annotation Id="597" Type="token" StartNode="3295" EndNode="3305">
+</Annotation>
+<Annotation Id="598" Type="token" StartNode="3306" EndNode="3307">
+</Annotation>
+<Annotation Id="599" Type="token" StartNode="3308" EndNode="3316">
+</Annotation>
+<Annotation Id="600" Type="token" StartNode="3317" EndNode="3319">
+</Annotation>
+<Annotation Id="601" Type="token" StartNode="3320" EndNode="3323">
+</Annotation>
+<Annotation Id="602" Type="token" StartNode="3323" EndNode="3324">
+</Annotation>
+<Annotation Id="603" Type="token" StartNode="3325" EndNode="3326">
+</Annotation>
+<Annotation Id="604" Type="token" StartNode="3328" EndNode="3332">
+</Annotation>
+<Annotation Id="605" Type="token" StartNode="3332" EndNode="3333">
+</Annotation>
+<Annotation Id="606" Type="token" StartNode="3335" EndNode="3339">
+</Annotation>
+<Annotation Id="607" Type="token" StartNode="3341" EndNode="3348">
+</Annotation>
+<Annotation Id="608" Type="token" StartNode="3348" EndNode="3349">
+</Annotation>
+<Annotation Id="609" Type="token" StartNode="3349" EndNode="3358">
+</Annotation>
+<Annotation Id="610" Type="token" StartNode="3359" EndNode="3371">
+</Annotation>
+<Annotation Id="611" Type="token" StartNode="3372" EndNode="3374">
+</Annotation>
+<Annotation Id="612" Type="token" StartNode="3375" EndNode="3378">
+</Annotation>
+<Annotation Id="613" Type="token" StartNode="3379" EndNode="3385">
+</Annotation>
+<Annotation Id="614" Type="token" StartNode="3386" EndNode="3388">
+</Annotation>
+<Annotation Id="615" Type="token" StartNode="3389" EndNode="3392">
+</Annotation>
+<Annotation Id="616" Type="token" StartNode="3393" EndNode="3404">
+</Annotation>
+<Annotation Id="617" Type="token" StartNode="3405" EndNode="3407">
+</Annotation>
+<Annotation Id="618" Type="token" StartNode="3408" EndNode="3411">
+</Annotation>
+<Annotation Id="619" Type="token" StartNode="3412" EndNode="3416">
+</Annotation>
+<Annotation Id="620" Type="token" StartNode="3417" EndNode="3419">
+</Annotation>
+<Annotation Id="621" Type="token" StartNode="3420" EndNode="3424">
+</Annotation>
+<Annotation Id="622" Type="token" StartNode="3425" EndNode="3428">
+</Annotation>
+<Annotation Id="623" Type="token" StartNode="3429" EndNode="3438">
+</Annotation>
+<Annotation Id="624" Type="token" StartNode="3439" EndNode="3444">
+</Annotation>
+<Annotation Id="625" Type="token" StartNode="3444" EndNode="3445">
+</Annotation>
+<Annotation Id="626" Type="token" StartNode="3447" EndNode="3454">
+</Annotation>
+<Annotation Id="627" Type="token" StartNode="3454" EndNode="3455">
+</Annotation>
+<Annotation Id="628" Type="token" StartNode="3455" EndNode="3464">
+</Annotation>
+<Annotation Id="629" Type="token" StartNode="3465" EndNode="3467">
+</Annotation>
+<Annotation Id="630" Type="token" StartNode="3468" EndNode="3475">
+</Annotation>
+<Annotation Id="631" Type="token" StartNode="3476" EndNode="3484">
+</Annotation>
+<Annotation Id="632" Type="token" StartNode="3485" EndNode="3494">
+</Annotation>
+<Annotation Id="633" Type="token" StartNode="3495" EndNode="3499">
+</Annotation>
+<Annotation Id="634" Type="token" StartNode="3500" EndNode="3503">
+</Annotation>
+<Annotation Id="635" Type="token" StartNode="3504" EndNode="3513">
+</Annotation>
+<Annotation Id="636" Type="token" StartNode="3514" EndNode="3516">
+</Annotation>
+<Annotation Id="637" Type="token" StartNode="3517" EndNode="3525">
+</Annotation>
+<Annotation Id="638" Type="token" StartNode="3526" EndNode="3535">
+</Annotation>
+<Annotation Id="639" Type="token" StartNode="3536" EndNode="3544">
+</Annotation>
+<Annotation Id="640" Type="token" StartNode="3545" EndNode="3552">
+</Annotation>
+<Annotation Id="641" Type="token" StartNode="3553" EndNode="3563">
+</Annotation>
+<Annotation Id="642" Type="token" StartNode="3564" EndNode="3567">
+</Annotation>
+<Annotation Id="643" Type="token" StartNode="3568" EndNode="3577">
+</Annotation>
+<Annotation Id="644" Type="token" StartNode="3577" EndNode="3578">
+</Annotation>
+<Annotation Id="645" Type="token" StartNode="3581" EndNode="3591">
+</Annotation>
+<Annotation Id="646" Type="token" StartNode="3592" EndNode="3602">
+</Annotation>
+<Annotation Id="647" Type="token" StartNode="3602" EndNode="3603">
+</Annotation>
+<Annotation Id="648" Type="token" StartNode="3604" EndNode="3611">
+</Annotation>
+<Annotation Id="649" Type="token" StartNode="3611" EndNode="3612">
+</Annotation>
+<Annotation Id="650" Type="token" StartNode="3613" EndNode="3618">
+</Annotation>
+<Annotation Id="651" Type="token" StartNode="3619" EndNode="3620">
+</Annotation>
+<Annotation Id="652" Type="token" StartNode="3620" EndNode="3622">
+</Annotation>
+<Annotation Id="653" Type="token" StartNode="3622" EndNode="3623">
+</Annotation>
+<Annotation Id="654" Type="token" StartNode="3625" EndNode="3626">
+</Annotation>
+<Annotation Id="655" Type="token" StartNode="3626" EndNode="3632">
+</Annotation>
+<Annotation Id="656" Type="token" StartNode="3633" EndNode="3635">
+</Annotation>
+<Annotation Id="657" Type="token" StartNode="3636" EndNode="3646">
+</Annotation>
+<Annotation Id="658" Type="token" StartNode="3647" EndNode="3652">
+</Annotation>
+<Annotation Id="659" Type="token" StartNode="3652" EndNode="3653">
+</Annotation>
+<Annotation Id="660" Type="token" StartNode="3658" EndNode="3666">
+</Annotation>
+<Annotation Id="661" Type="token" StartNode="3668" EndNode="3672">
+</Annotation>
+<Annotation Id="662" Type="token" StartNode="3673" EndNode="3680">
+</Annotation>
+<Annotation Id="663" Type="token" StartNode="3680" EndNode="3681">
+</Annotation>
+<Annotation Id="664" Type="token" StartNode="3682" EndNode="3692">
+</Annotation>
+<Annotation Id="665" Type="token" StartNode="3693" EndNode="3698">
+</Annotation>
+<Annotation Id="666" Type="token" StartNode="3699" EndNode="3701">
+</Annotation>
+<Annotation Id="667" Type="token" StartNode="3702" EndNode="3709">
+</Annotation>
+<Annotation Id="668" Type="token" StartNode="3709" EndNode="3710">
+</Annotation>
+<Annotation Id="669" Type="token" StartNode="3711" EndNode="3716">
+</Annotation>
+<Annotation Id="670" Type="token" StartNode="3717" EndNode="3718">
+</Annotation>
+<Annotation Id="671" Type="token" StartNode="3718" EndNode="3720">
+</Annotation>
+<Annotation Id="672" Type="token" StartNode="3720" EndNode="3721">
+</Annotation>
+</AnnotationSet>
+
+</GateDocument>
