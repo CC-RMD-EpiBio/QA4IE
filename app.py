@@ -73,7 +73,7 @@ def run_app():
     annotation_types = ['all_types'] + settings.schema.get_entity_names()
 
 
-
+    highlight_color = 'green'
 
     file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
     set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
@@ -88,7 +88,7 @@ def run_app():
                                       menu_system.MenuAction(annotator_pair_options.title, 
                                                              annotator_pair_options.return_options)],
                              slots = ['File', 'Annotator Pair'],
-                             selection_settings=menu_system.MenuSettings(color='green'))
+                             selection_settings=menu_system.MenuSettings(color=highlight_color))
 
     error_checks_menu = menu_system.Menu(title='Error Checks Menu', 
                       options=[menu_system.MenuAction('Text Differences', 
@@ -109,7 +109,7 @@ def run_app():
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options)],
                              slots = ['File', 'Set Name', 'Annotator', 'Entity'],
-                             selection_settings=menu_system.MenuSettings(color='green'))
+                             selection_settings=menu_system.MenuSettings(color=highlight_color))
 
     entity_lvl_tool_bar = menu_system.MenuToolBar(title = 'Entity Level Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -125,7 +125,7 @@ def run_app():
                                       menu_system.MenuAction(measure_options.title, 
                                                              measure_options.return_options)],
                              slots = ['File', 'Set Name', 'Key', 'Response', 'Entity', 'Measure'],
-                             selection_settings=menu_system.MenuSettings(color='green'))
+                             selection_settings=menu_system.MenuSettings(color=highlight_color))
 
     token_lvl_tool_bar = menu_system.MenuToolBar(title = 'Token Level Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -139,7 +139,7 @@ def run_app():
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options)],
                              slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'],
-                             selection_settings=menu_system.MenuSettings(color='green'))
+                             selection_settings=menu_system.MenuSettings(color=highlight_color))
 
     discrepancy_tool_bar = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -147,7 +147,19 @@ def run_app():
                                       menu_system.MenuAction(annotator_pair_options.title, 
                                                              annotator_pair_options.return_options)],
                              slots = ['File', 'Annotator Pair'],
-                             selection_settings=menu_system.MenuSettings(color='green'))
+                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+
+    statistics_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
+                             options=[menu_system.MenuAction(file_name_options.title, 
+                                                             file_name_options.return_options),
+                                      menu_system.MenuAction(set_name_options.title,
+                                                             set_name_options.return_options),
+                                      menu_system.MenuAction(annotator_options.title, 
+                                                             annotator_options.return_options),
+                                      menu_system.MenuAction(annotation_types_options.title, 
+                                                             annotation_types_options.return_options)],
+                             slots = ['File', 'Set Name', 'Annotator', 'Entity'],
+                             selection_settings=menu_system.MenuSettings(color=highlight_color))
 
     validation_menu = menu_system.Menu(title='Validation Menu', 
                       options=[menu_system.MenuAction('Validate Overlaps', 
@@ -183,14 +195,20 @@ def run_app():
                                        tool_bar = discrepancy_tool_bar,
                                        inherit_settings=True)
 
+    statistics_menu = menu_system.Menu(title='Statistics Menu', 
+                                       options=[menu_system.MenuAction('Compare')], 
+                                       tool_bar = statistics_tool_bar,
+                                       inherit_settings=True)
+
 
     main_menu =  menu_system.Menu(title='QA4IE Main Menu', 
                       options=[error_checks_menu, 
                                validation_menu, 
+                               statistics_menu,
                                evaluation_menu, 
                                discrepancy_menu, 
                                menu_system.MenuAction('Generate Report')], 
-                      selection_settings=menu_system.MenuSettings(color='green'))
+                      selection_settings=menu_system.MenuSettings(color=highlight_color))
 
     main_menu.run_menu()
 
