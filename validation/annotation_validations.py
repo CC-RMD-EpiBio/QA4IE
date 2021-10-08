@@ -141,7 +141,7 @@ def outbound_subentities(annotations, main_type = '', sub_entities = []):
 
     return conflicts
 
-def partial_subentity_overlap(annotations, hierarchy = {}):
+def partial_subentity_overlap(annotations, main_type = '', sub_entities = []):
 
     '''
     looks for subentities that are partially overlaped with their respective entity
@@ -157,27 +157,27 @@ def partial_subentity_overlap(annotations, hierarchy = {}):
     '''
     assert annotations, 'please provide a list of annotations'
     conflicts = {}
-    for _type in hierarchy:
-        main_type = _type
-        try:
-            sub_entities_types = list(hierarchy[_type]['sub_entities'].keys())
-            # get all subentities in current file
-            sub_entities_in_file = [a for a in annotations if a['mention'] in sub_entities_types]
-            entities_in_file = [a for a in annotations if a['mention'] == main_type]
-            for s_e in sub_entities_in_file:
-                for e in entities_in_file:
-                    if(s_e['start'] < e['start'] and s_e['end'] > e['start'] or 
-                        s_e['start'] < e['end'] and s_e['end'] > e['end']): 
-                            try:
-                                conflicts[s_e['mention']].append(s_e)
+    
 
-                            except KeyError as e:
-                                conflicts[s_e['mention']] = [s_e]
+    # get all subentities in current file
+    sub_entities_in_file = [a for a in annotations if a['mention'] in sub_entities]
+    entities_in_file = [a for a in annotations if a['mention'] == main_type]
+    
 
-        except KeyError as e:
-            # capture entities that don't have subentities
-            pass
+    for s_e in sub_entities_in_file:
+        #print(s_e)
+        for e in entities_in_file:
+            print(e)
+            if(s_e['start'] < e['start'] and s_e['end'] > e['start'] or 
+                s_e['start'] < e['end'] and s_e['end'] > e['end']): 
+                    try:
+                        conflicts[s_e['mention']].append(s_e)
+
+                    except KeyError as e:
+                        conflicts[s_e['mention']] = [s_e]
+
     return conflicts
+
 
 
 def outbound_annotations(annotations, all_types= {}):
