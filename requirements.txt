@@ -3,10 +3,8 @@ pandas
 numpy
 sklearn
 lxml
-difflib
 xlsxwriter
 termcolor
-time
 string
 temios
 configparser
