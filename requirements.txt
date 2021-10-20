@@ -5,6 +5,5 @@ sklearn
 lxml
 xlsxwriter
 termcolor
-string
 temios
 configparser
