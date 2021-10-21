@@ -1,8 +1,6 @@
-pathlib
-pandas
+pandas==0.24.1   
 numpy
-sklearn
-lxml
+lxml==4.3.3
 xlsxwriter
-termcolor
-configparser
+termcolor==1.1.0
+scikit-learn==0.20.3
