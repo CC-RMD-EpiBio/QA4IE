@@ -14,18 +14,20 @@ pip3 install -r requirements.txt
 ```
 to install all packages.
 
-## Package components
+## Quality Assurance components
 
-- **Error Checks:** description.
-  + See ```script```
-- **Validations:** description.
-  + See ```script```
-- **Statistics:** description.
-  + See ```script```
-- **Evaluation:** description.
-  + See ```script```
-- **Discrepancy Analysis:** description.
-  + See ```script```
+- **Error Checks
+  
+- **Validations
+  
+- **Statistics
+
+- **Evaluation
+
+- **Discrepancy Analysis
+
+- **Corpus Viewer
+
 
 ## Demo script/data
 
