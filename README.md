@@ -45,7 +45,7 @@ to install all packages.
  [type_main]
  overlaps =
  sub_entities= type_a|type_b|type_c
- features= foo:b|a|r||foo_2:b_2|a_2|r_3
+ features= foo:b|a|r||foo_2:b_2|a_2|r_2
  
  [type_a]
  overlaps = type_b|type_c
