@@ -54,7 +54,7 @@ from pathlib import Path
 from load_data import config_reader_test, create_corpus
 
 
-def init():
+def init(config_path=None):
 
     global task 
     global corpus
@@ -63,6 +63,7 @@ def init():
     global set_name
     global key_annotator
     global output_dir
+    #global config_path
 
     global logger
 
@@ -70,13 +71,12 @@ def init():
     base_dir = Path(__file__)
     
     try:
-        config_info = config_reader_test.read_config_file_information(base_dir.parent/'config.config')
+        config_info = config_reader_test.read_config_file_information(config_path)
 
         schema = config_info['schema']
         
         corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
                                              strict_matches=True)
-        key_annotator = config_info['key_annotator']
         task = config_info['task']
         output_dir = Path(config_info['output_dir'])
     except AssertionError as e:

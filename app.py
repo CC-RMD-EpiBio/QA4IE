@@ -50,36 +50,79 @@
 ###############################################################################
 
 import os, sys
+import curses
+import locale
 from itertools import combinations
 from load_data import settings
 from menu import menu_system
 from validation import validation_menu_functions 
 from error_checks import error_checks_menu_functions
+from stats import statistics_menu_functions
+from corpus_viewer import corpus_viewer_functions
 
 
-settings.init() 
 
-def run_app():
-    file_names = ['corpus'] + list(settings.corpus.keys())
 
-    set_names = ['all_sets'] + list(set([n for f, c in settings.corpus.items() 
+def run_app(stdscr):
+    if len(list(settings.corpus.keys())) == 1:
+        file_names = list(settings.corpus.keys())
+    else:
+        file_names = ['corpus'] + list(settings.corpus.keys())
+
+    if len(list(set([n for f, c in settings.corpus.items() 
                                            for a, b in c.items() 
-                                           for n in b['annotation_sets']]))
+                                           for n in b['annotation_sets']]))) == 1:
+        set_names = list(set([n for f, c in settings.corpus.items() 
+                                               for a, b in c.items() 
+                                               for n in b['annotation_sets']]))
+    else:
+        set_names = ['all_sets'] + list(set([n for f, c in settings.corpus.items() 
+                                               for a, b in c.items() 
+                                               for n in b['annotation_sets']]))
 
-    annotators = ['team'] + list(set([a for k, v in settings.corpus.items() 
-                                        for a in v.keys()]))
+   
+    if len(list(set([a for k, v in settings.corpus.items()
+                                        for a in v.keys()]))) == 1:
+        annotators = list(set([a for k, v in settings.corpus.items() 
+                                            for a in v.keys()]))
+    else:
+        annotators = ['team'] + list(set([a for k, v in settings.corpus.items() 
+                                            for a in v.keys()]))
 
-    annotator_pairs = ['team'] +  ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
-    annotation_types = ['all_types'] + settings.schema.get_entity_names()
+    if len(['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]) == 1:
+        annotator_pairs = ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
+    else:
+        annotator_pairs = ['team'] +  ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
+
+    if len(settings.schema.get_entity_names()) == 1:
+        annotation_types = settings.schema.get_entity_names()
+    else:
+        annotation_types = ['all_types'] + settings.schema.get_entity_names()
 
 
     highlight_color = 'green'
 
     file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
     set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
+    if len(file_names) > 1:
+      file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names[1:])
+    else:
+      file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names)
+    if len(set_names) > 1:
+      set_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=set_names[1:])
+    else:
+      set_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=set_names)
     annotator_options = menu_system.MenuToolBarOptions(option_rack=annotators)
+    if len(annotators) > 1:
+      annotator_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotators[1:])
+    else:
+      annotator_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotators)
     annotator_pair_options = menu_system.MenuToolBarOptions(option_rack=annotator_pairs)
     annotation_types_options = menu_system.MenuToolBarOptions(option_rack=annotation_types)
+    if len(annotation_types) > 1:
+      annotation_types_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotation_types[1:])
+    else:
+      annotation_types_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotation_types)
     measure_options = menu_system.MenuToolBarOptions(option_rack=['Average', 'Strict', 'Lenient'])
 
     error_checks_tool_bar = menu_system.MenuToolBar(title = 'Error Checks Menu Tool Bar',
@@ -90,13 +133,18 @@ def run_app():
                              slots = ['File', 'Annotator Pair'],
                              selection_settings=menu_system.MenuSettings(color=highlight_color))
 
-    error_checks_menu = menu_system.Menu(title='Error Checks Menu', 
-                      options=[menu_system.MenuAction('Text Differences', 
-                                                      error_checks_menu_functions.check_text_differences),
-                               menu_system.MenuAction('Set Name Differences', 
-                                                      error_checks_menu_functions.check_set_name_differences)], 
-                      tool_bar=error_checks_tool_bar,
-                      inherit_settings=True)
+
+    corpus_viewer_tool_bar = menu_system.MenuToolBar(title = 'Corpus Viewer Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options_no_general.title, 
+                                                           file_name_options_no_general.return_options),
+                                    menu_system.MenuAction(annotator_options_no_general.title, 
+                                                           annotator_options_no_general.return_options),
+                                    menu_system.MenuAction(set_name_options_no_general.title,
+                                                           set_name_options_no_general.return_options),
+                                    menu_system.MenuAction(annotation_types_options_no_general.title, 
+                                                           annotation_types_options_no_general.return_options)],
+                           slots = ['File', 'Annotator', 'Set Name', 'Annotation Type'],
+                           selection_settings=menu_system.MenuSettings(color=highlight_color))
 
 
     validation_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
@@ -161,7 +209,19 @@ def run_app():
                              slots = ['File', 'Set Name', 'Annotator', 'Entity'],
                              selection_settings=menu_system.MenuSettings(color=highlight_color))
 
-    validation_menu = menu_system.Menu(title='Validation Menu', 
+
+    error_checks_menu = menu_system.Menu(title='Error Checks', 
+                      options=[menu_system.MenuAction('Text Differences', 
+                                                      error_checks_menu_functions.check_text_differences),
+                               menu_system.MenuAction('Set Name Differences', 
+                                                      error_checks_menu_functions.check_set_name_differences,),
+                               menu_system.MenuAction('Generate Report', 
+                                                      error_checks_menu_functions.generate_error_checks_report)], 
+                      tool_bar=error_checks_tool_bar,
+                      screen=stdscr,
+                      inherit_settings=True)
+
+    validation_menu = menu_system.Menu(title='Validation', 
                       options=[menu_system.MenuAction('Validate Overlaps', 
                                           validation_menu_functions.validate_overlaps),
                                menu_system.MenuAction('Validate Subentity Boundaries', 
@@ -171,34 +231,71 @@ def run_app():
                                menu_system.MenuAction('Validate Annotation Boundaries', 
                                           validation_menu_functions.validate_annotation_boundaries),
                                menu_system.MenuAction('Validate Schema', 
-                                          validation_menu_functions.validate_schema_values)], 
+                                          validation_menu_functions.validate_schema_values),
+                               menu_system.MenuAction('Generate Report', 
+                                          validation_menu_functions.generate_validation_report)], 
                       tool_bar=validation_tool_bar,
+                      screen=stdscr,
                       inherit_settings=True)
 
 
     entity_level_menu = menu_system.Menu(title='Entity Level', 
                                         options=[menu_system.MenuAction('Evaluate')], 
                                         tool_bar = entity_lvl_tool_bar,
+                                        screen=stdscr,
                                         inherit_settings=True)
 
     token_level_menu = menu_system.Menu(title='Token Level', 
                                         options=[menu_system.MenuAction('Evaluate')], 
                                         tool_bar = token_lvl_tool_bar,
+                                        screen=stdscr,
                                         inherit_settings=True)
 
-    evaluation_menu = menu_system.Menu(title='Evaluation Menu', 
+    evaluation_menu = menu_system.Menu(title='Evaluation', 
                                        options=[entity_level_menu, token_level_menu], 
+                                       screen=stdscr,
                                        inherit_settings=True)
 
-    discrepancy_menu = menu_system.Menu(title='Discrepancy Menu', 
+    discrepancy_menu = menu_system.Menu(title='Discrepancy Analysis', 
                                        options=[menu_system.MenuAction('Compare')], 
                                        tool_bar = discrepancy_tool_bar,
+                                       screen=stdscr,
                                        inherit_settings=True)
 
-    statistics_menu = menu_system.Menu(title='Statistics Menu', 
-                                       options=[menu_system.MenuAction('Compare')], 
+    statistics_menu = menu_system.Menu(title='Statistics', 
+                                       options=[menu_system.MenuAction('Entity Distribution',
+                                                statistics_menu_functions.count_entities),
+                                                menu_system.MenuAction('Entity/Features Distribution',
+                                                statistics_menu_functions.count_entities_with_features),
+                                                menu_system.MenuAction('Entity Token Length Distribution',
+                                                statistics_menu_functions.entity_token_stats),
+                                                menu_system.MenuAction('Entity/Features Token Length Distribution',
+                                                statistics_menu_functions.entity_with_features_token_stats),
+                                                menu_system.MenuAction('Generate Report',
+                                                statistics_menu_functions.generate_statistics_report)], 
                                        tool_bar = statistics_tool_bar,
+                                       screen=stdscr,
                                        inherit_settings=True)
+
+
+    help_menu = menu_system.HelpMenu(title='Help',
+                                     screen=stdscr,
+                                     inherit_settings=True)
+
+
+
+
+    schema_viewer = menu_system.SchemaMenu(title='Annotation Schema',
+                                           options=[],
+                                           screen=stdscr,
+                                           inherit_settings=True)
+
+
+    corpus_viewer = menu_system.CorpusViewerMenu(title='Corpus Viewer',
+                                     options=[],
+                                     screen=stdscr,
+                                     tool_bar = corpus_viewer_tool_bar,
+                                     inherit_settings=True)
 
 
     main_menu =  menu_system.Menu(title='QA4IE Main Menu', 
@@ -207,17 +304,58 @@ def run_app():
                                statistics_menu,
                                evaluation_menu, 
                                discrepancy_menu, 
-                               menu_system.MenuAction('Generate Report')], 
+                               menu_system.MenuAction('Generate Reports', generate_all_reports),
+                               corpus_viewer,
+                               schema_viewer,
+                               help_menu], 
+                      screen=stdscr,
                       selection_settings=menu_system.MenuSettings(color=highlight_color))
 
-    main_menu.run_menu()
+    try:
+      try:
+        curses.noecho()
+        curses.curs_set(0)
+
+        main_menu.run_menu()
+      except curses.error as e:
+        pass
+    finally:
+      curses.nocbreak(); stdscr.keypad(0); curses.echo(); curses.curs_set(1)
+      curses.endwin() 
+
+def generate_all_reports():
+    error_checks_menu_functions.generate_error_checks_report()
+    validation_menu_functions.generate_validation_report()
+
+
+    return 'report generated in {}'.format(settings.output_dir)
 
 
 def main():
-    run_app()
+  try:
+      settings.init(sys.argv[1]) 
+  except IndexError as e:
+      print('Usage: python {} FILENAME'.format( __file__))
+
+  else:
+    try:
+      curses.wrapper(run_app)
+    except:
+      curses.nocbreak()
+      #stdscr.keypad(0)
+      
+      curses.echo()
+      curses.endwin()
+      #curses.wrapper(run_app)
+      raise
+    
 
 if __name__ == '__main__':
-    
+    locale.setlocale(locale.LC_ALL, '')
+    encoding = locale.getpreferredencoding()
+
     main()
+    
+    
 
 

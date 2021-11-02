@@ -48,70 +48,64 @@
 # derivative works thereof, in binary and source code form.
 #
 ###############################################################################
-import configparser
-from load_data import schema_framework 
+
+import os, sys
+from load_data import settings
 from pathlib import Path
+import curses
+import locale
+from functools import reduce
 
 
-def create_schema(annotation_sections, parser):
 
-    assert annotation_sections, 'please provide section names'
+def print_document(filters=[]):
 
-    schema = schema_framework.Schema(name = 'annotation_schema')
-
-    for section in annotation_sections:
-        
-        annotation = parser[section.strip()]
-        entity = schema_framework.Entity(name=section.strip())
-
-        if 'sub_entities' in annotation.keys():
-            for x in annotation['sub_entities'].split('|'):
-                entity.sub_entities[x.strip()] = schema_framework.Entity(name=x.strip()) 
-        
-        if 'overlaps' in annotation.keys():
-            if annotation['overlaps']:
-                for x in annotation['overlaps'].split('|'):
-                    entity.overlaps[x.strip()] = schema_framework.Entity(name=x.strip()) 
-        if 'features' in annotation.keys():
-            if annotation['features']:
-                for feature in annotation['features'].split('||'):
-                    entity.features[feature.split(':')[0]] = feature.split(':')[1].split('|') 
-
-        schema.add_entry(entity)
-
-    return schema
+    file = filters[0].title
+    annotator_name = filters[1].title
 
 
-def read_config_file_information(path_to_config=None):
+    document = settings.corpus[file][annotator_name]['text']
 
+    filecontent = document
 
-    path_to_config = Path() if path_to_config is None else Path(path_to_config)
+    encoding = 'utf-8'
+    filename = file 
     
-    assert path_to_config.is_file(), 'file does not exist'
+    stdscr.clear()
+    curses.noecho()
+    curses.cbreak()
+    curses.curs_set(0)
+    stdscr.keypad(1)
+    rows, columns = stdscr.getmaxyx()
+    stdscr.border()
+    bottom_menu = u"(↓) Next line | (↑) Previous line | (→) Next page | (←) Previous page | (q) Quit".encode(encoding).center(columns - 4)
+    stdscr.addstr(rows - 1, 2, bottom_menu, curses.A_REVERSE)
+    out = stdscr.subwin(rows - 2, columns - 2, 1, 1)
+    out_rows, out_columns = out.getmaxyx()
+    out_rows -= 1
+    lines = map(lambda x: x + " " * (out_columns - len(x)), reduce(lambda x, y: x + y, [[x[i:i+out_columns] for i in range(0, len(x), out_columns)] for x in filecontent.expandtabs(4).splitlines()]))
+    stdscr.refresh()
+    line = 0
+    while True:
+        top_menu = (u"Lines %d to %d of %d of %s" % (line + 1, min(len(lines), line + out_rows), len(lines), filename)).encode(encoding).center(columns - 4)
+        stdscr.addstr(0, 2, top_menu, curses.A_REVERSE)
+        out.addstr(0, 0, "".join(lines[line:line+out_rows]))
+        stdscr.refresh()
+        out.refresh()
+        c = stdscr.getch()
+        if c == ord("q"):
+            break
+        elif c == curses.KEY_DOWN:
+            if len(lines) - line > out_rows:
+                line += 1
+        elif c == curses.KEY_UP:
+            if line > 0:
+                line -= 1
+        elif c == curses.KEY_RIGHT:
+            if len(lines) - line >= 2 * out_rows:
+                line += out_rows
+        elif c == curses.KEY_LEFT:
+            if line >= out_rows:
+                line -= out_rows
 
-    parser = configparser.RawConfigParser()   
-    
-    parser.read(path_to_config)
-    config_sections = parser.sections()
-    
-    config_annotation_sections = [x for x in config_sections if x not in ['required', 'optional']]
-
-    annotations_dir = Path(parser['required']['annotations_dir'])
-    output_dir = Path(parser['required']['output_dir'])
-
-    # schema dir option no longer necessary if we add the info directly into the config file
-    # schema_dir = Path(parser['required']['output_dir']) 
-    # specified_set_name = parser['required']['specified_set_name']
-    #key_annotator = parser['required']['key_annotator']
-
-    task = parser['required']['task']
-    encoding = parser['required']['encoding'] # encoding to put into a required section
-
-    annotation_schema = create_schema(config_annotation_sections, parser)
-
-    return {'annotation_dir' : annotations_dir, 
-            'output_dir':output_dir, 
-            'task':task,
-            'encoding':encoding,
-            'schema':annotation_schema}
-
+    return document

@@ -53,6 +53,7 @@ import os, sys
 from load_data import settings
 from itertools import combinations
 from error_checks import document_errors
+from pathlib import Path
 
 
 def check_text_differences(filters=[]):
@@ -80,9 +81,9 @@ def check_text_differences(filters=[]):
                     if text_conflicts:
                         count += 1
             if count:
-                return 'text differences found between all annotators in corpus'
+                return 'Text differences found'
             else:
-                return 'no text differences found between all annotators in corpus'
+                return 'No text differences found'
 
             
         else:
@@ -95,11 +96,9 @@ def check_text_differences(filters=[]):
                     count += 1
 
             if count:
-                return 'text differences found between {} and {} in corpus'.format(anno_1, 
-                                                                                     anno_2)
+                return 'Text differences found'
             else:
-                return 'no text differences found between {} and {} in corpus'.format(anno_1, 
-                                                                                        anno_2)
+                return 'No text differences found'
                         
     else:
         if filters[1].title == 'team':
@@ -110,25 +109,19 @@ def check_text_differences(filters=[]):
                 if text_conflicts:
                     count += 1
             if count:
-                return 'text differences found between all annotators in file {}'.format(filters[0].title)
+                return 'Text differences found'
             else:
-                return 'no text differences found between all annotators in file {}'.format(filters[0].title)
+                return 'No text differences found'
         else:
             anno_1, anno_2 = filters[1].title.split('-')
             text_conflicts = document_errors.compare_texts(settings.corpus[filters[0].title][anno_1]['text'], 
                                                            settings.corpus[filters[0].title][anno_2]['text'])
 
             if text_conflicts:
-                return 'text differences found between {} and {} in file {}\n\n{}'.format(anno_1, 
-                                                                                      anno_2, 
-                                                                                      filters[0].title,
-                                                                                      '\n'.join([t for t in text_conflicts]))
-
-
+           
+                return 'Text differences found'
             else:
-                return 'no text differences found between {} and {} in file {}'.format(anno_1, 
-                                                                                         anno_2, 
-                                                                                         filters[0].title)
+                return 'No text differences found'
 
 
 def check_set_name_differences(filters=[]):
@@ -153,9 +146,9 @@ def check_set_name_differences(filters=[]):
                         count += 1
 
             if count:
-                return 'set name differences found between all annotators in corpus'
+                return 'Set name differences found'
             else:
-                return 'no set name differences found between all annotators in corpus'
+                return 'No set name differences found'
 
             
         else:
@@ -169,11 +162,9 @@ def check_set_name_differences(filters=[]):
                     count += 1
 
             if count:
-                return 'set name differences found between {} and {} in corpus'.format(anno_1, 
-                                                                                       anno_2)
+                return 'Set name differences found'
             else:
-                return 'no set name differences found between {} and {} in corpus'.format(anno_1, 
-                                                                                          anno_2)
+                return 'No set name differences found'
                         
     else:
         count = 0
@@ -185,29 +176,52 @@ def check_set_name_differences(filters=[]):
                 if set_name_conflicts:
                     count += 1
             if count:
-                return 'set name differences found between all annotators in file {}'.format(filters[0].title)
+                return 'Set name differences found'
             else:
-                return 'no set name differences found between all annotators in file {}'.format(filters[0].title)
+                return 'No set name differences found'
         else:
             anno_1, anno_2 = filters[1].title.split('-')
             set_name_conflicts = document_errors.compare_set_names(settings.corpus[filters[0].title][anno_1]['annotation_sets'].keys(), 
                                                                    settings.corpus[filters[0].title][anno_2]['annotation_sets'].keys())
 
             if set_name_conflicts:
-                return 'set name differences found between {} and {} in file {}\n\n{}'.format(anno_1, 
-                                                                                              anno_2, 
-                                                                                              filters[0].title,
-                                                                                              ', '.join([s for s in set_name_conflicts]))
-
-
+                return 'Set name differences found'
             else:
-                return 'no set name differences found between {} and {} in file {}'.format(anno_1, 
-                                                                                           anno_2, 
-                                                                                           filters[0].title)
+                return 'No set name differences found'
 
 
 def generate_error_checks_report():
 
     # 1) run this error check report
     # 3) return string of output
-    pass
+
+    
+    error_checks_path = Path(settings.output_dir / 'error_checks')
+    error_checks_path.mkdir(parents=True, exist_ok=True)
+
+    for file_name, annotators in settings.corpus.items():
+        for anno_1, anno_2 in combinations(annotators, 2):
+            text_conflicts = document_errors.compare_texts(annotators[anno_1]['text'], 
+                                                           annotators[anno_2]['text'])
+
+            if text_conflicts:
+                txt_path = error_checks_path / 'txt_differences' 
+                txt_path.mkdir(parents=True, exist_ok=True)
+                with open(txt_path / '{}_{}-{}.txt'.format(file_name, anno_1, anno_2), 'w') as txt_file:
+                    print('\n'.join([t for t in text_conflicts]), file=txt_file)
+
+    for file_name, annotators in settings.corpus.items():
+        for anno_1, anno_2 in combinations(annotators, 2):
+            set_name_conflicts = document_errors.compare_set_names(annotators[anno_1]['annotation_sets'].keys(), 
+                                                                   annotators[anno_2]['annotation_sets'].keys())
+            
+            if set_name_conflicts:
+                txt_path = error_checks_path / 'set_name_differences' 
+                txt_path.mkdir(parents=True, exist_ok=True)
+                with open(txt_path / '{}_{}-{}.txt'.format(file_name, anno_1, anno_2), 'w') as txt_file:
+                    print(', '.join([s for s in set_name_conflicts]), file=txt_file)
+
+
+
+    return 'report generated in {}'.format(settings.output_dir)
+    

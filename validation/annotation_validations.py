@@ -54,7 +54,7 @@
 
 '''
 
-def annotation_overlaps(annotations = [], annotation_types = []):
+def annotation_overlaps(annotations = [], annotation_types = {}):
     '''
         looks for overlaps of annotations that are not allowed in the guidelines
 
@@ -95,16 +95,17 @@ def annotation_overlaps(annotations = [], annotation_types = []):
     conflict_types = {}
 
     for _type, invalid_overlaps in annotation_types.items():
-        annotations_of_type = [a for a in annotations if a['mention'] == _type]
-        annotations_of_types = [a for a in annotations if a['mention'] in invalid_overlaps]
-        conflict_types[_type] = []
-        for annotation in annotations_of_type:
-            current_overlaps = overlap(annotation, annotations_of_types)
-            if current_overlaps:
-                current_overlaps.append(annotation)
-                current_overlaps = sorted(current_overlaps, key=lambda x: x['start'])
-                if not current_overlaps in conflict_types[_type]:
-                    conflict_types[_type].append(current_overlaps)
+        if invalid_overlaps:
+            annotations_of_type = [a for a in annotations if a['mention'] == _type]
+            annotations_of_types = [a for a in annotations if a['mention'] in invalid_overlaps]
+            conflict_types[_type] = []
+            for annotation in annotations_of_type:
+                current_overlaps = overlap(annotation, annotations_of_types)
+                if current_overlaps:
+                    current_overlaps.append(annotation)
+                    current_overlaps = sorted(current_overlaps, key=lambda x: x['start'])
+                    if not current_overlaps in conflict_types[_type]:
+                        conflict_types[_type].append(current_overlaps)
 
     return conflict_types
 
@@ -119,7 +120,7 @@ def outbound_subentities(annotations, main_type = '', sub_entities = []):
         :return conflicts: the conflicts found for this check
 
     '''
-    assert annotations, 'please provide a list of annotations'
+    #assert annotations, 'please provide a list of annotations'
     conflicts = {}
 
     # get all entities/subentities in current file
@@ -155,7 +156,7 @@ def partial_subentity_overlap(annotations, main_type = '', sub_entities = []):
     :return conflicts: the conflicts found for this check
 
     '''
-    assert annotations, 'please provide a list of annotations'
+    #assert annotations, 'please provide a list of annotations'
     conflicts = {}
     
 
@@ -167,7 +168,7 @@ def partial_subentity_overlap(annotations, main_type = '', sub_entities = []):
     for s_e in sub_entities_in_file:
         #print(s_e)
         for e in entities_in_file:
-            print(e)
+            
             if(s_e['start'] < e['start'] and s_e['end'] > e['start'] or 
                 s_e['start'] < e['end'] and s_e['end'] > e['end']): 
                     try:
@@ -204,7 +205,7 @@ def outbound_annotations(annotations, all_types= {}):
     return conflicts
                  
 
-def validate_schema(annotations = [], schema = None):
+def validate_schema(annotations = [], schema = {}):
     '''
 
         looks for annotations that violate the contents of a given schema
@@ -220,7 +221,7 @@ def validate_schema(annotations = [], schema = None):
     '''
 
     assert schema, 'please provide a valid schema representation'
-    assert annotations, 'please provide a list of annotations'
+    #assert annotations, 'please provide a list of annotations'
 
     conflicts = {}
     for annotation in annotations:

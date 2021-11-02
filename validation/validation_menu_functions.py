@@ -53,6 +53,8 @@ import os, sys
 from load_data import settings
 from itertools import combinations
 from validation import annotation_validations
+from pathlib import Path
+import pandas as pd
 
 
 
@@ -66,6 +68,17 @@ def validate_overlaps(filters=[]):
     annotator_name = filters[2].title
     annotation_type = filters[3].title
 
+    overlaps_to_validate = {}
+
+    for n, ovlps in settings.schema.get_overlaps().items():
+        ovlps = [str(o) for o in ovlps]
+        ovlps = [str(e) for e in settings.schema.get_entity_names() if not e in ovlps]
+        overlaps_to_validate[n] = ovlps
+    
+
+
+   
+
     if annotation_type == 'all_types': # all annotation types
         if file == 'corpus': # all notes
             if annotator_name == 'team': # all annotators
@@ -75,22 +88,60 @@ def validate_overlaps(filters=[]):
                                     for s, ans in d_c['annotation_sets'].items()
                                     for a in ans]
 
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if s == annotation_set]
 
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
 
-                    return ''
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans  if a_name == annotator_name]
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'                  
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -98,7 +149,19 @@ def validate_overlaps(filters=[]):
                                      for a in ans     if a_name == annotator_name and
                                                          s == annotation_set]
 
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -107,7 +170,20 @@ def validate_overlaps(filters=[]):
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if f == file]
-                    return ''
+
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -115,7 +191,19 @@ def validate_overlaps(filters=[]):
                                      for a in ans        if f == file and
                                                             s == annotation_set]
 
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -123,7 +211,20 @@ def validate_overlaps(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if f == file and
                                                                a_name == annotator_name]
-                    return ''
+
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'                                                        
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -131,7 +232,22 @@ def validate_overlaps(filters=[]):
                                      for a in ans    if f == file and
                                                         a_name == annotator_name and
                                                         s == annotation_set]
-                    return ''
+
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          overlaps_to_validate)
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
+
+                    
 
     else: # individual annotation types
         if file == 'corpus': # all notes
@@ -142,7 +258,19 @@ def validate_overlaps(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if a['mention'] == annotation_type]
 
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -150,7 +278,19 @@ def validate_overlaps(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             s == annotation_set]
 
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -158,7 +298,20 @@ def validate_overlaps(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if a['mention'] == annotation_type and
                                                                a_name == annotator_name]
-                    return ''
+
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -166,7 +319,20 @@ def validate_overlaps(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             a_name == annotator_name and
                                                             s == annotation_set]
-                    return ''
+
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -177,7 +343,19 @@ def validate_overlaps(filters=[]):
                                      for a in ans       if a['mention'] == annotation_type and
                                                            f == file]
 
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -185,7 +363,19 @@ def validate_overlaps(filters=[]):
                                      for a in ans               if a['mention'] == annotation_type and
                                                                 f == file and
                                                                 s == annotation_set]
-                    return ''
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -194,7 +384,21 @@ def validate_overlaps(filters=[]):
                                      for a in ans    if a['mention'] == annotation_type and
                                                         f == file and
                                                         a_name == annotator_name]
-                    return ''
+
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+
+                    for x,y in overlaps.items():
+                        if y:
+                            count += 1
+
+                    if count:
+                        return 'Annotation overlaps found'
+
+                    else:
+                        return 'No annotation overlaps found'
+
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -204,20 +408,29 @@ def validate_overlaps(filters=[]):
                                                                     a_name == annotator_name and 
                                                                     s == annotation_set]
 
-                    # h = settings.schema.get_type(annotation_type)    
-                    # if annotations:                                           
+                    overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
+                    count = 0
+                    output = ''
+                    overlap_count = 1
+                    for x, y in overlaps.items():
+                        if y:
+                            count +=1
+                            for overlap in y:
+                                output += 'overlap cluster: {}\n{}\n'.format(overlap_count, '-' * 18)
+                                overlap_count += 1
+                                for annotation in overlap:
+                               
+                                    output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                                                                          annotation['start'],
+                                                                          annotation['end'],
+                                                                          annotation['text_span'])
 
-                    #     if h.has_sub_entities():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.name,
-                    #                                                                             h.get_sub_entity_names())
-                    #         print(partial_overlaps)
-                    #     elif h.has_parent_entity():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.get_parent_entity_name(),
-                    #                                                                             [h.name])
-                    #         print(partial_overlaps)
-                    return ''
+                    if count:
+                        return 'Annotation overlaps found'
+                   
+                    else:
+                        return 'No annotation overlaps found'
                         
 def validate_subentity_boundaries(filters=[]):
 
@@ -235,11 +448,23 @@ def validate_subentity_boundaries(filters=[]):
             if annotator_name == 'team': # all annotators
                 if annotation_set == 'all_sets': # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
-                                    for a_name, d_c in a_c.items() 
-                                    for s, ans in d_c['annotation_sets'].items()
-                                    for a in ans]
+                                     for a_name, d_c in a_c.items() 
+                                     for s, ans in d_c['annotation_sets'].items()
+                                     for a in ans]
+                
+                    #sub_entities = [e for e in settings.schema.entities if e.is_subentity()]
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
-                    return ''
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -247,14 +472,37 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans if s == annotation_set]
 
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans  if a_name == annotator_name]
-                    return ''
+
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -262,7 +510,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans     if a_name == annotator_name and
                                                          s == annotation_set]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -271,7 +530,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if f == file]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -279,7 +549,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans        if f == file and
                                                             s == annotation_set]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -287,7 +568,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if f == file and
                                                                a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -295,7 +587,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans    if f == file and
                                                         a_name == annotator_name and
                                                         s == annotation_set]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
 
     else: # individual annotation types
         if file == 'corpus': # all notes
@@ -306,7 +609,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if a['mention'] == annotation_type]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -314,7 +628,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             s == annotation_set]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -322,7 +647,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if a['mention'] == annotation_type and
                                                                a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -330,7 +666,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             a_name == annotator_name and
                                                             s == annotation_set]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -341,7 +688,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans       if a['mention'] == annotation_type and
                                                            f == file]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -349,7 +707,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans               if a['mention'] == annotation_type and
                                                                 f == file and
                                                                 s == annotation_set]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -358,7 +727,18 @@ def validate_subentity_boundaries(filters=[]):
                                      for a in ans    if a['mention'] == annotation_type and
                                                         f == file and
                                                         a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -368,24 +748,32 @@ def validate_subentity_boundaries(filters=[]):
                                                                     a_name == annotator_name and 
                                                                     s == annotation_set]
 
-                    # h = settings.schema.get_type(annotation_type)    
-                    # if annotations:                                           
 
-                    #     if h.has_sub_entities():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.name,
-                    #                                                                             h.get_sub_entity_names())
-                    #         print(partial_overlaps)
-                    #     elif h.has_parent_entity():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.get_parent_entity_name(),
-                    #                                                                             [h.name])
-                    #         print(partial_overlaps)
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #conflict_count = 0
+                        output = ''
+                       
+                        if conflicts:
+                            count+= 1
+                        for n, conflict in conflicts.items():
+                            
+                            for annotation in conflict:
+                                   
+                                output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                                                                      annotation['start'],
+                                                                      annotation['end'],
+                                                                      annotation['text_span'])
 
 
 
-
+                    if count:
+                        return 'Out of bounds sub-entities found'
+                    else:
+                        return 'No out of bounds sub-entities found'
 
 def validate_subentity_partial_overlap(filters=[]):
 
@@ -407,7 +795,18 @@ def validate_subentity_partial_overlap(filters=[]):
                                     for s, ans in d_c['annotation_sets'].items()
                                     for a in ans]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -415,14 +814,36 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans if s == annotation_set]
 
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans  if a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -430,7 +851,18 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans     if a_name == annotator_name and
                                                          s == annotation_set]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -439,7 +871,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if f == file]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+                    #print(conflicts)
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -447,7 +891,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans        if f == file and
                                                             s == annotation_set]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -455,7 +911,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if f == file and
                                                                a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -463,7 +931,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans    if f == file and
                                                         a_name == annotator_name and
                                                         s == annotation_set]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
 
     else: # individual annotation types
         if file == 'corpus': # all notes
@@ -474,7 +954,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if a['mention'] == annotation_type]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -482,7 +974,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             s == annotation_set]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -490,7 +994,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if a['mention'] == annotation_type and
                                                                a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -498,7 +1014,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             a_name == annotator_name and
                                                             s == annotation_set]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -509,7 +1037,19 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans       if a['mention'] == annotation_type and
                                                            f == file]
 
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -517,7 +1057,18 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans               if a['mention'] == annotation_type and
                                                                 f == file and
                                                                 s == annotation_set]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -526,30 +1077,55 @@ def validate_subentity_partial_overlap(filters=[]):
                                      for a in ans    if a['mention'] == annotation_type and
                                                         f == file and
                                                         a_name == annotator_name]
-                    return ''
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #print(conflicts)
+                        if conflicts:
+                            count += 1
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans                if a['mention'] == annotation_type and
+                                     for a in ans                if 
                                                                     f == file and
                                                                     a_name == annotator_name and 
                                                                     s == annotation_set]
 
-                    h = settings.schema.get_type(annotation_type)    
-                    if annotations:                                           
+                    count = 0
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        #conflict_count = 0
+                        output = ''
+                        if annotation_type in list(conflicts.keys()):
+                            conflicts = {annotation_type:conflicts[annotation_type]}
+                        else:
+                            conflicts = {}
+                        if conflicts:
+                            count+= 1
+                        for n, conflict in conflicts.items():
+                            
+                            for annotation in conflict:
+                                   
+                                output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                                                                      annotation['start'],
+                                                                      annotation['end'],
+                                                                      annotation['text_span'])
 
-                        if h.has_sub_entities():
-                            partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                                                                                                h.name,
-                                                                                                h.get_sub_entity_names())
-                            print(partial_overlaps)
-                        elif h.has_parent_entity():
-                            partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                                                                                                h.get_parent_entity_name(),
-                                                                                                [h.name])
-                            print(partial_overlaps)
-                    return ''
+
+                    if count:
+                        return 'Sub-entity partial overlaps found'
+                    else:
+                        return 'No sub-entity partial overlaps found'
 
 
     
@@ -739,7 +1315,18 @@ def validate_schema_values(filters=[]):
                                     for s, ans in d_c['annotation_sets'].items()
                                     for a in ans]
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -747,14 +1334,37 @@ def validate_schema_values(filters=[]):
                                      for a in ans if s == annotation_set]
 
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans  if a_name == annotator_name]
-                    return ''
+
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -762,7 +1372,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans     if a_name == annotator_name and
                                                          s == annotation_set]
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -771,7 +1392,18 @@ def validate_schema_values(filters=[]):
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if f == file]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -779,7 +1411,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans        if f == file and
                                                             s == annotation_set]
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -787,7 +1430,18 @@ def validate_schema_values(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if f == file and
                                                                a_name == annotator_name]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -795,7 +1449,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans    if f == file and
                                                         a_name == annotator_name and
                                                         s == annotation_set]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
 
     else: # individual annotation types
         if file == 'corpus': # all notes
@@ -806,7 +1471,18 @@ def validate_schema_values(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans if a['mention'] == annotation_type]
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -814,7 +1490,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             s == annotation_set]
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -822,7 +1509,18 @@ def validate_schema_values(filters=[]):
                                      for s, ans in d_c['annotation_sets'].items() 
                                      for a in ans           if a['mention'] == annotation_type and
                                                                a_name == annotator_name]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -830,7 +1528,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans        if a['mention'] == annotation_type and
                                                             a_name == annotator_name and
                                                             s == annotation_set]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -841,7 +1550,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans       if a['mention'] == annotation_type and
                                                            f == file]
 
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -849,7 +1569,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans               if a['mention'] == annotation_type and
                                                                 f == file and
                                                                 s == annotation_set]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
@@ -858,7 +1589,18 @@ def validate_schema_values(filters=[]):
                                      for a in ans    if a['mention'] == annotation_type and
                                                         f == file and
                                                         a_name == annotator_name]
-                    return ''
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    #print(conflicts)
+                    if conflicts:
+                        count += 1
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
@@ -868,26 +1610,113 @@ def validate_schema_values(filters=[]):
                                                                     a_name == annotator_name and 
                                                                     s == annotation_set]
 
-                    # h = settings.schema.get_type(annotation_type)    
-                    # if annotations:                                           
+                    count = 0
+                    schema = settings.schema.get_simple_schema()
 
-                    #     if h.has_sub_entities():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.name,
-                    #                                                                             h.get_sub_entity_names())
-                    #         print(partial_overlaps)
-                    #     elif h.has_parent_entity():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.get_parent_entity_name(),
-                    #                                                                             [h.name])
-                    #         print(partial_overlaps)
-                    return ''
+                    conflicts = annotation_validations.validate_schema(annotations, schema)
+                                                                        
+                    output = ''
+                    if annotation_type in list(conflicts.keys()):
+                        conflicts = {annotation_type:conflicts[annotation_type]}
+                    else:
+                        conflicts = {}
+                    if conflicts:
+                        count+= 1
+                    for n, conflict in conflicts.items():
+                        
+                        for annotation in conflict:
+                               
+                            output += '\n{} ({}-{})\n{}\n{}\n'.format(annotation['mention'],
+                                                                  annotation['start'],
+                                                                  annotation['end'],
+                                                                  annotation['text_span'],
+                                                                  annotation['features'])
+
+
+                    if count:
+                        return 'Invalid annotations found'
+                    else:
+                        return 'No invalid annotations found'
+
 
 
 def generate_validation_report():
 
-    # 1) run this qa report
-    # 3) return string of output
-    pass
+    validation_path = Path(settings.output_dir / 'validations')
+    validation_path.mkdir(parents=True, exist_ok=True)
+    overlaps_to_validate = {}
+    total_overlaps = []
+    total_outbound_subentities = []
+    total_subentity_partial_overlaps = []
+    total_invalid_annotations = []
+
+    for n, ovlps in settings.schema.get_overlaps().items():
+        ovlps = [str(o) for o in ovlps]
+        ovlps = [str(e) for e in settings.schema.get_entity_names() if not e in ovlps]
+        overlaps_to_validate[n] = ovlps
+
+    for file_name, annotators in settings.corpus.items():
+        for annotator, document in annotators.items():
+            for set_name, annotations in document['annotation_sets'].items():
+                overlaps = annotation_validations.annotation_overlaps(annotations=annotations, 
+                                                                      annotation_types = overlaps_to_validate)
+                
+                for t, o in overlaps.items():
+                    if o:
+                        for x in o:
+                            total_overlaps.append([file_name, annotator, set_name, t, x])
+
+                for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        for n, e in conflicts.items():
+                            total_outbound_subentities.append([file_name, annotator, set_name, n, e])
+
+                for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        for n, e in conflicts.items():
+                            total_subentity_partial_overlaps.append([file_name, annotator, set_name, n, e])
+
+                schema = settings.schema.get_simple_schema()
+                conflicts = annotation_validations.validate_schema(annotations, schema)
+                for n, e in conflicts.items():
+                    total_invalid_annotations.append([file_name, annotator, set_name, n, e])
+                        
+    overlap_report = pd.DataFrame(total_overlaps, columns = ['file_name', 'annotator', 
+                                                             'set_name', 'annotation_type',
+                                                             'overlaps'])
+
+    sub_entity_outbound_report = pd.DataFrame(total_outbound_subentities, 
+                                                  columns = ['file_name', 'annotator', 
+                                                             'set_name', 'annotation_type',
+                                                             'overlaps'])
+
+    sub_entity_partial_overlap_report = pd.DataFrame(total_subentity_partial_overlaps, 
+                                                  columns = ['file_name', 'annotator', 
+                                                             'set_name', 'annotation_type',
+                                                             'overlaps'])
+
+    invalid_annotations_report = pd.DataFrame(total_invalid_annotations, 
+                                                  columns = ['file_name', 'annotator', 
+                                                             'set_name', 'annotation_type',
+                                                             'overlaps'])
+
+    # #out_of_bounds_annotations_report = out_bound_annotation(print_results=False)
+
+
+   
+    writer = pd.ExcelWriter(validation_path / 'validation_report.xlsx', engine='xlsxwriter')
+
+    
+    overlap_report.to_excel(writer, sheet_name='overlaps', index=False)
+    sub_entity_outbound_report.to_excel(writer, sheet_name='outbounds_sub_entity', index=False)
+    sub_entity_partial_overlap_report.to_excel(writer, sheet_name='sub_entity_partial_overlap', index=False)
+    invalid_annotations_report.to_excel(writer, sheet_name='invalid_annotations', index=False)
+    writer.save()
+
+    return 'report generated in {}'.format(settings.output_dir)
 
 

@@ -1,0 +1,36 @@
+[required]
+annotations_dir = /Users/jimenezsilvara/Desktop/QA4IE/data/annotations
+output_dir = /Users/jimenezsilvara/Desktop/qa_outputs
+
+task = sequence_labelling
+encoding = UTF-8
+
+[Assistance]
+overlaps = Assistance|Action|Quantification
+features= Polarity:True|False|Unclear||Source:Person Only|Other|Device Only
+
+[Instructions/Questions]
+overlaps = Score Definition|Instructions/Questions|Mobility
+
+[Action]
+overlaps = Assistance|Action|Quantification
+features = Subdomain Code:d410|d415|d420|d430|d435|d440|d445|d450|d455|d460|d470|d475|d480||Polarity:Able|Unable|Unclear
+
+[Quantification]
+overlaps = Assistance|Action|Quantification
+features=Type:Distance|Time|Scale|Frequency
+
+[Mobility]
+overlaps = Score Definition|Instructions/Questions
+sub_entities = Action|Assistance|Quantification
+features = Timeline:Past|Present|Future||Type:Objective|Subjective||Subject:Patient|Other
+
+[Score Definition]
+overlaps = Score Definition|Instructions/Questions|Mobility
+features =
+
+
+
+
+
+

@@ -71,11 +71,52 @@ class Schema():
 
         return out
 
+    def to_string(self):
+        
+        out = ''
+
+        for k, v in self.entities.items():
+            if not v.has_parent_entity():
+                out += '{}\n'.format(v)
+
+                for i, j in v.sub_entities.items():
+                    out += '{} {}\n'.format('-'*2 ,j)
+
+        return out
+
     def len(self):
         return len(self.entities)
 
     def get_type(self, t):
         return self.entities[t]
+
+    def get_overlaps(self):
+        temp = {}
+                    
+        for s, obj in self.entities.items():
+            
+            if obj.is_sub_entity():
+                
+                main_entity_overlaps = self.entities[obj.get_parent_entity_name()].overlaps
+
+                x = [o for n, o in main_entity_overlaps.items()]
+                x.append(obj.get_parent_entity_name())
+                temp[s] = [o for n, o in obj.overlaps.items()] + x
+
+            else:
+                if obj.has_sub_entities():
+
+                    temp[s] = [o for n, o in obj.overlaps.items()] + obj.get_sub_entity_names()
+                else:
+                    x = []
+                    for n, ent in obj.overlaps.items():
+                        if self.entities[n].has_sub_entities():
+                            x += self.entities[n].get_sub_entity_names()
+
+                    temp[s] = [o for n, o in obj.overlaps.items()] + x
+
+
+        return temp
 
     def add_entry(self, entry):
         # entry is class entity
@@ -93,6 +134,7 @@ class Schema():
                 for x, y in entry.overlaps.items(): # is list
                     if x in self.entities.keys():
                         entry.overlaps[x] = self.entities[x]
+
                     # else:
                     #     self.entities[x] = entry.overlaps[x]
         else:
@@ -103,6 +145,13 @@ class Schema():
             if self.entities[entry.name].has_sub_entities():
                 entry.parent_entity = self.entities[entry.name].sub_entities
 
+    def get_simple_schema(self):
+        simple_schema = {}
+        for n, e in self.entities.items():
+            simple_schema[n] = e.features
+
+        return simple_schema
+        
     def get_entity_names(self):
         return list(self.entities.keys())
 
@@ -116,7 +165,11 @@ class Entity():
         self.overlaps = {} if overlaps is None else overlaps
 
     def __repr__(self):
+
+        if self.features:
         
+            return '{} : ({})'.format(self.name, ', '.join(['{} | {}'.format(a,b) for a, b in self.features.items()]))
+
         return '{}'.format(self.name)
 
     def has_overlaps(self):
@@ -150,62 +203,5 @@ class Entity():
     def is_concurrent(self):
         return True if len(self.parent_entity) > 1 else False
 
-def main():
-    base_dir = Path(__file__)
-    path_to_config = base_dir.parent / 'config.config'
-
-    parser = configparser.RawConfigParser()   
-    parser.read(path_to_config)
-    config_sections = parser.sections()
-    
-    annotation_sections = [x for x in config_sections if x not in ['required', 'optional']]
-
-    schema = Schema(name = 'annotation_schema')
-
-    for section in annotation_sections:
-        
-        config_entity = parser[section.strip()]
-        entity = Entity(name=section.strip())
-
-        if 'sub_entities' in config_entity.keys():
-            if config_entity['sub_entities']:
-                for x in config_entity['sub_entities'].split('|'):
-                    entity.sub_entities[x.strip()] = Entity(name=x.strip()) 
-        
-        if 'overlaps' in config_entity.keys():
-            if config_entity['overlaps']:
-                for x in config_entity['overlaps'].split('|'):
-                    entity.overlaps[x.strip()] = Entity(name=x.strip()) 
-
-        if 'features' in config_entity.keys():
-            if config_entity['features']:
-                for feature in config_entity['features'].split('||'):
-                    entity.features[feature.split(':')[0]] = feature.split(':')[1].split('|') 
-
-        schema.add_entry(entity)
-
-    print(schema)
-
-    print(schema.get_entity_names())
-
-    # ['Assistance', 'Instructions/Questions', 'Action', 'Quantification', 'Mobility', 'Score Definition']
 
 
-    print(schema.get_type('Assistance')) # print the entity info
-    print(schema.get_type('Assistance').get_parent_entity()) # prints its parent entity
-    print(schema.get_type('Assistance').has_parent_entity()) # true or false
-    print(schema.get_type('Assistance').has_sub_entities()) # true or false
-    print(schema.get_type('Assistance').get_sub_entity('Action')) # empty
-    print(schema.get_type('Mobility').get_sub_entity('Action')) # returns the type
-    print(schema.get_type('Mobility').get_sub_entity('Action').features) # you can get its features
-
-
-    print(schema.get_type('Instructions/Questions'))
-    print(schema.get_type('Instructions/Questions').has_sub_entities())
-    print(schema.get_type('Instructions/Questions').get_parent_entity())
-    print(schema.get_type('Instructions/Questions').has_sub_entities())
-
-
-
-# if __name__ == '__main__':
-#     main()
