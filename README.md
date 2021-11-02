@@ -17,15 +17,15 @@ to install all packages.
 ## Package components
 
 - **Error Checks:** description.
-  + See ```script```
+
 - **Validations:** description.
-  + See ```script```
+
 - **Statistics:** description.
-  + See ```script```
+ 
 - **Evaluation:** description.
-  + See ```script```
+
 - **Discrepancy Analysis:** description.
-  + See ```script```
+
   
  ## Setting the config file
  
@@ -35,9 +35,9 @@ to install all packages.
  
 -**Output Directory:** the absolute path to a results/report directory.
  
- -**Task:** this section should either be `sequence_labeling` or `classification`
+-**Task:** this section should either be `sequence_labeling` or `classification`
   
- -**Encoding:** the encoding of the xml files
+-**Encoding:** the encoding of the xml files
  
  The config file allows to add an unlimited amount of annotation types. The following is an example of how to create these types in the config file.
  
@@ -73,14 +73,6 @@ This package includes `n` small datasets for code demonstration purposes:
 - ```demo_data/demo_dataset_2``` dataset description
 - ```demo_data/demo_dataset_3``` dataset description
 - ```demo_data/demo_dataset_n``` dataset description
-
-The included `demo_script` script utilizes the provided datasets to make a complete complete end-to-end quality assurance process, with the following steps:
-
-1. step 1
-2. step 2
-3. step 3
-4. step 4
-5. step n
 
 To use the tool you will first need to update the information inside the config file. Afterwards, to run the tool just run,
 ```
