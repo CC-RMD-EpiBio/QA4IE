@@ -35,9 +35,9 @@ to install all packages.
  
 -**Output Directory:** the absolute path to a results/report directory.
  
- -*Task:** this section should either be `sequence_labeling` or `classification`
+ -**Task:** this section should either be `sequence_labeling` or `classification`
   
- -*Encoding:** the encoding of the xml files
+ -**Encoding:** the encoding of the xml files
  
  The config file allows to add an unlimited amount of annotation types. The following is an example of how to create these types in the config file.
  
