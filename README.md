@@ -44,6 +44,12 @@ The included `demo_script` script utilizes the provided datasets to make a compl
 4. step 4
 5. step n
 
+To use the tool just run
+```
+python app.py <path_to_config_file>
+```
+where the path_to_config_file is a placeholder for the absolute path to the config file
+
 ## Reference
 
 If you use this software in your own work, please cite the following paper:
