@@ -16,17 +16,17 @@ to install all packages.
 
 ## Quality Assurance components
 
-- **Error Checks
+- Error Checks
   
-- **Validations
+- Validations
   
-- **Statistics
+- Statistics
 
-- **Evaluation
+- Evaluation
 
-- **Discrepancy Analysis
+- Discrepancy Analysis
 
-- **Corpus Viewer
+- Corpus Viewer
 
 
 ## Demo script/data
