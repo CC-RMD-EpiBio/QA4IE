@@ -48,43 +48,65 @@
 # derivative works thereof, in binary and source code form.
 #
 ###############################################################################
-
-import os, sys
+import configparser
+from load_data import schema_framework 
 from pathlib import Path
-from load_data import config_reader, create_corpus, config_check
 
 
-def init(config_path=None):
+def create_schema(annotation_sections, parser):
 
-    global task 
-    global corpus
-    global schema
-    global hierarchy
-    global set_name
-    global key_annotator
-    global output_dir
-    #global config_path
+    assert annotation_sections, 'please provide section names'
 
-    global logger
+    schema = schema_framework.Schema(name = 'annotation_schema')
 
-    # load config file
-    base_dir = Path(__file__)
-    
-    try:
-        config_info = config_reader.read_config_file_information(config_path)
-        config_check.config_check(config_info)
-
-        schema = config_info['schema']
+    for section in annotation_sections:
         
-        corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
-                                             strict_matches=True)
-        task = config_info['task']
-        output_dir = Path(config_info['output_dir'])
-    except AssertionError as e:
-        raise 
+        annotation = parser[section.strip()]
+        entity = schema_framework.Entity(name=section.strip())
 
-  
+        if 'sub_entities' in annotation.keys():
+            for x in annotation['sub_entities'].split('|'):
+                entity.sub_entities[x.strip()] = schema_framework.Entity(name=x.strip()) 
+        
+        if 'overlaps' in annotation.keys():
+            if annotation['overlaps']:
+                for x in annotation['overlaps'].split('|'):
+                    entity.overlaps[x.strip()] = schema_framework.Entity(name=x.strip()) 
+        if 'features' in annotation.keys():
+            if annotation['features']:
+                for feature in annotation['features'].split('||'):
+                    entity.features[feature.split(':')[0]] = feature.split(':')[1].split('|') 
+
+        schema.add_entry(entity)
+
+    return schema
 
 
+def read_config_file_information(path_to_config=None):
 
+
+    path_to_config = Path() if path_to_config is None else Path(path_to_config)
     
+    assert path_to_config.is_file(), 'file does not exist'
+
+    parser = configparser.RawConfigParser()   
+    
+    parser.read(path_to_config)
+    config_sections = parser.sections()
+    
+    config_annotation_sections = [x for x in config_sections if x not in ['required', 'optional']]
+
+    annotations_dir = Path(parser['required']['annotations_dir'])
+    output_dir = Path(parser['required']['output_dir'])
+
+    task = parser['required']['task']
+    encoding = parser['required']['encoding'] # encoding to put into a required section
+
+    annotation_schema = create_schema(config_annotation_sections, parser)
+
+    return {'annotation_dir' : annotations_dir, 
+            'output_dir':output_dir, 
+            'task':task,
+            'encoding':encoding,
+            'schema':annotation_schema}
+

@@ -49,42 +49,53 @@
 #
 ###############################################################################
 
-import os, sys
-from pathlib import Path
-from load_data import config_reader, create_corpus, config_check
+from os.path import *
+import os
+from os import access, R_OK
 
 
-def init(config_path=None):
+# configuration = {}
+# config_path = r'config.config'
+# configuration = read_config_file_information(config_path)
+# schema = schema_framework
+#Check if configuration is readable
+print("Performing Config Checks")
+print("________________________________________________________\n")
+def config_check(configuration):
+    flag = 0
+    print("Checking if configuration is valid\n")
+    if not configuration:
+        flag = 1
+        print("Configuration not read correctly")
+    #check if task is correct
+    tasks=["sequence_labelling","classification"]
+    print("Checking if task is valid\n")
+    if configuration['task'] not in tasks:
+        flag = 1
+        print(configuration['task'])
+        print("The task listed is not valid, please only enter sequence_labelling or classification")
+    print("Checking if annotation directory is valid\n")
+    if not exists(configuration['annotation_dir']):
+        flag = 1
+        print("The annotation_file_location is not a valid file location")
+    if not isdir(configuration['annotation_dir']):
+        flag = 1
+        print("The annotation_file_location is not a valid directory")
+    print("Checking if annotation files are available and readable")
+    def scan_folder(parent):
+    # iterate over all the files in directory 'parent'
+        #print("These are all annotation files:")
+        flag = 0
+        for file_name in os.listdir(parent):
+            if not exists(file_name):
+                print(file_name)
+                file_name=str(parent)+"/"+file_name
+                for file in os.listdir(file_name):
+                    if file.endswith(".xml"):
+                        full_file= file_name + str(file)
+                        access(full_file, R_OK)
+                        print(file)
+    scan_folder(configuration['annotation_dir'])
 
-    global task 
-    global corpus
-    global schema
-    global hierarchy
-    global set_name
-    global key_annotator
-    global output_dir
-    #global config_path
-
-    global logger
-
-    # load config file
-    base_dir = Path(__file__)
-    
-    try:
-        config_info = config_reader.read_config_file_information(config_path)
-        config_check.config_check(config_info)
-
-        schema = config_info['schema']
-        
-        corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
-                                             strict_matches=True)
-        task = config_info['task']
-        output_dir = Path(config_info['output_dir'])
-    except AssertionError as e:
-        raise 
-
-  
-
-
-
-    
+    assert not flag, 'issues found'
+    #check if all schema file is valid through checking overlaps and sub_entities    
