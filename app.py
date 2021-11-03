@@ -222,14 +222,17 @@ def run_app(stdscr):
                       inherit_settings=True)
 
     validation_menu = menu_system.Menu(title='Validation', 
-                      options=[menu_system.MenuAction('Validate Overlaps', 
+                      options=[menu_system.MenuAction('Annotation Overlaps', 
                                           validation_menu_functions.validate_overlaps),
-                               menu_system.MenuAction('Validate Subentity Boundaries', 
+                               menu_system.MenuAction('Subentity Boundaries', 
                                           validation_menu_functions.validate_subentity_boundaries),
-                               menu_system.MenuAction('Validate Subentity Partial Overlaps', 
+                               menu_system.MenuAction('Subentity Partial Overlaps', 
                                           validation_menu_functions.validate_subentity_partial_overlap),
-                               menu_system.MenuAction('Validate Annotation Boundaries', 
+                               menu_system.MenuAction('Annotation Boundaries (TODO)', 
                                           validation_menu_functions.validate_annotation_boundaries),
+                               menu_system.MenuAction('Negative Length Annotations (TODO)'),
+                               menu_system.MenuAction('Zero Length Annotations (TODO)'),
+                               menu_system.MenuAction('Schema Scope (TODO)'),
                                menu_system.MenuAction('Validate Schema', 
                                           validation_menu_functions.validate_schema_values),
                                menu_system.MenuAction('Generate Report', 
@@ -333,16 +336,21 @@ def generate_all_reports():
 
 def main():
   try:
-      settings.init(sys.argv[1]) 
+    if len(sys.argv) == 1:
+      path = sys.argv[1]
+    else:
+      path = ' '.join([x for x in sys.argv[1:]])
+    
+    settings.init(path)
   except IndexError as e:
-      print('Usage: python {} FILENAME'.format( __file__))
+      print('Usage: python {} <path_to_file>'.format( __file__))
 
   else:
     try:
       curses.wrapper(run_app)
     except:
       curses.nocbreak()
-      #stdscr.keypad(0)
+      #curses.keypad(0)
       
       curses.echo()
       curses.endwin()
@@ -351,8 +359,8 @@ def main():
     
 
 if __name__ == '__main__':
-    locale.setlocale(locale.LC_ALL, '')
-    encoding = locale.getpreferredencoding()
+    # locale.setlocale(locale.LC_ALL, '')
+    # encoding = locale.getpreferredencoding()
 
     main()
     
