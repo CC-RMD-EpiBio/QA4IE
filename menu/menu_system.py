@@ -51,12 +51,9 @@
 
 import os, sys, tty ,termios
 from load_data import settings
-from termcolor import colored
 import copy
 import string
-import time
 import curses
-import textwrap
 import locale
 from functools import reduce
 
@@ -76,6 +73,7 @@ class KeyboardReader():
                         260: 'left',
                         114: 'r'
                            }
+        
     def read_key(self, scr):
         k =  scr.getch()
         try:
@@ -84,7 +82,7 @@ class KeyboardReader():
             if k == curses.KEY_RESIZE:
                 return '--'
             else:
-                pass
+                scr.refresh()
 
 class MenuPrint():
 
@@ -132,17 +130,14 @@ class MenuToolBar():
         self.previous_execution = MenuAction()
         self.highlighted_option = MenuAction()
 
-        self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
+        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
         
-        self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
+        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
 
     def generate_toolbar(self, scr, color, width):
 
         height, width = scr.getmaxyx()
-        bar = [self.selection_settings.format_str(o.title) 
-                    if o == self.highlighted_option 
-                    else self.text_settings.format_str(o.title) 
-                    for o in self.options]
+        bar = [o.title for o in self.options]
         assert len(self.slots) == len(bar), 'need to add slot names in tool bar {}'.format(self.title)
         # if self.highlighted_option.title == 'Exit':
         #     self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'), curses.color_pair(1))
@@ -286,13 +281,13 @@ class MenuAction():
         self.title = settings.format_str(self.title)
         self.highlighted_option = True
 
-class MenuSettings():
-    def __init__(self, color=None, attributes=None):
-        self.color = 'white' if color is None else color
-        self.attributes = [] if attributes is None else attributes
+# class MenuSettings():
+#     def __init__(self, color=None, attributes=None):
+#         self.color = 'white' if color is None else color
+#         self.attributes = [] if attributes is None else attributes
 
-    def format_str(self, string):
-        return colored(string, color=self.color, attrs=self.attributes)
+#     def format_str(self, string):
+#         return colored(string, color=self.color, attrs=self.attributes)
 
 class Menu():
     """
@@ -315,8 +310,8 @@ class Menu():
         self.child_menus = {}
         self.previous_execution = MenuAction()
         self.inherit_settings = inherit_settings
-        self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
-        self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
+        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
+        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
         
         self.highlighted_option = self.options[list(self.options.keys())[0]]
         self.tool_bar = tool_bar
@@ -325,47 +320,48 @@ class Menu():
 
         self.update_inherited_settings()
         self.screen = screen
-        self.screen.clear()
-        self.screen.refresh()
+        
+        #self.screen.clear()
+        #self.screen.refresh()
         
 
 
-    @property
-    def selection_settings(self):
-        """
-        :type: Menu
-        """
-        return self._selection_settings
+    # @property
+    # def selection_settings(self):
+    #     """
+    #     :type: Menu
+    #     """
+    #     return self._selection_settings
 
-    @selection_settings.setter
-    def selection_settings(self, value):
+    # @selection_settings.setter
+    # def selection_settings(self, value):
 
-        self._selection_settings = value
+    #     self._selection_settings = value
 
-    @selection_settings.deleter
-    def selection_settings(self):
-        """
-        :type: Menu
-        """
-        del self._selection_settings  
-    @property
-    def text_settings(self):
-        """
-        :type: Menu
-        """
-        return self._text_settings 
+    # @selection_settings.deleter
+    # def selection_settings(self):
+    #     """
+    #     :type: Menu
+    #     """
+    #     del self._selection_settings  
+    # @property
+    # def text_settings(self):
+    #     """
+    #     :type: Menu
+    #     """
+    #     return self._text_settings 
 
-    @text_settings.setter
-    def text_settings (self, value):
-        # for child in self.child_menus.values():
-        self._text_settings = value
+    # @text_settings.setter
+    # def text_settings (self, value):
+    #     # for child in self.child_menus.values():
+    #     self._text_settings = value
 
-    @text_settings.deleter
-    def text_settings(self):
-        """
-        :type: Menu
-        """
-        del self._text_settings  
+    # @text_settings.deleter
+    # def text_settings(self):
+    #     """
+    #     :type: Menu
+    #     """
+    #     del self._text_settings  
 
 
     @property
@@ -484,8 +480,8 @@ class Menu():
         root = self.return_root()
 
         def update_children(menu):
-            menu.text_settings = menu.parent_menu.text_settings
-            menu.selection_settings = menu.parent_menu.selection_settings
+            #menu.text_settings = menu.parent_menu.text_settings
+            #menu.selection_settings = menu.parent_menu.selection_settings
             return([update_children(child) for child in menu.child_menus.values() if child.inherit_settings])
 
         [update_children(child) for child in root.child_menus.values() if child.inherit_settings]
@@ -664,16 +660,16 @@ class Menu():
             if input_:
                 self.read_input()
         except curses.error as e:
-            pass
+            print(e)
             #self.screen.addstr(20, 0, '{}'.format(e))
 
     def read_input(self):
         '''
             Reads user input
         '''
-        while(True):
-            key = KeyboardReader().read_key(self.screen)
-            self.validate_user_input(key)
+        #while(True):
+        key = KeyboardReader().read_key(self.screen)
+        self.validate_user_input(key)
 
     def remove_option(self, selection):
         '''
@@ -694,6 +690,8 @@ class Menu():
 
     def update_movement(self, key):
 
+        #self.clear_screen()
+        self.screen.keypad(1)
         try:
             try:
                 x = {'up':-1, 'down':1}[key]
@@ -702,7 +700,7 @@ class Menu():
             try:
                 y = {'left':-1, 'right':1}[key]
             except KeyError as e:
-                y = 0
+                y= 0
 
             options_keys = list(self.options.keys())
 
@@ -714,6 +712,7 @@ class Menu():
                         self.run_menu(input_=False)
                     elif y == 0:
                         self.tool_bar.highlighted_option = MenuAction()
+                        self.run_menu(input_=False)
 
 
             try:
@@ -786,7 +785,7 @@ class Menu():
                 self.highlighted_option = self.options[options_keys[current_option_index]]
                 self.refresh()
         except IndexError as e:
-            pass
+            self.refresh()
     def validate_user_input(self, key):
         '''
             Validates the key pressed by the user
@@ -874,17 +873,52 @@ class Menu():
         '''
             Refreshes the screen 
         '''
-        try:
-            self.screen.clear()
-            self.run_menu()
-        except RecursionError as e:
-            pass
+        
+        # try:
+        # #self.clear_screen()
+        self.run_menu()
+        # except RecursionError as e:
+
+        #     #self.screen = None
+        #     self.screen = curses.initscr()
+        #     curses.noecho()
+        #     curses.curs_set(0)
+        #     #self.highlighted_option = self.previous_execution
+            
+        #     # self.screen.keypad(0)
+        #     # #curses.echo()
+        #     # #curses.curs_set(1)
+        #     curses.endwin() 
+        #     # #curses.cbreak()
+        #     # self.screen.clear()
+        #     # # #self.screen.refresh()
+        #     # print(e)
+        #     # self.previous_execution = MenuAction()
+
+        #     # self.highlighted_option = self.options[list(self.options.keys())[0]]
+        #     #self.run_menu(input_=False)
+        #     # #print(e)# maximum recursion depth exceeded while getting the str of an object
+        #     #self.exit()
+        #     # #pass
+        #     # self.refresh()
+        #     # temp_title = self.title
+        #     # temp_options = list(self.options.values())
+        #     # self.previous_execution = MenuAction()
+        #     # self.highlighted_option = self.options[list(self.options.keys())[0]]
+        #     # self = None
+        #     #print(e)
+        #     # temp_new_menu = Menu(title=temp_title,
+        #     #                      options=temp_options,
+        #     #                      screen=curses.initscr())
+
+        #     # self=temp_new_menu
+        #     #self.run_menu()
 
     def back(self):
         '''
             Goes to the previous menu, if current menu does not have any previous menus then it refreshes the page
         '''
-        self.screen.clear()
+        #self.screen.clear()
         if self.has_parent():
             self.parent_menu.refresh()
         else:
@@ -915,7 +949,7 @@ class HelpMenu(Menu):
         self.tool_bar =None
         self.screen = screen
         
-        self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
+        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
         
 
         self.create_links()
@@ -974,8 +1008,8 @@ class CorpusViewerMenu(Menu):
         self.child_menus = {}
         self.previous_execution = MenuAction()
         self.inherit_settings = inherit_settings
-        self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
-        self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
+        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
+        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
         
         
         self.tool_bar = tool_bar
@@ -988,7 +1022,7 @@ class CorpusViewerMenu(Menu):
         self.create_links()
         self.screen = screen
 
-        
+        self.input_history_counter = []
         self.update_inherited_settings()
         
         
@@ -1123,7 +1157,13 @@ class CorpusViewerMenu(Menu):
 
         '''
         #self.rows, self.columns = self.screen.getmaxyx()
+        if set(self.input_history_counter) == 1 and len(self.input_history_counter):
+            key = 'space'
         if key in ['up', 'down', 'left', 'right']:
+            if not key in self.input_history_counter:
+                self.input_history_counter = []
+            
+            self.input_history_counter.append(key)
             self.update_movement(key)
             
         elif key == 'space': 
@@ -1365,12 +1405,6 @@ class CorpusViewerMenu(Menu):
                 self.read_input()
         except curses.error as e:
             pass
-class DocumentWrapper(textwrap.TextWrapper):
-
-    def wrap(self, text):
-        split_text = text.split('\n')
-        lines = [line for para in split_text for line in textwrap.TextWrapper.wrap(self, para)]
-        return lines
 
 
 class SchemaMenu(Menu):
@@ -1381,8 +1415,8 @@ class SchemaMenu(Menu):
         self.child_menus = {}
         self.previous_execution = MenuAction()
         self.inherit_settings = inherit_settings
-        self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
-        self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
+        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
+        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
         
         self.tool_bar = tool_bar
         self.highlighted_option = MenuAction()
