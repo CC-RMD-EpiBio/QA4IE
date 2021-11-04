@@ -337,21 +337,26 @@ def main():
       print('Usage: python {} <path_to_file>'.format( __file__))
 
   else:
-    # try:
-    curses.wrapper(run_app)
-    # except:
+    try:
+
+        curses.wrapper(run_app)
+        curses.noecho()
+        curses.cbreak()
+        curses.curs_set(0)
+        stdscr.keypad(0)
+    except:
       # curses.nocbreak()
-      # #curses.keypad(0)
+      # curses.keypad(0)
       
       # curses.echo()
       # curses.endwin()
-      # curses.wrapper(run_app)
-      #print('e')
+      #curses.wrapper(run_app)
+      raise
     
 
 if __name__ == '__main__':
-    # locale.setlocale(locale.LC_ALL, '')
-    # encoding = locale.getpreferredencoding()
+    locale.setlocale(locale.LC_ALL, '')
+    encoding = locale.getpreferredencoding()
 
     main()
     
