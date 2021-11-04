@@ -667,9 +667,9 @@ class Menu():
         '''
             Reads user input
         '''
-        #while(True):
-        key = KeyboardReader().read_key(self.screen)
-        self.validate_user_input(key)
+        while(True):
+            key = KeyboardReader().read_key(self.screen)
+            self.validate_user_input(key)
 
     def remove_option(self, selection):
         '''
@@ -690,8 +690,6 @@ class Menu():
 
     def update_movement(self, key):
 
-        #self.clear_screen()
-        self.screen.keypad(1)
         try:
             try:
                 x = {'up':-1, 'down':1}[key]
@@ -700,7 +698,7 @@ class Menu():
             try:
                 y = {'left':-1, 'right':1}[key]
             except KeyError as e:
-                y= 0
+                y = 0
 
             options_keys = list(self.options.keys())
 
@@ -712,7 +710,6 @@ class Menu():
                         self.run_menu(input_=False)
                     elif y == 0:
                         self.tool_bar.highlighted_option = MenuAction()
-                        self.run_menu(input_=False)
 
 
             try:
@@ -785,7 +782,7 @@ class Menu():
                 self.highlighted_option = self.options[options_keys[current_option_index]]
                 self.refresh()
         except IndexError as e:
-            self.refresh()
+            pass
     def validate_user_input(self, key):
         '''
             Validates the key pressed by the user
@@ -806,11 +803,7 @@ class Menu():
         #     self.screen.addstr(0, width - len(msg), '{}'.format(msg), curses.A_BLINK)
         #     os.execv(sys.executable, ['python3'] + [sys.argv[0]])
 
-        elif key == '--':
-            try:
-                self.refresh()
-            except curses.error as e:
-                pass
+
         elif key == 'tab': 
             self.previous_execution = MenuAction()
                 
@@ -1157,13 +1150,9 @@ class CorpusViewerMenu(Menu):
 
         '''
         #self.rows, self.columns = self.screen.getmaxyx()
-        if set(self.input_history_counter) == 1 and len(self.input_history_counter):
-            key = 'space'
+
         if key in ['up', 'down', 'left', 'right']:
-            if not key in self.input_history_counter:
-                self.input_history_counter = []
-            
-            self.input_history_counter.append(key)
+ 
             self.update_movement(key)
             
         elif key == 'space': 
@@ -1324,7 +1313,7 @@ class CorpusViewerMenu(Menu):
             curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
             #curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
             colors = [curses.COLOR_RED, curses.COLOR_GREEN,
-                      curses.COLOR_YELLOW, curses.COLOR_BLUE, curses.COLOR_MAGENTA,
+                      curses.COLOR_YELLOW, curses.COLOR_MAGENTA,
                       curses.COLOR_CYAN]
 
             for i in range(4, len(settings.schema.entities)+4):
@@ -1433,7 +1422,7 @@ class SchemaMenu(Menu):
     def run_menu(self, input_=True):
 
 
-        self.screen.clear()
+        #self.screen.clear()
 
         try:
             curses.start_color()
@@ -1472,4 +1461,4 @@ class SchemaMenu(Menu):
             if input_:
                 self.read_input()
         except curses.error as e:
-            print(e)
+            print('hh {}'.format(e))
