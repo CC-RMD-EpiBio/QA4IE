@@ -802,13 +802,16 @@ class Menu():
         #     msg = 'restarting tool'
         #     self.screen.addstr(0, width - len(msg), '{}'.format(msg), curses.A_BLINK)
         #     os.execv(sys.executable, ['python3'] + [sys.argv[0]])
-
+        elif key == '--':
+            
+            self.refresh()
 
         elif key == 'tab': 
             self.previous_execution = MenuAction()
                 
             self.refresh()
         elif key == 'esc' and not self.has_parent(): 
+            
             self.exit()
         elif key == 'backspace':
             self.previous_execution = MenuAction() # clears the output every time one goes back and forth menus
@@ -928,7 +931,8 @@ class Menu():
         '''
             Quits the menu
         '''
-        #self.clear_screen()
+        self.clear_screen()
+        #os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit()
 
 class HelpMenu(Menu):
@@ -1312,9 +1316,8 @@ class CorpusViewerMenu(Menu):
 
             curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
             #curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-            colors = [curses.COLOR_RED, curses.COLOR_GREEN,
-                      curses.COLOR_YELLOW, curses.COLOR_MAGENTA,
-                      curses.COLOR_CYAN]
+            colors = [curses.COLOR_RED, curses.COLOR_YELLOW, curses.COLOR_MAGENTA,
+                      curses.COLOR_CYAN, curses.COLOR_BLUE]
 
             for i in range(4, len(settings.schema.entities)+4):
                 curses.init_pair(i , colors[(i-4) % len(colors)], curses.COLOR_BLACK)
@@ -1461,4 +1464,4 @@ class SchemaMenu(Menu):
             if input_:
                 self.read_input()
         except curses.error as e:
-            print('hh {}'.format(e))
+            print(e)
