@@ -61,7 +61,7 @@ from stats import statistics_menu_functions
 from corpus_viewer import corpus_viewer_functions
 
 
-
+sys.setrecursionlimit(10**6)
 
 def run_app(stdscr):
     if len(list(settings.corpus.keys())) == 1:
@@ -100,7 +100,6 @@ def run_app(stdscr):
         annotation_types = ['all_types'] + settings.schema.get_entity_names()
 
 
-    highlight_color = 'green'
 
     file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
     set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
@@ -130,8 +129,7 @@ def run_app(stdscr):
                                                              file_name_options.return_options),
                                       menu_system.MenuAction(annotator_pair_options.title, 
                                                              annotator_pair_options.return_options)],
-                             slots = ['File', 'Annotator Pair'],
-                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+                             slots = ['File', 'Annotator Pair'])
 
 
     corpus_viewer_tool_bar = menu_system.MenuToolBar(title = 'Corpus Viewer Tool Bar',
@@ -143,8 +141,7 @@ def run_app(stdscr):
                                                            set_name_options_no_general.return_options),
                                     menu_system.MenuAction(annotation_types_options_no_general.title, 
                                                            annotation_types_options_no_general.return_options)],
-                           slots = ['File', 'Annotator', 'Set Name', 'Annotation Type'],
-                           selection_settings=menu_system.MenuSettings(color=highlight_color))
+                           slots = ['File', 'Annotator', 'Set Name', 'Annotation Type'])
 
 
     validation_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
@@ -156,8 +153,7 @@ def run_app(stdscr):
                                                              annotator_options.return_options),
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Annotator', 'Entity'],
-                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+                             slots = ['File', 'Set Name', 'Annotator', 'Entity'])
 
     entity_lvl_tool_bar = menu_system.MenuToolBar(title = 'Entity Level Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -172,8 +168,7 @@ def run_app(stdscr):
                                                              annotation_types_options.return_options),
                                       menu_system.MenuAction(measure_options.title, 
                                                              measure_options.return_options)],
-                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity', 'Measure'],
-                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity', 'Measure'])
 
     token_lvl_tool_bar = menu_system.MenuToolBar(title = 'Token Level Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -186,16 +181,14 @@ def run_app(stdscr):
                                                              annotator_options.return_options),
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'],
-                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
 
     discrepancy_tool_bar = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
                                                              file_name_options.return_options),
                                       menu_system.MenuAction(annotator_pair_options.title, 
                                                              annotator_pair_options.return_options)],
-                             slots = ['File', 'Annotator Pair'],
-                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+                             slots = ['File', 'Annotator Pair'])
 
     statistics_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -206,8 +199,7 @@ def run_app(stdscr):
                                                              annotator_options.return_options),
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Annotator', 'Entity'],
-                             selection_settings=menu_system.MenuSettings(color=highlight_color))
+                             slots = ['File', 'Set Name', 'Annotator', 'Entity'])
 
 
     error_checks_menu = menu_system.Menu(title='Error Checks', 
@@ -311,8 +303,7 @@ def run_app(stdscr):
                                corpus_viewer,
                                schema_viewer,
                                help_menu], 
-                      screen=stdscr,
-                      selection_settings=menu_system.MenuSettings(color=highlight_color))
+                      screen=stdscr)
 
     try:
       try:
@@ -321,7 +312,7 @@ def run_app(stdscr):
 
         main_menu.run_menu()
       except curses.error as e:
-        pass
+        print(e)
     finally:
       curses.nocbreak(); stdscr.keypad(0); curses.echo(); curses.curs_set(1)
       curses.endwin() 
@@ -346,16 +337,16 @@ def main():
       print('Usage: python {} <path_to_file>'.format( __file__))
 
   else:
-    try:
-      curses.wrapper(run_app)
-    except:
-      curses.nocbreak()
-      #curses.keypad(0)
+    # try:
+    curses.wrapper(run_app)
+    # except:
+      # curses.nocbreak()
+      # #curses.keypad(0)
       
-      curses.echo()
-      curses.endwin()
-      #curses.wrapper(run_app)
-      raise
+      # curses.echo()
+      # curses.endwin()
+      # curses.wrapper(run_app)
+      #print('e')
     
 
 if __name__ == '__main__':
