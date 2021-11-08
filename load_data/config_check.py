@@ -48,40 +48,35 @@
 # derivative works thereof, in binary and source code form.
 #
 ###############################################################################
-import config_reader_test
-from config_reader_test import read_config_file_information
-from read_schema import *
+
 from os.path import *
-import json
 import os
 from os import access, R_OK
-import schema_framework
 
 
-configuration = {}
-config_path = r'config.config'
-configuration = read_config_file_information(config_path)
-schema = schema_framework
+# configuration = {}
+# config_path = r'config.config'
+# configuration = read_config_file_information(config_path)
+# schema = schema_framework
 #Check if configuration is readable
-print("Performing Config Checks")
-print("________________________________________________________\n")
-def config_check():
+
+
+def config_check(configuration):
+    print("Performing Config Checks")
+    print("{}\n".format('_'*30))
+
     flag = 0
     print("Checking if configuration is valid\n")
     if not configuration:
         flag = 1
         print("Configuration not read correctly")
-    else:
-        print("--Configuration read correctly\n")
     #check if task is correct
-    tasks=["sequence labelling","classification"]
+    tasks=["sequence_labelling","classification"]
     print("Checking if task is valid\n")
     if configuration['task'] not in tasks:
         flag = 1
         print(configuration['task'])
         print("The task listed is not valid, please only enter sequence_labelling or classification")
-    else:
-        print("--Task is valid\n")
     print("Checking if annotation directory is valid\n")
     if not exists(configuration['annotation_dir']):
         flag = 1
@@ -89,28 +84,22 @@ def config_check():
     if not isdir(configuration['annotation_dir']):
         flag = 1
         print("The annotation_file_location is not a valid directory")
-    else:
-        print("--annotation file location is a valid directory\n")
     print("Checking if annotation files are available and readable")
-    print("If all files are listed they are available and readable\n")
     def scan_folder(parent):
     # iterate over all the files in directory 'parent'
         #print("These are all annotation files:")
         flag = 0
         for file_name in os.listdir(parent):
             if not exists(file_name):
-                print("\t"+file_name)
+                print(file_name)
                 file_name=str(parent)+"/"+file_name
                 for file in os.listdir(file_name):
                     if file.endswith(".xml"):
                         full_file= file_name + str(file)
                         access(full_file, R_OK)
-                        print("\t\t"+file)
-    scan_folder(configuration['annotation_dir'])
-    return(flag)
+                        print(file)
+    if not flag:                    
+        scan_folder(configuration['annotation_dir'])
+
+    assert not flag, 'issues found'
     #check if all schema file is valid through checking overlaps and sub_entities    
-if not(config_check()):
-    print("\nNo errors found in the configuration file")
-else:
-    print("There is an error in the configuration file")
-    exit()
