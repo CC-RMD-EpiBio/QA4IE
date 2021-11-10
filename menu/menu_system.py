@@ -733,42 +733,7 @@ class Menu():
         # try:
         # #self.clear_screen()
         self.run_menu()
-        # except RecursionError as e:
 
-        #     #self.screen = None
-        #     self.screen = curses.initscr()
-        #     curses.noecho()
-        #     curses.curs_set(0)
-        #     #self.highlighted_option = self.previous_execution
-            
-        #     # self.screen.keypad(0)
-        #     # #curses.echo()
-        #     # #curses.curs_set(1)
-        #     curses.endwin() 
-        #     # #curses.cbreak()
-        #     # self.screen.clear()
-        #     # # #self.screen.refresh()
-        #     # print(e)
-        #     # self.previous_execution = MenuAction()
-
-        #     # self.highlighted_option = self.options[list(self.options.keys())[0]]
-        #     #self.run_menu(input_=False)
-        #     # #print(e)# maximum recursion depth exceeded while getting the str of an object
-        #     #self.exit()
-        #     # #pass
-        #     # self.refresh()
-        #     # temp_title = self.title
-        #     # temp_options = list(self.options.values())
-        #     # self.previous_execution = MenuAction()
-        #     # self.highlighted_option = self.options[list(self.options.keys())[0]]
-        #     # self = None
-        #     #print(e)
-        #     # temp_new_menu = Menu(title=temp_title,
-        #     #                      options=temp_options,
-        #     #                      screen=curses.initscr())
-
-        #     # self=temp_new_menu
-        #     #self.run_menu()
 
     def back(self):
         '''
@@ -884,7 +849,6 @@ class CorpusViewerMenu(Menu):
         self.parent_menu = None
         self.child_menus = {}
         self.previous_execution = MenuAction()
-        self.inherit_settings = inherit_settings
 
         self.tool_bar = tool_bar
         self.highlighted_option = MenuAction()
@@ -931,14 +895,14 @@ class CorpusViewerMenu(Menu):
                     self.tool_bar.update_toolbar(y, self.out, curses.color_pair(1), w) # moves left and
                     self.run_menu(input_=False)
 
-            if key == 'down':
-                if len(self.lines) - self.line > self.out_rows:
-                    self.line += 1
-                self.refresh()
-            if key == 'up':
-                if self.line > 0:
-                    self.line -= 1
-                self.refresh()
+                if x > 0:
+                    if len(self.lines) - self.line > self.out_rows:
+                        self.line += 1
+                    self.refresh()
+                if x < 0:
+                    if self.line > 0:
+                        self.line -= 1
+                    self.refresh()
 
         except IndexError as e:
             pass
@@ -947,7 +911,6 @@ class CorpusViewerMenu(Menu):
             Validates the key pressed by the user
 
         '''
-        #self.rows, self.columns = self.screen.getmaxyx()
 
         if key in ['up', 'down', 'left', 'right']:
  
@@ -985,35 +948,9 @@ class CorpusViewerMenu(Menu):
                             self.refresh()
                         if key in ['left', 'right']:
                             x = {'left':-1, 'right':1}[key]
-                            # get index number
-                            current_option_index = current_option_stack.index(current_option.title)
-                            
-                            if current_option_index == 0:
-                                if x < 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[-1]
-                                    self.line = 0
-                                    self.run_menu(input_ = False)
-                                if x > 0:
-                                    try:
-                                        self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
-                                    except IndexError as e:
-                                        self.tool_bar.highlighted_option.title = current_option_stack[-1]
-                                    self.line = 0
-                                    self.run_menu(input_ = False)
- 
-                            elif current_option_index  == len(current_option_stack) - 1:
-                                if x > 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[0]
-                                    self.line = 0
-                                    self.run_menu(input_ = False)
-                                if x < 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
-                                    self.line = 0
-                                    self.run_menu(input_ = False)
-                            elif x + current_option_index in range(0, len(current_option_stack)):
-                                self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
-                                self.line = 0
-                                self.run_menu(input_ = False)
+                            current_option_index = (current_option_stack.index(current_option.title) + x)%len(current_option_stack)
+                            self.tool_bar.highlighted_option.title = current_option_stack[current_option_index]
+                            self.run_menu(input_ = False)
 
         else:
             pass # if other keys are found, do nothing
@@ -1024,12 +961,11 @@ class CorpusViewerMenu(Menu):
             Runs the current menu
         '''
         self.screen.clear()
+        curses.start_color()
         self.rows, self.columns = self.screen.getmaxyx()
         self.out = self.screen.subwin(self.rows - 2, self.columns - 2, 1, 1)
         self.out_rows, self.out_columns = self.out.getmaxyx()
         try:
-            curses.start_color()
-            #curses.start_color()
             
             self.screen.addstr(0, 0, '{}'.format(self.title))
             try:
@@ -1054,7 +990,6 @@ class CorpusViewerMenu(Menu):
             filename = file 
             stdscr = self.screen
 
-            
             corpus_size = len(settings.corpus)
             annotators_in_corpus = len(set([a for t, ans in settings.corpus.items() for a, b in ans.items()]))
             annotations = len([a for f, a_c in settings.corpus.items() 
@@ -1074,39 +1009,44 @@ class CorpusViewerMenu(Menu):
             self.out_rows -= 1
             self.rows, self.columns = stdscr.getmaxyx()
             self.out_rows -= 5
+
             offsets = [[i for i in range(x['start'], x['end'])] for x in doc_annotations]
 
             offsets = [y for x in offsets for y in x]
-            #offsets.append(len(doc_annotations))
             
             self.out = stdscr.subwin(self.rows - 2, self.columns - 2, 1, 1)
             file_annotations = []
 
             for i in range(0, len(filecontent)):
                 if i in offsets:
-                    file_annotations.append(filecontent[i])
+                    if filecontent[i] in ['\n', '\t', '\r', '\a']:
+                        file_annotations.append(filecontent[i])
+                    else:
+                        file_annotations.append('¤')
+                    
                 elif filecontent[i] in ['\n', '\t', '\r', '\a']:
                     file_annotations.append(filecontent[i])
                 else:
-                    file_annotations.append(' ')
+                    file_annotations.append(filecontent[i])
             
             file_annotations = ''.join(file_annotations)
 
-            self.annotation_lines = [x + " " * (self.out_columns - len(x)) for x in reduce(lambda x, y: x + y, [[x[i:i+self.out_columns] for i in range(0, len(x), self.out_columns)] for x in file_annotations.expandtabs(4).splitlines()])]
+            self.annotation_lines = [x + " " * (self.out_columns - len(x)) 
+                                            for x in reduce(lambda x, y: x + y, [[x[i:i+self.out_columns] 
+                                            for i in range(0, len(x), self.out_columns)] 
+                                            for x in file_annotations.expandtabs(4).splitlines()])]
 
 
-            self.lines = [x + " " * (self.out_columns - len(x)) for x in reduce(lambda x, y: x + y, [[x[i:i+self.out_columns] for i in range(0, len(x), self.out_columns)] for x in filecontent.expandtabs(4).splitlines()])]
+            self.lines = [x + " " * (self.out_columns - len(x)) 
+                                    for x in reduce(lambda x, y: x + y, [[x[i:i+self.out_columns] 
+                                    for i in range(0, len(x), self.out_columns)] 
+                                    for x in filecontent.expandtabs(4).splitlines()])]
             
-
-
-
             curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-            #curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-            colors = [curses.COLOR_RED, curses.COLOR_YELLOW, curses.COLOR_MAGENTA,
-                      curses.COLOR_CYAN, curses.COLOR_BLUE]
 
-            for i in range(4, len(settings.schema.entities)+4):
-                curses.init_pair(i , colors[(i-4) % len(colors)], curses.COLOR_BLACK)
+            for i in range(0, len(settings.schema.entities)):
+                curses.init_pair(i + 3, 0, i+9)
+
             self.height, self.width = self.screen.getmaxyx()
 
 
@@ -1120,65 +1060,52 @@ class CorpusViewerMenu(Menu):
             if self.width <= len(top_menu):
                 self.screen.attron(curses.color_pair(2))
                 self.screen.addstr(3, 0, top_menu[:self.width-len(top_menu)-1])
-                #self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
                 self.screen.attroff(curses.color_pair(2))
             else:
                 self.screen.attron(curses.color_pair(2))
                 self.screen.addstr(3, 0, top_menu)
                 self.screen.addstr(3, len(top_menu), " " * (self.width - len(top_menu) - 1))
                 self.screen.attroff(curses.color_pair(2))
-            # self.screen.attron(curses.color_pair(2))
-            # self.screen.addstr(3, 0, top_menu)
-            # self.screen.addstr(3, len(top_menu), " " * (self.width - len(top_menu) - 1))
-            # self.screen.attroff(curses.color_pair(2))
-
-            # if annotator_name == 'anno2':
-            #     self.out.addstr(4,0, '{}'.format(offsets))
-                
-            # else:
-                
 
             for l in range(0, len(self.lines[self.line:self.line+self.out_rows])):
                 for c in range(0, len(self.lines[self.line:self.line+self.out_rows][l])):
                     txt_char = self.lines[self.line:self.line+self.out_rows][l][c]
                     annotated_char = self.annotation_lines[self.line:self.line+self.out_rows][l][c]
-                    #annotated_char = '0'
-                    #self.out.addstr(4,0, '{}'.format(out))
-                    i = list(settings.schema.entities.keys()).index(annotation_type) + 4
-                    if annotated_char == ' ' :
-                        self.out.addstr(l+4, c, ''.join(txt_char))
+                    i = list(settings.schema.entities.keys()).index(annotation_type)
+                    if doc_annotations:
+                        if not annotated_char == '¤' :
+                            self.out.addstr(l+4, c, ''.join(txt_char))
+                        else:
+                            self.out.addstr(l+4, c, ''.join(txt_char), curses.color_pair(i+3))
                     else:
-                        self.out.addstr(l+4, c, ''.join(txt_char), curses.color_pair(i))
-       
-            
+                        self.out.addstr(l+4, c, ''.join(txt_char))
 
-            #self.out.addstr(4, 0, ''.join(self.lines[self.line:self.line+self.out_rows]))
-            #self.out.addstr(4, 0, ''.join(self.annotation_lines[self.line:self.line+self.out_rows]))
-            # for y in range(4, self.out_rows):
-            #     for x in range(0, self.out_columns):
-            #         self.out.addstr(y, x, ''.join(self.lines[x][y]))
-            #         #if self.annotation_lines[x][y] == ' ':
-            #         self.out.addstr(x, y, ''.join(self.annotation_lines[x][y]), curses.color_pair(3))
-            
-            
-            #self.out.addstr(3, 0, '{}'.format(self.lines[self.line:self.line+self.out_rows]))
+
             if self.has_parent():
-                statusbarstr = "Press 'backspace' to return to {} |{} {} annotations".format(self.parent_menu,len(doc_annotations), annotation_type)
+                status_bar_options = ["Press 'backspace' to return to {}".format(self.parent_menu),
+                                     "{} {} annotations".format(len(doc_annotations), annotation_type)]
+
             else:
-                statusbarstr = "Press 'esc' to exit | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(corpus_size, annotators_in_corpus, annotations)
+                status_bar_options = ["Press 'esc' to exit",
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
+
+            statusbarstr = ' | '.join(status_bar_options)
+
+
+            self.height, self.width = self.screen.getmaxyx()
             if self.width <= len(statusbarstr):
                 self.screen.attron(curses.color_pair(2))
                 self.screen.addstr(self.height-1, 0, statusbarstr[:self.width-len(statusbarstr)-1])
-                #self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
                 self.screen.attroff(curses.color_pair(2))
             else:
                 self.screen.attron(curses.color_pair(2))
                 self.screen.addstr(self.height-1, 0, statusbarstr)
-                self.screen.addstr(self.height-1, len(statusbarstr), " " * (self.width - len(statusbarstr) - 1))
+                self.screen.addstr(self.height-1, len(statusbarstr), ' ' * (self.width - len(statusbarstr) - 1))
                 self.screen.attroff(curses.color_pair(2))
 
-            # self.screen.refresh()
-            # self.out.refresh()
+            self.screen.refresh()
             if input_:
                 self.read_input()
         except curses.error as e:
