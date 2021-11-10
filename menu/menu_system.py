@@ -58,7 +58,6 @@ import locale
 from functools import reduce
 
 
-
 class KeyboardReader():
     def __init__(self):
         self.key_mappings = {
@@ -71,7 +70,9 @@ class KeyboardReader():
                         258: 'down',
                         261: 'right',
                         260: 'left',
-                        114: 'r'
+                        114: 'r',
+                        106:'j',
+                        107:'k'
                            }
         
     def read_key(self, scr):
@@ -80,18 +81,9 @@ class KeyboardReader():
             return self.key_mappings[k]
         except KeyError as e:
             if k == curses.KEY_RESIZE:
-                return '--'
+                return 'resize'
             else:
                 scr.refresh()
-
-class MenuPrint():
-
-    def __init__(self, output=None, settings=None):
-        self.output = '' if output is None else output
-        self.settings = settings
-
-    def print_in_console(self):
-        print('{}'.format(self.settings.format_str(self.output)))
 
 class MenuToolBarOptions():
     def __init__(self, option_rack = None):
@@ -105,7 +97,6 @@ class MenuToolBarOptions():
         else:
             l = self.option_rack
             current_option = x.title
-            #var = current_option
             if not current_option in l:
                 pass
             else:
@@ -130,24 +121,17 @@ class MenuToolBar():
         self.previous_execution = MenuAction()
         self.highlighted_option = MenuAction()
 
-        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
-        
-        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
 
     def generate_toolbar(self, scr, color, width):
 
-        height, width = scr.getmaxyx()
-        bar = [o.title for o in self.options]
-        assert len(self.slots) == len(bar), 'need to add slot names in tool bar {}'.format(self.title)
-        # if self.highlighted_option.title == 'Exit':
-        #     self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'), curses.color_pair(1))
-        # else:
-        #     self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'))
+        #m height, width = scr.getmaxyx()
+        assert len(self.slots) == len(self.options), 'different slot and options lengths {}'.format(self.title)
+
         x = 0
         try:
             for i, j in zip(range(0, len(self.options)), range(0, len(self.slots))):
-                if x >= width:
-                    break
+                # if x >= width:
+                    # break
                 if self.options[i] == self.highlighted_option:
                     scr.addstr(1, x, '{}'.format(self.slots[j]))
                     x += len(self.slots[j]) + 1
@@ -165,22 +149,18 @@ class MenuToolBar():
         except curses.error as e:
             pass
 
-
-
-        
-        # bar = ['{} : {}'.format(self.text_settings.format_str(x), y) for x, y in zip(self.slots, bar)]
-        # return '  '.join(bar)
-
     def reset_toolbar(self):
 
         if self.previous_execution:
     
             try:
                 highlighted_option_index = self.options.index(self.highlighted_option)
-                self.options = [MenuAction(do.title, o.action) for o, do in zip(self.options, self.default_options)]
+                self.options = [MenuAction(do.title, o.action) for o, do in zip(self.options, 
+                                                                                self.default_options)]
                 self.highlighted_option = self.options[highlighted_option_index]
             except ValueError as e:
-                self.options = [MenuAction(do.title, o.action) for o, do in zip(self.options, self.default_options)]
+                self.options = [MenuAction(do.title, o.action) for o, do in zip(self.options, 
+                                                                               self.default_options)]
 
 
     def update_toolbar(self, x=None, scr=None, color=None, width=0):
@@ -192,26 +172,10 @@ class MenuToolBar():
             except ValueError as e:
 
                 current_option_index = 0
-            
-            if current_option_index == 0:
-                if x < 0:
-                    self.highlighted_option = self.options[len(self.options) - 1]
-                if x > 0:
-                    self.highlighted_option = self.options[current_option_index + x]
 
-            if current_option_index == len(self.options) - 1:
-                if x < 0:
-                    
-                    self.highlighted_option = self.options[current_option_index + x]
-                if x > 0: 
-                    self.highlighted_option = self.options[0]
-
-            if current_option_index + x in range(0, len(self.options)):
-                #current_option_index = current_option_index + x
-                self.highlighted_option = self.options[current_option_index + x]
+            self.highlighted_option = self.options[(current_option_index + x) % len(self.options)]
 
             self.generate_toolbar(scr, color, width)
-            #self.highlighted_option = MenuAction()
 
 class MenuAction():
     def __init__(self, title=None, action=None):
@@ -224,8 +188,6 @@ class MenuAction():
         :type: MenuAction
         """
         return '{}'.format(self.title)
-
-
 
     @property
     def title(self):
@@ -275,19 +237,10 @@ class MenuAction():
             except TypeError as e:
                 return self.action()
 
-
-
     def highlight_action(self, settings):
         self.title = settings.format_str(self.title)
         self.highlighted_option = True
 
-# class MenuSettings():
-#     def __init__(self, color=None, attributes=None):
-#         self.color = 'white' if color is None else color
-#         self.attributes = [] if attributes is None else attributes
-
-#     def format_str(self, string):
-#         return colored(string, color=self.color, attrs=self.attributes)
 
 class Menu():
     """
@@ -310,60 +263,23 @@ class Menu():
         self.child_menus = {}
         self.previous_execution = MenuAction()
         self.inherit_settings = inherit_settings
-        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
-        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
-        
+
         self.highlighted_option = self.options[list(self.options.keys())[0]]
         self.tool_bar = tool_bar
 
         self.create_links()
 
-        self.update_inherited_settings()
+        #self.update_inherited_settings()
         self.screen = screen
         
-        #self.screen.clear()
-        #self.screen.refresh()
+        self.height, self.width = self.screen.getmaxyx()
+        self.output_window =  self.screen.subwin(self.height - 4, 
+                                                 self.width - 2, 1, 1)
+        self.out_rows, self.out_columns = self.output_window.getmaxyx()
+
+        self.out_line = 0
+        self.out_lines = ''
         
-
-
-    # @property
-    # def selection_settings(self):
-    #     """
-    #     :type: Menu
-    #     """
-    #     return self._selection_settings
-
-    # @selection_settings.setter
-    # def selection_settings(self, value):
-
-    #     self._selection_settings = value
-
-    # @selection_settings.deleter
-    # def selection_settings(self):
-    #     """
-    #     :type: Menu
-    #     """
-    #     del self._selection_settings  
-    # @property
-    # def text_settings(self):
-    #     """
-    #     :type: Menu
-    #     """
-    #     return self._text_settings 
-
-    # @text_settings.setter
-    # def text_settings (self, value):
-    #     # for child in self.child_menus.values():
-    #     self._text_settings = value
-
-    # @text_settings.deleter
-    # def text_settings(self):
-    #     """
-    #     :type: Menu
-    #     """
-    #     del self._text_settings  
-
-
     @property
     def title(self):
         """
@@ -480,8 +396,6 @@ class Menu():
         root = self.return_root()
 
         def update_children(menu):
-            #menu.text_settings = menu.parent_menu.text_settings
-            #menu.selection_settings = menu.parent_menu.selection_settings
             return([update_children(child) for child in menu.child_menus.values() if child.inherit_settings])
 
         [update_children(child) for child in root.child_menus.values() if child.inherit_settings]
@@ -562,106 +476,107 @@ class Menu():
             Runs the current menu
         '''
         self.screen.clear()
-        #self.screen.refresh()
+
         try:
-            height, width = self.screen.getmaxyx()
+            self.height, self.width = self.screen.getmaxyx()
             curses.start_color()
             curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+            curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
             self.screen.addstr(0, 0, '{}'.format(self.title))
+
             if self.tool_bar:
-                self.tool_bar.generate_toolbar(self.screen, curses.color_pair(1), width)
+                self.tool_bar.generate_toolbar(self.screen, curses.color_pair(1), self.width)
             self.screen.addstr(2, 0, '{}'.format('Please select an option:'))
             
-            #print(self.text_settings.format_str('{}'.format(self.title)))
-
-            #curses.endwin()
-            # if self.tool_bar:
-            #     #print(self.tool_bar.options)
-            #     #self.tool_bar.options filters
-            #     self.tool_bar.generate_toolbar()
-            # print(self.text_settings.format_str('Please select an option:\n'))
 
             for i in range(0, len(self.options.keys())):
-                if list(self.options.keys())[i] == self.highlighted_option.title:
-                    self.screen.addstr(4 + i, 0, '{}'.format(list(self.options.keys())[i]), curses.color_pair(1))
-                    #print('  {}'.format(self.selection_settings.format_str(option)))
-                else:
-                    self.screen.addstr(4 + i, 0, '{}'.format(list(self.options.keys())[i]))
+                if i + 4 < self.height - 1:
+                    if list(self.options.keys())[i] == self.highlighted_option.title:
+                        self.screen.addstr(4 + i, 0, '{}'.format(list(self.options.keys())[i]), curses.color_pair(1))
+                        #print('  {}'.format(self.selection_settings.format_str(option)))
+                    else:
+                        self.screen.addstr(4 + i, 0, '{}'.format(list(self.options.keys())[i]))
+
             if not self.has_parent():
-                if self.highlighted_option.title == 'Exit':
-                    self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'), curses.color_pair(1))
-                else:
-                    self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'))
+                if len(self.options.keys()) + 5 < self.height - 1:
+                    if self.highlighted_option.title == 'Exit':
+                        self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'), curses.color_pair(1))
+                    else:
+                        self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'))
 
-            # for option in self.options.keys():
-            #     if option == self.highlighted_option.title:
-            #         print('  {}'.format(self.selection_settings.format_str(option)))
-            #     else:
-            #         print('  {}'.format(self.text_settings.format_str(option)))
-            # if not self.has_parent():
-            #     if self.highlighted_option.title == 'Exit':
-            #         print('\n  {}'.format(self.selection_settings.format_str('Exit')))
-            #     else:
-            #         print('\n  {}'.format(self.text_settings.format_str('Exit')))
-
-            # print(self.text_settings.format_str('\nUse the up and down arrow keys to move the highlight to your choice.'))
-
-            # if self.has_parent():
-            #     print(self.text_settings.format_str('Press enter to execute the option.\n'))
-            #     print(self.text_settings.format_str('Press backspace to go back to {}.\n'.format(self.parent_menu.title)))
-            # else:
-            #     print(self.text_settings.format_str('Press enter to execute the option.\n'))
-
-            height, width = self.screen.getmaxyx()
             if isinstance(self.previous_execution, MenuAction):
                 if self.previous_execution.title == 'Exit':
                     self.previous_execution.execute_action()
-                # else:
-                #     self.screen.addstr(8, 0 , '{}'.format('Executed'))
 
                 if self.tool_bar: 
                     action = self.previous_execution.execute_action(self.tool_bar.options)
                     if not action is None:
-                        self.screen.addstr(len(self.options.keys()) + 6, 0, '{}'.format(action))
+                       
+                        self.height, self.width = self.screen.getmaxyx()
+                        
+                        self.output_window = self.screen.subwin(self.height - 2, self.width - 2, 1, 1)
 
-                    # MenuPrint(, self.text_settings).print_in_console()
-                #self.screen.addstr(len(self.options.keys()) + 10, 0, '{}'.format('Executed'))
+                        self.out_rows, self.out_columns = self.output_window.getmaxyx()
+                        self.out_rows -= 1
+                        self.out_rows -= 10
+                        try:
+                            self.out_lines = [x + ' ' * (self.out_columns - len(x)) for x in reduce(lambda x, y: x + y, 
+                                                                                                    [[x[i:i+self.out_columns] 
+                                                                                    for i in range(0, 
+                                                                                                   len(x), 
+                                                                                                   self.out_columns)] 
+                                                                                    for x in action.expandtabs(4).splitlines()])]
 
-            curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-            height, width = self.screen.getmaxyx()
+                            for l in range(0, len(self.out_lines[self.out_line:self.out_line+self.out_rows])):
+                                for c in range(0, len(self.out_lines[self.out_line:self.out_line+self.out_rows][l])):
 
-            curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-            
+                                    txt_char = self.out_lines[self.out_line:self.out_line+self.out_rows][l][c]
+                                    self.output_window.addstr(l + len(self.options.keys()) + 5, c, 
+                                                              ''.join(txt_char))
+                        except TypeError as e:
+                            pass
+
+
             corpus_size = len(settings.corpus)
             annotators_in_corpus = len(set([a for t, ans in settings.corpus.items() for a, b in ans.items()]))
-            annotations = len([a for f, a_c in settings.corpus.items() 
-                            for a_name, d_c in a_c.items() 
-                            for s, ans in d_c['annotation_sets'].items()
-                            for a in ans if a['mention'] in settings.schema.get_entity_names()])
+            annotations_in_corpus = len([a for f, a_c in settings.corpus.items() 
+                                            for a_name, d_c in a_c.items() 
+                                            for s, ans in d_c['annotation_sets'].items()
+                                            for a in ans if a['mention'] in settings.schema.get_entity_names()])
+
             if self.has_parent():
-                statusbarstr = "Press 'backspace' to return to {} | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(self.parent_menu,corpus_size, annotators_in_corpus, annotations)
+                status_bar_options = ["Press 'backspace' to return to {}".format(self.parent_menu),
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
+
             else:
-                statusbarstr = "Press 'esc' to exit | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(corpus_size, annotators_in_corpus, annotations)
+                status_bar_options = ["Press 'esc' to exit",
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
+
+            statusbarstr = ' | '.join(status_bar_options)
 
 
-            if width <= len(statusbarstr):
+            self.height, self.width = self.screen.getmaxyx()
+            if self.width <= len(statusbarstr):
                 self.screen.attron(curses.color_pair(2))
-                self.screen.addstr(height-1, 0, statusbarstr[:width-len(statusbarstr)-1])
-                #self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+                self.screen.addstr(self.height-1, 0, statusbarstr[:self.width-len(statusbarstr)-1])
                 self.screen.attroff(curses.color_pair(2))
             else:
                 self.screen.attron(curses.color_pair(2))
-                self.screen.addstr(height-1, 0, statusbarstr)
-                self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+                self.screen.addstr(self.height-1, 0, statusbarstr)
+                self.screen.addstr(self.height-1, len(statusbarstr), ' ' * (self.width - len(statusbarstr) - 1))
                 self.screen.attroff(curses.color_pair(2))
 
             self.screen.refresh()
-
+            
             if input_:
                 self.read_input()
         except curses.error as e:
             print(e)
-            #self.screen.addstr(20, 0, '{}'.format(e))
+            
 
     def read_input(self):
         '''
@@ -711,7 +626,6 @@ class Menu():
                     elif y == 0:
                         self.tool_bar.highlighted_option = MenuAction()
 
-
             try:
                 try:
                     current_option_index = options_keys.index(self.highlighted_option.title)
@@ -720,67 +634,30 @@ class Menu():
             except ValueError as e: # if current option is exit
                 current_option_index = len(options_keys) 
 
-            if current_option_index  == len(options_keys) - 1: # last item in the options list
-                if x > 0:
-                    if self.tool_bar:
-                        
-                        self.highlighted_option = MenuAction()
-                        self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
-                        self.refresh()
-                    
-                    current_option_index = 0
-                    self.highlighted_option = self.options[options_keys[current_option_index]]
-                    if not self.has_parent():
-                        self.highlighted_option = MenuAction('Exit',self.exit)
-                    self.refresh()
+            num_highlight_options = len(options_keys) 
+            if self.tool_bar:
+                num_highlight_options += 1
+            if not self.has_parent():
+                num_highlight_options += 1
 
-                elif x < 0:
-                    current_option_index += x
-                    if self.tool_bar:
-                        if current_option_index < 0:
-                            
-                            current_option_index = 0
-                            self.highlighted_option = MenuAction()
-                            self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
-                            self.refresh()
+            
+            current_option_index = (current_option_index + x) % num_highlight_options
+
+            if current_option_index == len(options_keys):
+
+                if not self.has_parent():
+                    self.highlighted_option = MenuAction('Exit', self.exit)
+
+                if self.tool_bar:
+                    self.highlighted_option = MenuAction()
+                    self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
+
+            else:
+                self.highlighted_option =  self.options[options_keys[current_option_index]]
+
+            self.refresh()
 
 
-                        # self.tool_bar.update_toolbar(0)
-                        # #self.refresh()
-                        # current_option_index = 0
-
-                    self.highlighted_option = self.options[options_keys[current_option_index]]
-                    self.refresh()
-
-            if current_option_index == 0: # first item in the options list
-                if x < 0:
-                    if self.tool_bar:
-                        self.highlighted_option = MenuAction()
-                        self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
-                        self.refresh()
-                        
-                    current_option_index = len(options_keys) - 1
-                    current_menu_action = self.options[options_keys[current_option_index]]
-                    self.highlighted_option = self.options[options_keys[current_option_index]]
-                    if not self.has_parent():
-                        self.highlighted_option = MenuAction('Exit', self.exit)
-                    self.refresh()
-
-            if current_option_index == len(options_keys): # if in exit go back to top or bottom
-                if x > 0:
-                    current_option_index = 0
-                    self.highlighted_option = self.options[options_keys[current_option_index]]
-                    self.refresh()
-
-                if x < 0:
-                    current_option_index = len(options_keys) - 1
-                    self.highlighted_option = self.options[options_keys[current_option_index]]
-                    self.refresh()
-
-            if current_option_index + x in range(0, len(options_keys)):
-                current_option_index += x
-                self.highlighted_option = self.options[options_keys[current_option_index]]
-                self.refresh()
         except IndexError as e:
             pass
     def validate_user_input(self, key):
@@ -797,18 +674,20 @@ class Menu():
             if self.tool_bar:
                 self.tool_bar.reset_toolbar()
             self.refresh()
-        # elif key == 'r':
-        #     height, width = self.screen.getmaxyx()
-        #     msg = 'restarting tool'
-        #     self.screen.addstr(0, width - len(msg), '{}'.format(msg), curses.A_BLINK)
-        #     os.execv(sys.executable, ['python3'] + [sys.argv[0]])
-        elif key == '--':
-            
+        elif key == 'j':
+            if self.out_line > 0:
+                self.out_line -= 1
+            self.refresh()
+        elif key == 'k':
+            if len(self.out_lines) - self.out_line > self.out_rows:
+                self.out_line += 1
             self.refresh()
 
         elif key == 'tab': 
             self.previous_execution = MenuAction()
-                
+
+            self.refresh()
+        elif key == 'resize':
             self.refresh()
         elif key == 'esc' and not self.has_parent(): 
             
@@ -831,34 +710,15 @@ class Menu():
                         if key in ['left', 'right']:
                             x = {'left':-1, 'right':1}[key]
                             # get index number
-                            current_option_index = current_option_stack.index(current_option.title)
-    
-                            if current_option_index == 0:
-                                if x < 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[-1]
-                                    self.run_menu(input_ = False)
-                                if x > 0:
-                                    try:
-                                        self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
-                                    except IndexError as e:
-                                        self.tool_bar.highlighted_option.title = current_option_stack[-1]
-                                    self.run_menu(input_ = False)
- 
-                            elif current_option_index  == len(current_option_stack) - 1:
-                                if x > 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[0]
-                                    self.run_menu(input_ = False)
-                                if x < 0:
-                                    self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
-                                    self.run_menu(input_ = False)
-                            elif x + current_option_index in range(0, len(current_option_stack)):
-                                self.tool_bar.highlighted_option.title = current_option_stack[current_option_index + x]
+                            current_option_index = (current_option_stack.index(current_option.title) + x)%len(current_option_stack)
+                            self.tool_bar.highlighted_option.title = current_option_stack[current_option_index]
+                            self.run_menu(input_ = False)
+        
 
-                                self.run_menu(input_ = False)
             if isinstance(self.highlighted_option, Menu): # checks if selection is menu
                 self.screen.clear()
                 self.highlighted_option.run_menu()
-
+            self.out_line = 0
             self.previous_execution = self.highlighted_option
 
             self.refresh()
@@ -946,53 +806,73 @@ class HelpMenu(Menu):
         self.tool_bar =None
         self.screen = screen
         
-        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
-        
-
         self.create_links()
 
-        self.update_inherited_settings()
         self.screen.clear()
         self.screen.refresh()
+    def validate_user_input(self, key):
+        '''
+            Validates the key pressed by the user
+
+        '''
+        
+        if key == 'resize':
+            self.refresh()
+        elif key == 'backspace':
+            self.previous_execution = MenuAction() # clears the output every time one goes back and forth menus
+            self.back()
+        else:
+            pass # if other keys are found, do nothing
+                   
 
     def run_menu(self):
         '''
             Runs the current menu
         '''
-
-        self.screen.addstr(0, 0, '{}'.format(self.title))
-        help_options =  'Use the up and down arrow keys to move the highlight to your choice.\n'
-        help_options += 'Press enter to execute an option.\n'
-        help_options += 'Press backspace to go back to a previous menu.\n'
-        help_options += 'Press spacebar to reset the output and the filters of a menu.\n'
-        help_options += 'Press tab to reset the filters of a menu.\n'
-        help_options += 'Press esc inside the Main Menu to quit the tool.\n'
-        self.screen.addstr(1, 0, help_options)
-        curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+        self.screen.clear()
         height, width = self.screen.getmaxyx()
-
         curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+        self.screen.addstr(0, 0, '{}'.format(self.title))
+        help_options = ['Use the up and down arrow keys to move the highlight to your choice.',
+                        'Press enter to execute an option.',
+                        'Press backspace to go back to a previous menu.',
+                        'Press spacebar to reset the output and the filters of a menu.',
+                        'Press tab to reset the filters of a menu.',
+                        'Press esc inside the Main Menu to quit the tool.'
+                        ]
+
+        for i in range(0, len(help_options)):
+            for j in range(0, (len(help_options[i]))):
+                self.screen.addstr(i + 1, j + 1, help_options[i][j])
         
         corpus_size = len(settings.corpus)
         annotators_in_corpus = len(set([a for t, ans in settings.corpus.items() for a, b in ans.items()]))
-        annotations = len([a for f, a_c in settings.corpus.items() 
+        annotations_in_corpus = len([a for f, a_c in settings.corpus.items() 
                         for a_name, d_c in a_c.items() 
                         for s, ans in d_c['annotation_sets'].items()
                         for a in ans if a['mention'] in settings.schema.get_entity_names()])
+
         if self.has_parent():
-            statusbarstr = "Press 'backspace' to return to {} | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(self.parent_menu,corpus_size, annotators_in_corpus, annotations)
+            status_bar_options = ["Press 'backspace' to return to {}".format(self.parent_menu),
+                                 "corpus size: {}".format(corpus_size),
+                                 "annotators in corpus {}".format(annotators_in_corpus),
+                                 "annotations in corpus {}".format(annotations_in_corpus)]
+
         else:
-            statusbarstr = "Press 'esc' to exit | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(corpus_size, annotators_in_corpus, annotations)
+            status_bar_options = ["Press 'esc' to exit",
+                                 "corpus size: {}".format(corpus_size),
+                                 "annotators in corpus {}".format(annotators_in_corpus),
+                                 "annotations in corpus {}".format(annotations_in_corpus)]
+
+        statusbarstr = ' | '.join(status_bar_options)
+        self.screen.attron(curses.color_pair(2))
         if width <= len(statusbarstr):
-            self.screen.attron(curses.color_pair(2))
             self.screen.addstr(height-1, 0, statusbarstr[:width-len(statusbarstr)-1])
-            #self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-            self.screen.attroff(curses.color_pair(2))
         else:
-            self.screen.attron(curses.color_pair(2))
             self.screen.addstr(height-1, 0, statusbarstr)
             self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-            self.screen.attroff(curses.color_pair(2))
+
+        self.screen.attroff(curses.color_pair(2))
         self.screen.refresh()
 
         self.read_input()
@@ -1005,10 +885,7 @@ class CorpusViewerMenu(Menu):
         self.child_menus = {}
         self.previous_execution = MenuAction()
         self.inherit_settings = inherit_settings
-        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
-        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
-        
-        
+
         self.tool_bar = tool_bar
         self.highlighted_option = MenuAction()
         
@@ -1018,22 +895,12 @@ class CorpusViewerMenu(Menu):
         
         self.create_links()
         self.screen = screen
-
-        self.input_history_counter = []
-        self.update_inherited_settings()
-        
-        
-        
+     
         self.rows, self.columns = self.screen.getmaxyx()
         self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1), self.columns)
         self.out = self.screen.subwin(self.rows - 2, self.columns - 2, 1, 1)
         self.out_rows, self.out_columns = self.out.getmaxyx()
         
-        self.screen.clear()
-        self.screen.refresh()
-        
-        
-        #self.tool_bar.update_toolbar(1, self.screen, curses.color_pair(1))
 
     def read_input(self):
         '''
@@ -1072,80 +939,7 @@ class CorpusViewerMenu(Menu):
                 if self.line > 0:
                     self.line -= 1
                 self.refresh()
-            if key == '--':
-                self.refresh()
 
-
-
-            # try:
-            #     try:
-            #         current_option_index = options_keys.index(self.highlighted_option.title)
-            #     except AttributeError as e:
-            #         current_option_index = 0
-            # except ValueError as e: # if current option is exit
-            #     current_option_index = len(options_keys) 
-
-            # if current_option_index  == len(options_keys) - 1: # last item in the options list
-            #     if x > 0:
-            #         if self.tool_bar:
-                        
-            #             self.highlighted_option = MenuAction()
-            #             self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
-            #             self.refresh()
-                    
-            #         current_option_index = 0
-            #         self.highlighted_option = self.options[options_keys[current_option_index]]
-            #         if not self.has_parent():
-            #             self.highlighted_option = MenuAction('Exit',self.exit)
-            #         self.refresh()
-
-            #     elif x < 0:
-            #         current_option_index += x
-            #         if self.tool_bar:
-            #             if current_option_index < 0:
-                            
-            #                 current_option_index = 0
-            #                 self.highlighted_option = MenuAction()
-            #                 self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
-            #                 self.refresh()
-
-
-            #             # self.tool_bar.update_toolbar(0)
-            #             # #self.refresh()
-            #             # current_option_index = 0
-
-            #         self.highlighted_option = self.options[options_keys[current_option_index]]
-            #         self.refresh()
-
-            # if current_option_index == 0: # first item in the options list
-            #     if x < 0:
-            #         if self.tool_bar:
-            #             self.highlighted_option = MenuAction()
-            #             self.tool_bar.update_toolbar(0, self.screen, curses.color_pair(1))
-            #             self.refresh()
-                        
-            #         current_option_index = len(options_keys) - 1
-            #         current_menu_action = self.options[options_keys[current_option_index]]
-            #         self.highlighted_option = self.options[options_keys[current_option_index]]
-            #         if not self.has_parent():
-            #             self.highlighted_option = MenuAction('Exit', self.exit)
-            #         self.refresh()
-
-            # if current_option_index == len(options_keys): # if in exit go back to top or bottom
-            #     if x > 0:
-            #         current_option_index = 0
-            #         self.highlighted_option = self.options[options_keys[current_option_index]]
-            #         self.refresh()
-
-            #     if x < 0:
-            #         current_option_index = len(options_keys) - 1
-            #         self.highlighted_option = self.options[options_keys[current_option_index]]
-            #         self.refresh()
-
-            # if current_option_index + x in range(0, len(options_keys)):
-            #     current_option_index += x
-            #     self.highlighted_option = self.options[options_keys[current_option_index]]
-            #     self.refresh()
         except IndexError as e:
             pass
     def validate_user_input(self, key):
@@ -1164,13 +958,8 @@ class CorpusViewerMenu(Menu):
             if self.tool_bar:
                 self.tool_bar.reset_toolbar()
             self.refresh()
-        # elif key == 'r':
-        #     height, width = self.screen.getmaxyx()
-        #     msg = 'restarting tool'
-        #     self.screen.addstr(0, width - len(msg), '{}'.format(msg), curses.A_BLINK)
-        #     os.execv(sys.executable, ['python3'] + [sys.argv[0]])
-        elif key == '--':
-            
+
+        elif key == 'resize':
             self.refresh()
 
         elif key == 'tab': 
@@ -1226,9 +1015,6 @@ class CorpusViewerMenu(Menu):
                                 self.line = 0
                                 self.run_menu(input_ = False)
 
-            # self.previous_execution = self.highlighted_option
-
-            # self.refresh()
         else:
             pass # if other keys are found, do nothing
                    
@@ -1407,61 +1193,136 @@ class SchemaMenu(Menu):
         self.child_menus = {}
         self.previous_execution = MenuAction()
         self.inherit_settings = inherit_settings
-        #self.selection_settings = MenuSettings(color='white', attributes=['reverse', 'bold']) if selection_settings is None else selection_settings
-        #self.text_settings = MenuSettings(color='white', attributes=[]) if text_settings is None else text_settings
-        
+
         self.tool_bar = tool_bar
         self.highlighted_option = MenuAction()
 
         self.screen = screen
+        self.height, self.width = self.screen.getmaxyx()
+        self.output_window =  self.screen.subwin(self.height - 4, 
+                                                 self.width - 2, 1, 1)
+
+        self.out_rows, self.out_columns = self.output_window.getmaxyx()
+
+        self.out_line = 0
+        self.out_lines = ''
         self.create_links()
 
-        self.update_inherited_settings()
         self.screen.clear()
         self.screen.refresh()
 
+    def validate_user_input(self, key):
+        '''
+            Validates the key pressed by the user
+
+        '''
+        
+        if key == 'resize':
+            self.refresh()
+        elif key == 'backspace':
+            self.previous_execution = MenuAction() # clears the output every time one goes back and forth menus
+            self.back()
+        elif key == 'space': 
+            self.refresh()
+        elif key == 'up':
+            if self.out_line > 0:
+                self.out_line -= 1
+            self.refresh()
+        elif key == 'down':
+            if len(self.out_lines) - self.out_line > self.out_rows:
+                self.out_line += 1
+            self.refresh()
+
+        else:
+            pass # if other keys are found, do nothing
 
 
     def run_menu(self, input_=True):
 
-
-        #self.screen.clear()
+        self.screen.clear()
 
         try:
+            self.height, self.width = self.screen.getmaxyx()
             curses.start_color()
             curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+            curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
             self.screen.addstr(0, 0, '{}'.format(self.title))
 
-
-            self.screen.addstr(2, 0, '{}'.format(settings.schema.to_string()))
-
-            height, width = self.screen.getmaxyx()
-
-            curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+            self.height, self.width = self.screen.getmaxyx()
             
+            self.output_window = self.screen.subwin(self.height - 2, self.width - 2, 1, 1)
+
+            self.out_rows, self.out_columns = self.output_window.getmaxyx()
+            self.out_rows -= 1
+            self.out_rows -= 4
+
+            printed_schema = ''
+
+            for k, v in settings.schema.entities.items():
+                if not v.has_parent_entity():
+                    printed_schema += '{}\n'.format(v.name)
+                    for i, j in v.features.items():
+                        printed_schema += '{} {} : {}\n'.format(' '*1, i, ', '.join(j))
+                    printed_schema += '\n'
+                    for i, j in v.sub_entities.items():
+                        printed_schema += '{} {}\n'.format(' '*2 ,j.name)
+                        for a, b in j.features.items():
+                            printed_schema += '{} {} : {}\n'.format(' '*3, a, ', '.join(b))
+
+
+            self.out_lines = [x + ' ' * (self.out_columns - len(x)) for x in reduce(lambda x, y: x + y, 
+                                                                                    [[x[i:i+self.out_columns] 
+                                                                    for i in range(0, 
+                                                                                   len(x), 
+                                                                                   self.out_columns)] 
+                                                                    for x in printed_schema.expandtabs(4).splitlines()])]
+
+            for l in range(0, len(self.out_lines[self.out_line:self.out_line+self.out_rows])):
+                for c in range(0, len(self.out_lines[self.out_line:self.out_line+self.out_rows][l])):
+
+                    txt_char = self.out_lines[self.out_line:self.out_line+self.out_rows][l][c]
+                    self.output_window.addstr(l + 1, c, 
+                                              ''.join(txt_char))
+
+
             corpus_size = len(settings.corpus)
             annotators_in_corpus = len(set([a for t, ans in settings.corpus.items() for a, b in ans.items()]))
-            annotations = len([a for f, a_c in settings.corpus.items() 
-                            for a_name, d_c in a_c.items() 
-                            for s, ans in d_c['annotation_sets'].items()
-                            for a in ans if a['mention'] in settings.schema.get_entity_names()])
-            if self.has_parent():
-                statusbarstr = "Press 'backspace' to return to {} | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(self.parent_menu,corpus_size, annotators_in_corpus, annotations)
-            else:
-                statusbarstr = "Press 'esc' to exit | corpus size: {} | annotators in corpus: {} | annotations in corpus: {}".format(corpus_size, annotators_in_corpus, annotations)
-            if width <= len(statusbarstr):
-                self.screen.attron(curses.color_pair(2))
-                self.screen.addstr(height-1, 0, statusbarstr[:width-len(statusbarstr)-1])
-                #self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-                self.screen.attroff(curses.color_pair(2))
-            else:
-                self.screen.attron(curses.color_pair(2))
-                self.screen.addstr(height-1, 0, statusbarstr)
-                self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-                self.screen.attroff(curses.color_pair(2))
-            self.screen.refresh()
+            annotations_in_corpus = len([a for f, a_c in settings.corpus.items() 
+                                            for a_name, d_c in a_c.items() 
+                                            for s, ans in d_c['annotation_sets'].items()
+                                            for a in ans if a['mention'] in settings.schema.get_entity_names()])
 
+            if self.has_parent():
+                status_bar_options = ["Press 'backspace' to return to {}".format(self.parent_menu),
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
+
+            else:
+                status_bar_options = ["Press 'esc' to exit",
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
+
+            statusbarstr = ' | '.join(status_bar_options)
+
+
+            self.height, self.width = self.screen.getmaxyx()
+            if self.width <= len(statusbarstr):
+                self.screen.attron(curses.color_pair(2))
+                self.screen.addstr(self.height-1, 0, statusbarstr[:self.width-len(statusbarstr)-1])
+                self.screen.attroff(curses.color_pair(2))
+            else:
+                self.screen.attron(curses.color_pair(2))
+                self.screen.addstr(self.height-1, 0, statusbarstr)
+                self.screen.addstr(self.height-1, len(statusbarstr), ' ' * (self.width - len(statusbarstr) - 1))
+                self.screen.attroff(curses.color_pair(2))
+
+            self.screen.refresh()
+            
             if input_:
                 self.read_input()
         except curses.error as e:
             print(e)
+            
+
