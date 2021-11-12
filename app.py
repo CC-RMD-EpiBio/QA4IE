@@ -58,7 +58,6 @@ from menu import menu_system
 from validation import validation_menu_functions 
 from error_checks import error_checks_menu_functions
 from stats import statistics_menu_functions
-from corpus_viewer import corpus_viewer_functions
 
 
 sys.setrecursionlimit(10**6)
