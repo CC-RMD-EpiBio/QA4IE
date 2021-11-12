@@ -58,6 +58,7 @@ from menu import menu_system
 from validation import validation_menu_functions 
 from error_checks import error_checks_menu_functions
 from stats import statistics_menu_functions
+from evaluation import evaluation_menu_functions
 
 
 sys.setrecursionlimit(10**6)
@@ -240,7 +241,8 @@ def run_app(stdscr):
                                         inherit_settings=True)
 
     token_level_menu = menu_system.Menu(title='Token Level', 
-                                        options=[menu_system.MenuAction('Evaluate')], 
+                                        options=[menu_system.MenuAction('Evaluate', 
+                                                evaluation_menu_functions.token_eval)], 
                                         tool_bar = token_lvl_tool_bar,
                                         screen=stdscr,
                                         inherit_settings=True)
