@@ -59,12 +59,7 @@ def init(config_path=None):
     global task 
     global corpus
     global schema
-    global hierarchy
-    global set_name
-    global key_annotator
     global output_dir
-    #global config_path
-
     global logger
 
     # load config file
@@ -75,9 +70,13 @@ def init(config_path=None):
         config_check.config_check(config_info)
 
         schema = config_info['schema']
-        
-        corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
-                                             strict_matches=True)
+        encoding = config_info['encoding']
+        try:
+            corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
+                                                 strict_matches=True,
+                                                 encoding = encoding)
+        except LookupError as e:
+            raise
         task = config_info['task']
         output_dir = Path(config_info['output_dir'])
     except AssertionError as e:
