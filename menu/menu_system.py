@@ -795,52 +795,60 @@ class HelpMenu(Menu):
             Runs the current menu
         '''
         self.screen.clear()
-        height, width = self.screen.getmaxyx()
-        curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-        self.screen.addstr(0, 0, '{}'.format(self.title))
-        help_options = ['Use the up and down arrow keys to move the highlight to your choice.',
-                        'Press enter to execute an option.',
-                        'Press backspace to go back to a previous menu.',
-                        'Press spacebar to reset the output and the filters of a menu.',
-                        'Press tab to reset the filters of a menu.',
-                        'Press esc inside the Main Menu to quit the tool.'
-                        ]
+        try:
+            height, width = self.screen.getmaxyx()
+            curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+            self.screen.addstr(0, 0, '{}'.format(self.title))
+            help_options = ['Use the up and down arrow keys to move the highlight to your choice.',
+                            'Press enter to execute an option.',
+                            'Press backspace to go back to a previous menu.',
+                            'Press spacebar to reset the output and the filters of a menu.',
+                            'Press tab to reset the filters of a menu.',
+                            'Press esc inside the Main Menu to quit the tool.'
+                            ]
 
-        for i in range(0, len(help_options)):
-            for j in range(0, (len(help_options[i]))):
-                self.screen.addstr(i + 1, j + 1, help_options[i][j])
-        
-        corpus_size = len(settings.corpus)
-        annotators_in_corpus = len(set([a for t, ans in settings.corpus.items() for a, b in ans.items()]))
-        annotations_in_corpus = len([a for f, a_c in settings.corpus.items() 
-                        for a_name, d_c in a_c.items() 
-                        for s, ans in d_c['annotation_sets'].items()
-                        for a in ans if a['mention'] in settings.schema.get_entity_names()])
+            for i in range(0, len(help_options)):
+                for j in range(0, 
+                              (len(help_options[i]) if len(help_options[i]) < width 
+                                                    else len(help_options[i]) - (len(help_options[i]) - width)-1)):
 
-        if self.has_parent():
-            status_bar_options = ["Press 'backspace' to return to {}".format(self.parent_menu),
-                                 "corpus size: {}".format(corpus_size),
-                                 "annotators in corpus {}".format(annotators_in_corpus),
-                                 "annotations in corpus {}".format(annotations_in_corpus)]
+                    self.screen.addstr(i + 1, 
+                                       j + 1, 
+                                       help_options[i][j])
+            
+            corpus_size = len(settings.corpus)
+            annotators_in_corpus = len(set([a for t, ans in settings.corpus.items() for a, b in ans.items()]))
+            annotations_in_corpus = len([a for f, a_c in settings.corpus.items() 
+                            for a_name, d_c in a_c.items() 
+                            for s, ans in d_c['annotation_sets'].items()
+                            for a in ans if a['mention'] in settings.schema.get_entity_names()])
 
-        else:
-            status_bar_options = ["Press 'esc' to exit",
-                                 "corpus size: {}".format(corpus_size),
-                                 "annotators in corpus {}".format(annotators_in_corpus),
-                                 "annotations in corpus {}".format(annotations_in_corpus)]
+            if self.has_parent():
+                status_bar_options = ["Press 'backspace' to return to {}".format(self.parent_menu),
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
 
-        statusbarstr = ' | '.join(status_bar_options)
-        self.screen.attron(curses.color_pair(2))
-        if width <= len(statusbarstr):
-            self.screen.addstr(height-1, 0, statusbarstr[:width-len(statusbarstr)-1])
-        else:
-            self.screen.addstr(height-1, 0, statusbarstr)
-            self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+            else:
+                status_bar_options = ["Press 'esc' to exit",
+                                     "corpus size: {}".format(corpus_size),
+                                     "annotators in corpus {}".format(annotators_in_corpus),
+                                     "annotations in corpus {}".format(annotations_in_corpus)]
 
-        self.screen.attroff(curses.color_pair(2))
-        self.screen.refresh()
+            statusbarstr = ' | '.join(status_bar_options)
+            self.screen.attron(curses.color_pair(2))
+            if width <= len(statusbarstr):
+                self.screen.addstr(height-1, 0, statusbarstr[:width-len(statusbarstr)-1])
+            else:
+                self.screen.addstr(height-1, 0, statusbarstr)
+                self.screen.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
 
-        self.read_input()
+            self.screen.attroff(curses.color_pair(2))
+            self.screen.refresh()
+
+            self.read_input()
+        except curses.error as e:
+            print(e)
 
 class CorpusViewerMenu(Menu):
     def __init__(self, title=None, options=None, screen = None, selection_settings=None, text_settings=None, inherit_settings=False, tool_bar=None):
@@ -965,6 +973,7 @@ class CorpusViewerMenu(Menu):
         self.rows, self.columns = self.screen.getmaxyx()
         self.out = self.screen.subwin(self.rows - 2, self.columns - 2, 1, 1)
         self.out_rows, self.out_columns = self.out.getmaxyx()
+        #self.line = 0
         try:
             
             self.screen.addstr(0, 0, '{}'.format(self.title))
@@ -972,6 +981,8 @@ class CorpusViewerMenu(Menu):
                 height, width = self.out.getmaxyx()
                 if self.tool_bar:
                     self.tool_bar.generate_toolbar(self.out, curses.color_pair(1), width)
+
+                    
             except RecursionError as e:
                 self.refresh()
 
@@ -1027,7 +1038,7 @@ class CorpusViewerMenu(Menu):
                 elif filecontent[i] in ['\n', '\t', '\r', '\a']:
                     file_annotations.append(filecontent[i])
                 else:
-                    file_annotations.append(filecontent[i])
+                    file_annotations.append('-')
             
             file_annotations = ''.join(file_annotations)
 
@@ -1048,6 +1059,8 @@ class CorpusViewerMenu(Menu):
                 curses.init_pair(i + 3, 0, i+9)
 
             self.height, self.width = self.screen.getmaxyx()
+
+            self.line = 0 if self.line > min(len(self.lines), self.line + self.out_rows) else self.line
 
 
             instructions = '(↓) Next line | (↑) Previous line'
