@@ -147,7 +147,7 @@ class MenuToolBar():
                     scr.addstr(1, x, '{}'.format(self.options[i]))
                     x += len(self.options[i].title) + 1
         except curses.error as e:
-            pass
+            print(e)
 
     def reset_toolbar(self):
 
@@ -800,10 +800,11 @@ class HelpMenu(Menu):
             curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
             self.screen.addstr(0, 0, '{}'.format(self.title))
             help_options = ['Use the up and down arrow keys to move the highlight to your choice.',
+                            'Use j or k keys to go up and down the printed results.',
                             'Press enter to execute an option.',
                             'Press backspace to go back to a previous menu.',
                             'Press spacebar to reset the output and the filters of a menu.',
-                            'Press tab to reset the filters of a menu.',
+                            'Press tab to clear the output.',
                             'Press esc inside the Main Menu to quit the tool.'
                             ]
 
