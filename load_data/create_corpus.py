@@ -56,7 +56,7 @@
 from load_data.read_annotations import read_gate_xml
 
 
-def create_corpus(annotations_dir = None, strict_matches=False):
+def create_corpus(annotations_dir = None, strict_matches=False, encoding='utf-8'):
     '''
     Creates a corpus structure using nested dictionaries
     :param annotations_dir: the path object to the annotated files
@@ -78,7 +78,7 @@ def create_corpus(annotations_dir = None, strict_matches=False):
         content = {}
         for path in paths:
             current_annotator = path.parts[len(annotations_dir.parts)] # getting the annotator's name
-            content[current_annotator] = read_gate_xml(file_path = path, annotator=current_annotator) 
+            content[current_annotator] = read_gate_xml(file_path = path, annotator=current_annotator, encoding=encoding) 
 
         corpus[file_name] = dict(sorted(content.items(), key=lambda x: x[0].lower()))
 
