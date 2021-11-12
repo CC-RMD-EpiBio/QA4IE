@@ -93,11 +93,12 @@ def config_check(configuration):
             if not exists(file_name):
                 print(file_name)
                 file_name=str(parent)+"/"+file_name
-                for file in os.listdir(file_name):
-                    if file.endswith(".xml"):
-                        full_file= file_name + str(file)
-                        access(full_file, R_OK)
-                        print(file)
+                if not file_name[0] == '.':
+                    for file in os.listdir(file_name):
+                        if file.endswith(".xml"):
+                            full_file= file_name + str(file)
+                            access(full_file, R_OK)
+                            print(file)
     if not flag:                    
         scan_folder(configuration['annotation_dir'])
 
