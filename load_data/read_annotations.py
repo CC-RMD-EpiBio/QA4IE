@@ -56,7 +56,7 @@
 from lxml import etree
 
 
-def read_gate_xml(file_path, exclude_sets = [], annotator = None):
+def read_gate_xml(file_path, exclude_sets = [], annotator = None, encoding = 'utf-8'):
     """
     Given a a path to an gate xml, generate a object representation of it
     :param file_path: a pathlib object that points to the annotation file
@@ -72,8 +72,8 @@ def read_gate_xml(file_path, exclude_sets = [], annotator = None):
     document_contents = {}
     tree = etree.parse(str(file_path))
     root = tree.getroot()
-    document_contents['text'] = etree.tostring(tree.find('TextWithNodes'), encoding='utf-8', 
-                                                                           method="text", 
+    document_contents['text'] = etree.tostring(tree.find('TextWithNodes'), encoding=encoding, 
+                                                                           method='text', 
                                                                            with_tail = False).decode()
     document_contents['annotation_sets'] = {}
 
