@@ -74,28 +74,23 @@ def validate_overlaps(filters=[]):
         ovlps = [str(o) for o in ovlps]
         ovlps = [str(e) for e in settings.schema.get_entity_names() if not e in ovlps]
         overlaps_to_validate[n] = ovlps
-    
-
-
-   
 
     if annotation_type == 'all_types': # all annotation types
         if file == 'corpus': # all notes
             if annotator_name == 'team': # all annotators
                 if annotation_set == 'all_sets': # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                    for a_name, d_c in a_c.items() 
-                                    for s, ans in d_c['annotation_sets'].items()
-                                    for a in ans]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          overlaps_to_validate)
-
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
 
                     if count:
                         return 'Annotation overlaps found'
@@ -103,19 +98,19 @@ def validate_overlaps(filters=[]):
                     else:
                         return 'No annotation overlaps found'
                 else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans if s == annotation_set]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          overlaps_to_validate)
-
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+
+
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
 
                     if count:
                         return 'Annotation overlaps found'
@@ -124,18 +119,19 @@ def validate_overlaps(filters=[]):
                         return 'No annotation overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans  if a_name == annotator_name]
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          overlaps_to_validate)
-
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+                          
+
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
 
                     if count:
                         return 'Annotation overlaps found'
@@ -143,19 +139,18 @@ def validate_overlaps(filters=[]):
                     else:
                         return 'No annotation overlaps found'                  
                 else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans     if a_name == annotator_name and
-                                                         s == annotation_set]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          overlaps_to_validate)
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
 
                     if count:
                         return 'Annotation overlaps found'
@@ -253,18 +248,18 @@ def validate_overlaps(filters=[]):
         if file == 'corpus': # all notes
             if annotator_name == 'team': # all annotators
                 if annotation_set == 'all_sets': # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans if a['mention'] == annotation_type]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+                         
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
 
                     if count:
                         return 'Annotation overlaps found'
@@ -272,19 +267,19 @@ def validate_overlaps(filters=[]):
                     else:
                         return 'No annotation overlaps found'
                 else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans        if a['mention'] == annotation_type and
-                                                            s == annotation_set]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+                         
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
+
 
                     if count:
                         return 'Annotation overlaps found'
@@ -293,19 +288,19 @@ def validate_overlaps(filters=[]):
                         return 'No annotation overlaps found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans           if a['mention'] == annotation_type and
-                                                               a_name == annotator_name]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+                         
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
+
 
                     if count:
                         return 'Annotation overlaps found'
@@ -313,20 +308,19 @@ def validate_overlaps(filters=[]):
                     else:
                         return 'No annotation overlaps found'
                 else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans        if a['mention'] == annotation_type and
-                                                            a_name == annotator_name and
-                                                            s == annotation_set]
-
-                    overlaps = annotation_validations.annotation_overlaps(annotations, 
-                                                                          {annotation_type:overlaps_to_validate[annotation_type]})
                     count = 0
+                    for f, a_c in settings.corpus.items():
+                      for a_name, d_c in a_c.items():
+                        for s, annotations in d_c['annotation_sets'].items():
 
-                    for x,y in overlaps.items():
-                        if y:
-                            count += 1
+                          overlaps = annotation_validations.annotation_overlaps(annotations, 
+                                                                                overlaps_to_validate)
+
+                               
+                          for x,y in overlaps.items():
+                              if y:
+                                  count += 1
+
 
                     if count:
                         return 'Annotation overlaps found'
