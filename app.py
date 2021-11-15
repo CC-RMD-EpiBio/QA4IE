@@ -321,7 +321,7 @@ def run_app(stdscr):
 def generate_all_reports():
     error_checks_menu_functions.generate_error_checks_report()
     validation_menu_functions.generate_validation_report()
-
+    statistics_menu_functions.generate_statistics_report()
 
     return 'report generated in {}'.format(settings.output_dir)
 
