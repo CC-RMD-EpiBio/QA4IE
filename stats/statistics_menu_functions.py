@@ -231,7 +231,7 @@ def count_entities(filters=[]):
    
     for anno, counts in stat_mention_count_print.items():
         output += '{}\n{}\n'.format(anno, 
-                            ''.join(['  {} : {}\n'.format(k, v) for k, v in counts.items()]))
+                            ''.join(['{} : {}\n'.format(k, v) for k, v in counts.items()]))
 
     return output
 
@@ -429,8 +429,8 @@ def count_entities_with_features(filters=[]):
                 stat_mention_count_print[annotator_name] = {t : stats['count']}
 
     for anno, counts in collections.OrderedDict(sorted(stat_mention_count_print.items())).items():
-        output += '{}\n{}\n'.format(anno, 
-                            ''.join(['  {} : {}\n'.format(k, v) for k, v in counts.items()]))
+        output += '{}\n'.format(
+                            ''.join(['{} : {}\n'.format(k, v) for k, v in counts.items()]))
 
     return output
 
@@ -610,8 +610,8 @@ def entity_token_stats(filters=[]):
                 stat_mention_count_print[annotator_name] = {t : token_summary}
 
     for anno, counts in collections.OrderedDict(sorted(stat_mention_count_print.items())).items():
-        output += '{}\n{}\n'.format(anno, 
-                            ''.join(['  {} : {}\n'.format(k, v) for k, v in counts.items()]))
+        output += '{}\n'.format(
+                            ''.join(['{} : {}\n'.format(k, v) for k, v in counts.items()]))
 
     return output
 
@@ -790,8 +790,8 @@ def entity_with_features_token_stats(filters=[]):
                 stat_mention_count_print[annotator_name] = {t : token_summary}
 
     for anno, counts in collections.OrderedDict(sorted(stat_mention_count_print.items())).items():
-        output += '{}\n{}\n'.format(anno, 
-                            ''.join(['  {} : {}\n'.format(k, v) for k, v in counts.items()]))
+        output += '{}\n'.format(
+                            ''.join(['{} : {}\n'.format(k, v) for k, v in counts.items()]))
 
     return output
 
