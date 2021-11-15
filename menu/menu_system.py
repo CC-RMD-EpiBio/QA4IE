@@ -57,7 +57,6 @@ import curses
 import locale
 from functools import reduce
 
-
 class KeyboardReader():
     def __init__(self):
         self.key_mappings = {
@@ -507,6 +506,8 @@ class Menu():
             if isinstance(self.previous_execution, MenuAction):
                 if self.previous_execution.title == 'Exit':
                     self.previous_execution.execute_action()
+                if self.previous_execution.title == 'Generate Reports':
+                    self.previous_execution.execute_action()
 
                 if self.tool_bar: 
                     action = self.previous_execution.execute_action(self.tool_bar.options)
@@ -532,6 +533,34 @@ class Menu():
 
                                     txt_char = self.out_lines[self.out_line:self.out_line+self.out_rows][l][c]
                                     self.output_window.addstr(l + len(self.options.keys()) + 5, c, 
+                                                              ''.join(txt_char))
+                        except TypeError as e:
+                            pass
+                else:
+
+                    action = self.previous_execution.execute_action()
+                    if not action is None:
+                       
+                        self.height, self.width = self.screen.getmaxyx()
+                        
+                        self.output_window = self.screen.subwin(self.height - 2, self.width - 2, 1, 1)
+
+                        self.out_rows, self.out_columns = self.output_window.getmaxyx()
+                        self.out_rows -= 1
+                        self.out_rows -= 10
+                        try:
+                            self.out_lines = [x + ' ' * (self.out_columns - len(x)) for x in reduce(lambda x, y: x + y, 
+                                                                                                    [[x[i:i+self.out_columns] 
+                                                                                    for i in range(0, 
+                                                                                                   len(x), 
+                                                                                                   self.out_columns)] 
+                                                                                    for x in action.expandtabs(4).splitlines()])]
+
+                            for l in range(0, len(self.out_lines[self.out_line:self.out_line+self.out_rows])):
+                                for c in range(0, len(self.out_lines[self.out_line:self.out_line+self.out_rows][l])):
+
+                                    txt_char = self.out_lines[self.out_line:self.out_line+self.out_rows][l][c]
+                                    self.output_window.addstr(l + len(self.options.keys()) + 6, c, 
                                                               ''.join(txt_char))
                         except TypeError as e:
                             pass
@@ -575,7 +604,7 @@ class Menu():
             if input_:
                 self.read_input()
         except curses.error as e:
-            print(e)
+            pass
             
 
     def read_input(self):
