@@ -230,7 +230,7 @@ def count_entities(filters=[]):
 
    
     for anno, counts in stat_mention_count_print.items():
-        output += '{}\n{}\n'.format(anno, 
+        output += '{}\n'.format( 
                             ''.join(['{} : {}\n'.format(k, v) for k, v in counts.items()]))
 
     return output
