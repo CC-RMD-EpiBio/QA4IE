@@ -88,7 +88,7 @@ def annotation_overlaps(annotations = [], annotation_types = {}):
         
         res = []
         for t in l:
-            if(t['end'] >= a['start'] and t['start'] <= a['end'] and not t['id'] == a['id']):
+            if(t['end'] > a['start'] and t['start'] < a['end'] and not t['id'] == a['id']):
                 res.append(t)
         return res
 
