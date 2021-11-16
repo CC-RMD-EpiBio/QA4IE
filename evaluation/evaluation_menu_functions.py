@@ -50,7 +50,7 @@
 ###############################################################################
 
 import sys, os
-from evaluation import token_level_eval
+from evaluation import token_level_eval, kappa_score
 from load_data import settings
 
 def token_eval(filters=[]):
@@ -124,6 +124,84 @@ def token_eval(filters=[]):
                     out += 'F1 Score: {}\n'.format(round(results['f_score'],2))
 
                     return out
+
+
+def cohens_kappa(filters=[]):
+
+    
+  document_name = filters[0].title
+  set_name = filters[1].title
+  key_name = filters[2].title
+  response_name = filters[3].title
+  entity_type = filters[4].title
+
+  
+  # defaults
+  #   File : corpus Set Name : all_sets Key : team Response : team Entity : all_types
+
+  if document_name == 'corpus':
+      return ''
+  else:
+      if key_name == 'team':
+          return ''
+      else:
+          if response_name == 'team':
+              return ''
+          else:
+              if entity_type == 'all_types':
+                  return ''
+              else:
+              # (key_text, key_annotations, resp_text, resp_annotations, ent_types)
+                  
+                  current_document = settings.corpus[document_name]
+                  key_document = current_document[key_name]
+                  response_document = current_document[response_name]
+
+                  if set_name == 'all_sets':
+                      key_annotations = [a for s, ans in key_document['annotation_sets'].items()
+                                           for a in ans]
+                      response_annotations = [a for s, ans in response_document['annotation_sets'].items()
+                                                for a in ans
+                                                ]
+                  else:
+                      key_annotations = [a for s, ans in key_document['annotation_sets'].items()
+                                           for a in ans if s == set_name
+                                           ]
+
+                      response_annotations = [a for s, ans in response_document['annotation_sets'].items()
+                                                for a in ans if s == set_name
+                                                ]
+
+
+                  try:
+                      results = kappa_score.compare(key_document['text'],
+                                                         key_annotations,
+                                                         response_document['text'],
+                                                         response_annotations,
+                                                         entity_type)
+                  except AssertionError as e:
+                      return '{}'.format(e)
+
+                  out = ''
+                                
+                  cm_print = '{} {}\n{} {}\n'.format(results['confusion_matrix'][0][0],
+                                                     results['confusion_matrix'][1][0],
+                                                     results['confusion_matrix'][0][1],
+                                                     results['confusion_matrix'][1][1])
+
+
+                  out += '{}\n\n'.format(cm_print)
+                  out += 'Observed Agreement: {}\n'.format(results['observed_agreement'])
+                  out += 'Positive Specific Agreement: {}\n'.format(results['positive_specific_agreement'])
+                  out += 'Negative Specific Agreement: {}\n'.format(results['negative_specific_agreement'])
+                  out += 'Chance Agreement: {}\n'.format(results['chance_agreement'])
+                  out += 'Cohens Kappa: {}\n'.format(results['cohens_kappa'])
+
+                  return out
+
+
+
+
 
 
 
