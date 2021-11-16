@@ -183,6 +183,19 @@ def run_app(stdscr):
                                                              annotation_types_options.return_options)],
                              slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
 
+    cohens_kappa_tool_bar = menu_system.MenuToolBar(title = 'Cohens Kappa Menu Tool Bar',
+                             options=[menu_system.MenuAction(file_name_options.title, 
+                                                             file_name_options.return_options),
+                                      menu_system.MenuAction(set_name_options.title,
+                                                             set_name_options.return_options),
+                                      menu_system.MenuAction(annotator_options.title, 
+                                                             annotator_options.return_options),
+                                      menu_system.MenuAction(annotator_options.title, 
+                                                             annotator_options.return_options),
+                                      menu_system.MenuAction(annotation_types_options.title, 
+                                                             annotation_types_options.return_options)],
+                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
+
     discrepancy_tool_bar = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
                                                              file_name_options.return_options),
@@ -234,23 +247,36 @@ def run_app(stdscr):
                       inherit_settings=True)
 
 
-    entity_level_menu = menu_system.Menu(title='Entity Level', 
-                                        options=[menu_system.MenuAction('Evaluate')], 
-                                        tool_bar = entity_lvl_tool_bar,
-                                        screen=stdscr,
-                                        inherit_settings=True)
 
-    token_level_menu = menu_system.Menu(title='Token Level', 
-                                        options=[menu_system.MenuAction('Evaluate', 
-                                                evaluation_menu_functions.token_eval)], 
-                                        tool_bar = token_lvl_tool_bar,
-                                        screen=stdscr,
-                                        inherit_settings=True)
 
-    evaluation_menu = menu_system.Menu(title='Evaluation', 
-                                       options=[entity_level_menu, token_level_menu], 
-                                       screen=stdscr,
-                                       inherit_settings=True)
+    if settings.task == 'sequence_labelling':
+      entity_level_menu = menu_system.Menu(title='Entity Level', 
+                                    options=[menu_system.MenuAction('Evaluate')], 
+                                    tool_bar = entity_lvl_tool_bar,
+                                    screen=stdscr,
+                                    inherit_settings=True)
+
+      token_level_menu = menu_system.Menu(title='Token Level', 
+                                          options=[menu_system.MenuAction('Evaluate', 
+                                                  evaluation_menu_functions.token_eval)], 
+                                          tool_bar = token_lvl_tool_bar,
+                                          screen=stdscr,
+                                          inherit_settings=True)
+      evaluation_menu = menu_system.Menu(title='Evaluation', 
+                                         options=[entity_level_menu, token_level_menu], 
+                                         screen=stdscr,
+                                         inherit_settings=True)
+    if settings.task == 'classification':
+      cohens_kappa_menu = menu_system.Menu(title='Cohens Kappa', 
+                                          options=[menu_system.MenuAction('Evaluate',
+                                            evaluation_menu_functions.cohens_kappa)], 
+                                          tool_bar = cohens_kappa_tool_bar,
+                                          screen=stdscr,
+                                          inherit_settings=True)
+      evaluation_menu = menu_system.Menu(title='Evaluation', 
+                                         options=[cohens_kappa_menu], 
+                                         screen=stdscr,
+                                         inherit_settings=True)
 
     discrepancy_menu = menu_system.Menu(title='Discrepancy Analysis', 
                                        options=[menu_system.MenuAction('Compare')], 
