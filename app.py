@@ -215,7 +215,7 @@ def run_app(stdscr):
                              slots = ['File', 'Set Name', 'Annotator', 'Entity'])
 
 
-    error_checks_menu = menu_system.Menu(title='Error Checks', 
+    error_checks_menu = menu_system.Menu(title='Document Validations', 
                       options=[menu_system.MenuAction('Text Differences', 
                                                       error_checks_menu_functions.check_text_differences),
                                menu_system.MenuAction('Set Name Differences', 
@@ -225,26 +225,42 @@ def run_app(stdscr):
                       tool_bar=error_checks_tool_bar,
                       screen=stdscr,
                       inherit_settings=True)
-
-    validation_menu = menu_system.Menu(title='Validation', 
-                      options=[menu_system.MenuAction('Annotation Overlaps', 
-                                          validation_menu_functions.validate_overlaps),
-                               menu_system.MenuAction('Subentity Boundaries', 
-                                          validation_menu_functions.validate_subentity_boundaries),
-                               menu_system.MenuAction('Subentity Partial Overlaps', 
-                                          validation_menu_functions.validate_subentity_partial_overlap),
-                               menu_system.MenuAction('Annotation Boundaries (TODO)', 
-                                          validation_menu_functions.validate_annotation_boundaries),
-                               menu_system.MenuAction('Negative Length Annotations (TODO)'),
-                               menu_system.MenuAction('Zero Length Annotations (TODO)'),
-                               menu_system.MenuAction('Schema Scope (TODO)'),
-                               menu_system.MenuAction('Validate Schema', 
-                                          validation_menu_functions.validate_schema_values),
-                               menu_system.MenuAction('Generate Report', 
-                                          validation_menu_functions.generate_validation_report)], 
-                      tool_bar=validation_tool_bar,
-                      screen=stdscr,
-                      inherit_settings=True)
+    if [y for x, y in settings.schema.entities.items() if y.is_sub_entity()]:
+        validation_menu = menu_system.Menu(title='Annotation Validations', 
+                          options=[menu_system.MenuAction('Annotation Overlaps', 
+                                              validation_menu_functions.validate_overlaps),
+                                   menu_system.MenuAction('Subentity Boundaries', 
+                                              validation_menu_functions.validate_subentity_boundaries),
+                                   menu_system.MenuAction('Annotation Boundaries (TODO)', 
+                                              validation_menu_functions.validate_annotation_boundaries),
+                                   menu_system.MenuAction('Negative Length Annotations (TODO)'),
+                                   menu_system.MenuAction('Zero Length Annotations (TODO)'),
+                                   menu_system.MenuAction('Document Scope',
+                                    validation_menu_functions.validate_annotation_scope),
+                                   menu_system.MenuAction('Validate Schema', 
+                                              validation_menu_functions.validate_schema_values),
+                                   menu_system.MenuAction('Generate Report', 
+                                              validation_menu_functions.generate_validation_report)], 
+                          tool_bar=validation_tool_bar,
+                          screen=stdscr,
+                          inherit_settings=True)
+    else:
+        validation_menu = menu_system.Menu(title='Annotation Validations', 
+                  options=[menu_system.MenuAction('Annotation Overlaps', 
+                                      validation_menu_functions.validate_overlaps),
+                           menu_system.MenuAction('Annotation Boundaries (TODO)', 
+                                      validation_menu_functions.validate_annotation_boundaries),
+                           menu_system.MenuAction('Negative Length Annotations (TODO)'),
+                           menu_system.MenuAction('Zero Length Annotations (TODO)'),
+                           menu_system.MenuAction('Document Scope',
+                            validation_menu_functions.validate_annotation_scope),
+                           menu_system.MenuAction('Validate Schema', 
+                                      validation_menu_functions.validate_schema_values),
+                           menu_system.MenuAction('Generate Report', 
+                                      validation_menu_functions.generate_validation_report)], 
+                  tool_bar=validation_tool_bar,
+                  screen=stdscr,
+                  inherit_settings=True)
 
 
 

@@ -251,8 +251,22 @@ def validate_schema(annotations = [], schema = {}):
     return conflicts
 
 
+def validate_annotation_scope(annotations = [], text = ''):
 
-                                                                                    
+    conflicts = {}   
+    for annotation in annotations:
+        if annotation['start'] > len(text) or annotation['end'] > len(text):
+            try:
+                conflicts[annotation['mention']].append(annotation)
+            except KeyError as e:
+                conflicts[annotation['mention']] = [annotation]
+        if annotation['start'] < 0 or annotation['end'] < 0:
+            try:
+                conflicts[annotation['mention']].append(annotation)
+            except KeyError as e:
+                conflicts[annotation['mention']] = [annotation]
+
+    return conflicts
                     
 
 

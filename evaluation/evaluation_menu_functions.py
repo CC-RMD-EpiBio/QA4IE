@@ -48,7 +48,7 @@
 # derivative works thereof, in binary and source code form.
 #
 ###############################################################################
-
+from tokenizer import tokenizer
 import sys, os
 from evaluation import token_level_eval, kappa_score
 from load_data import settings
@@ -66,7 +66,168 @@ def token_eval(filters=[]):
     #   File : corpus Set Name : all_sets Key : team Response : team Entity : all_types
 
     if document_name == 'corpus':
-        return ''
+        if key_name == 'team':
+            return ''
+        else:
+            if response_name == 'team':
+                return ''
+            else:
+                if entity_type == 'all_types':
+                  if set_name == 'all_sets':
+                    results = {}
+                    confusion_matrix = [[0,0],[0,0]]
+                    for t, v in settings.corpus.items(): # settings.schema.get_entity_names()
+                      key_text = v[key_name]['text']
+                      response_text = v[response_name]['text'] 
+                      try:
+                        assert len(key_text) == len(response_text), 'text differences found between the documents'
+                      except AssertionError as e:
+                        return '{}'.format(e)
+                      key_annotations = [a  
+                                          for s, ans in v[key_name]['annotation_sets'].items()
+                                          for a in ans
+                                          if a['mention'] in settings.schema.get_entity_names()
+                                         ]
+
+                      response_annotations = [a  
+                                               for s, ans in v[response_name]['annotation_sets'].items()
+                                               for a in ans
+                                               if a['mention'] in settings.schema.get_entity_names()
+                                               ]
+
+                      key_tokens = tokenizer.tokenizer(key_text)
+                      resp_tokens = tokenizer.tokenizer(response_text)
+                      key_bio = token_level_eval.transform_to_bio(key_tokens, 
+                                                                    key_annotations, 
+                                                                    settings.schema.get_entity_names())
+                      resp_bio = token_level_eval.transform_to_bio(resp_tokens, 
+                                                                   response_annotations, 
+                                                                   settings.schema.get_entity_names())
+
+                      for ent_type in settings.schema.get_entity_names():
+
+
+                        key_label_distribution = [token_level_eval.camelcase(ent_type) 
+                                                  if token_level_eval.camelcase(ent_type) in item 
+                                                  else 'O' 
+                                                  for item in key_bio]
+
+                        resp_label_distribution = [token_level_eval.camelcase(ent_type) 
+                                                   if token_level_eval.camelcase(ent_type) in item 
+                                                   else 'O' 
+                                                   for item in resp_bio]
+
+                        cm = token_level_eval.compute_confusion_matrix(key_label_distribution, 
+                                                                       resp_label_distribution)
+
+                        
+                        confusion_matrix[0][0] += cm[0][0]
+                        confusion_matrix[0][1] += cm[0][1]
+                        confusion_matrix[1][0] += cm[1][0]
+                        confusion_matrix[1][1] += cm[1][1]
+                        
+            
+
+                    results['confusion_matrix'] = confusion_matrix
+                    #results['pre'], results['rec'], results['acc'], results['f_score'] = 0,0,0,0
+                    try:
+                      results['pre'], results['rec'], results['acc'], results['f_score'] = token_level_eval.acc_precision_recall_f1(confusion_matrix)   
+                    except AssertionError as e:
+                      results['pre'], results['rec'], results['acc'], results['f_score'] = 0,0,0,0
+                  else:
+                    results = {}
+                    confusion_matrix = [[0,0],[0,0]]
+                    for t, v in settings.corpus.items(): # settings.schema.get_entity_names()
+                      key_text = v[key_name]['text']
+                      response_text = v[response_name]['text'] 
+                      try:
+                        assert len(key_text) == len(response_text), 'text differences found between the documents'
+                      except AssertionError as e:
+                        return '{}'.format(e)
+                      key_annotations = [a  
+                                          for s, ans in v[key_name]['annotation_sets'].items()
+                                          for a in ans
+                                          if s == set_name
+                                          if a['mention'] in settings.schema.get_entity_names()
+                                         ]
+                      
+
+
+                      response_annotations = [a  
+                                               for s, ans in v[response_name]['annotation_sets'].items()
+                                               for a in ans
+                                               if s == set_name
+                                               if a['mention'] in settings.schema.get_entity_names()
+                                               ]
+
+                      key_tokens = tokenizer.tokenizer(key_text)
+                      resp_tokens = tokenizer.tokenizer(response_text)
+                      key_bio = token_level_eval.transform_to_bio(key_tokens, 
+                                                                    key_annotations, 
+                                                                    settings.schema.get_entity_names())
+                      resp_bio = token_level_eval.transform_to_bio(resp_tokens, 
+                                                                   response_annotations, 
+                                                                   settings.schema.get_entity_names())
+
+                      for ent_type in settings.schema.get_entity_names():
+
+
+                        key_label_distribution = [token_level_eval.camelcase(ent_type) 
+                                                  if token_level_eval.camelcase(ent_type) in item 
+                                                  else 'O' 
+                                                  for item in key_bio]
+
+                        resp_label_distribution = [token_level_eval.camelcase(ent_type) 
+                                                   if token_level_eval.camelcase(ent_type) in item 
+                                                   else 'O' 
+                                                   for item in resp_bio]
+
+                        cm = token_level_eval.compute_confusion_matrix(key_label_distribution, 
+                                                                       resp_label_distribution)
+
+                        
+                        confusion_matrix[0][0] += cm[0][0]
+                        confusion_matrix[0][1] += cm[0][1]
+                        confusion_matrix[1][0] += cm[1][0]
+                        confusion_matrix[1][1] += cm[1][1]
+                        
+            
+
+                    results['confusion_matrix'] = confusion_matrix
+                    #results['pre'], results['rec'], results['acc'], results['f_score'] = 0,0,0,0
+                    try:
+                      results['pre'], results['rec'], results['acc'], results['f_score'] = token_level_eval.acc_precision_recall_f1(confusion_matrix)   
+                    except AssertionError as e:
+                      results['pre'], results['rec'], results['acc'], results['f_score'] = 0,0,0,0
+                else:
+                    if set_name == 'all_sets':
+                      return ''
+                    else:# fix here
+                        key_annotations = [a  for d, annos in settings.corpus.items()
+                                              for name, anno in annos.items()
+                                              for s, ans in anno['annotation_sets'].items()
+                                              for a in ans 
+                                              if s == set_name
+                                              if a['mention'] == entity_type
+                                              if name == key_name]
+
+                        response_annotations = [a  for d, annos in settings.corpus.items()
+                                              for name, anno in annos.items()
+                                              for s, ans in anno['annotation_sets'].items()
+                                              for a in ans 
+                                              if s == set_name
+                                              if a['mention'] == entity_type
+                                              if name == response_name]
+                        try:
+                          results = token_level_eval.compare(key_document,
+                                                             key_annotations,
+                                                             response_document,
+                                                             response_annotations,
+                                                             [entity_type])
+                        except AssertionError as e:
+                            return '{}'.format(e)
+   
+                      
     else:
         if key_name == 'team':
             return ''
@@ -109,21 +270,21 @@ def token_eval(filters=[]):
                     except AssertionError as e:
                         return '{}'.format(e)
 
-                    out = ''
-                                  
-                    cm_print = '{} {}\n{} {}\n'.format(results['confusion_matrix'][0][0],
-                                                    results['confusion_matrix'][1][0],
-                                                       results['confusion_matrix'][0][1],
-                                                       results['confusion_matrix'][1][1])
+    out = ''
+                  
+    cm_print = '{} {}\n{} {}\n'.format(results['confusion_matrix'][0][0],
+                                    results['confusion_matrix'][1][0],
+                                       results['confusion_matrix'][0][1],
+                                       results['confusion_matrix'][1][1])
 
 
-                    out += '{}\n\n'.format(cm_print)
-                    out += 'Precision: {}\n'.format(round(results['pre'],2))
-                    out += 'Reccall: {}\n'.format(round(results['rec'],2))
-                    out += 'Accuracy: {}\n'.format(round(results['acc'],2))
-                    out += 'F1 Score: {}\n'.format(round(results['f_score'],2))
+    out += '{}\n\n'.format(cm_print)
+    out += 'Precision: {}\n'.format(round(results['pre'],2))
+    out += 'Reccall: {}\n'.format(round(results['rec'],2))
+    out += 'Accuracy: {}\n'.format(round(results['acc'],2))
+    out += 'F1 Score: {}\n'.format(round(results['f_score'],2))
 
-                    return out
+    return out
 
 
 def cohens_kappa(filters=[]):

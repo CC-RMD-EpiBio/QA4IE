@@ -57,7 +57,6 @@ from pathlib import Path
 import pandas as pd
 
 
-
 def validate_overlaps(filters=[]):
     # 1) filter data based on filters
     # 2) run THIS qa function
@@ -454,6 +453,13 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -469,6 +475,13 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -492,6 +505,12 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -507,6 +526,13 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -532,6 +558,13 @@ def validate_subentity_boundaries(filters=[]):
                         if conflicts:
                             count += 1
 
+
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
                     if count:
                         return 'Out of bounds sub-entities found'
                     else:
@@ -546,6 +579,12 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -569,6 +608,12 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -584,6 +629,12 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -610,6 +661,12 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -625,6 +682,12 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -648,6 +711,12 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -663,6 +732,12 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -689,6 +764,12 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -704,6 +785,12 @@ def validate_subentity_boundaries(filters=[]):
                     count = 0
                     for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
                         conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
@@ -728,6 +815,12 @@ def validate_subentity_boundaries(filters=[]):
                                                          sub_entities = e.get_sub_entity_names())
                         if conflicts:
                             count += 1
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
 
                     if count:
                         return 'Out of bounds sub-entities found'
@@ -748,7 +841,7 @@ def validate_subentity_boundaries(filters=[]):
                         conflicts = annotation_validations.outbound_subentities(annotations, 
                                                          main_type = e.name, 
                                                          sub_entities = e.get_sub_entity_names())
-                        #conflict_count = 0
+                       
                         output = ''
                        
                         if conflicts:
@@ -761,7 +854,20 @@ def validate_subentity_boundaries(filters=[]):
                                                                       annotation['start'],
                                                                       annotation['end'],
                                                                       annotation['text_span'])
-
+                    for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                         main_type = e.name, 
+                                                         sub_entities = e.get_sub_entity_names())
+                        if conflicts:
+                            count += 1
+                        for n, conflict in conflicts.items():
+                          
+                          for annotation in conflict:
+                                 
+                              output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                                                                    annotation['start'],
+                                                                    annotation['end'],
+                                                                    annotation['text_span'])
 
 
                     if count:
@@ -1121,7 +1227,309 @@ def validate_subentity_partial_overlap(filters=[]):
                     else:
                         return 'No sub-entity partial overlaps found'
 
+def validate_annotation_scope(filters=[]):
 
+    # 1) filter data based on filters
+    # 2) run THIS qa function
+    # 3) return string of output
+    
+    file = filters[0].title
+    annotation_set = filters[1].title
+    annotator_name = filters[2].title
+    annotation_type = filters[3].title
+
+    if annotation_type == 'all_types': # all annotation types
+        if file == 'corpus': # all notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      for s, ans in d_c['annotation_sets'].items():
+                        conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                        if conflicts:
+                            count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      for s, ans in d_c['annotation_sets'].items():
+                        if s == annotation_set:
+                          conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      if a_name == annotator_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                          conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      if a_name == annotator_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                            conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                  
+        else: # individual notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                       
+                        for s, ans in d_c['annotation_sets'].items():
+                          
+                          conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        
+                        for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                          
+                            conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                            conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+
+    else: # individual annotation types
+        if file == 'corpus': # all notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      
+                      for s, ans in d_c['annotation_sets'].items():
+                          ans = [a for a in ans if a['mention'] == annotation_type]
+                          conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      
+                      for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      if annotator_name == a_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      if annotator_name == a_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                
+        else: # individual notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                      
+                        for s, ans in d_c['annotation_sets'].items():
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items():
+                    if f == file:
+                      for a_name, d_c in a_c.items():
+                        
+                        for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                              if s == annotation_set:
+                                ans = [a for a in ans if a['mention'] == annotation_type]
+                                conflicts = annotation_validations.validate_annotation_scope(ans, d_c['text'])
+                                if conflicts:
+                                    count += 1
+
+                  if count:
+                      return 'Document Scope Issues found'
+                  else:
+                      return 'No document Scope Issues found'
+                        #conflict_count = 0
+                    #     output = ''
+                    #     if annotation_type in list(conflicts.keys()):
+                    #         conflicts = {annotation_type:conflicts[annotation_type]}
+                    #     else:
+                    #         conflicts = {}
+                    #     if conflicts:
+                    #         count+= 1
+                    #     for n, conflict in conflicts.items():
+                            
+                    #         for annotation in conflict:
+                                   
+                    #             output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                    #                                                   annotation['start'],
+                    #                                                   annotation['end'],
+                    #                                                   annotation['text_span'])
+
+
+                    # if count:
+                    #     return 'Sub-entity partial overlaps found'
+                    # else:
+                    #     return 'No sub-entity partial overlaps found'
     
 
 def validate_annotation_boundaries(filters=[]):

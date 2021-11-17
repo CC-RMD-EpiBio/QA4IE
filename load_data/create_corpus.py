@@ -71,18 +71,21 @@ def create_corpus(annotations_dir = None, strict_matches=False, encoding='utf-8'
     assert annotations_dir, 'please provide a directory for the annotation'
     assert annotations_dir.is_dir(), 'please provide a valid directory'
 
-    annotations = match_file_ids(files=[x for x in annotations_dir.glob('**/*.xml')], strict_matches=strict_matches)
+    annotations = match_file_ids(files=[x for x in annotations_dir.glob('**/*.xml')], 
+                                 strict_matches=strict_matches)
     corpus = {}
     # for loop to populate the entire corpus into a nested dictionary using the glob approach 
     for file_name, paths in annotations.items():
         content = {}
         for path in paths:
             current_annotator = path.parts[len(annotations_dir.parts)] # getting the annotator's name
-            content[current_annotator] = read_gate_xml(file_path = path, annotator=current_annotator, encoding=encoding) 
+            content[current_annotator] = read_gate_xml(file_path = path, 
+                                                       annotator=current_annotator, 
+                                                       encoding=encoding) 
 
         corpus[file_name] = dict(sorted(content.items(), key=lambda x: x[0].lower()))
 
-
+    assert corpus, 'error loading data'
 
     return corpus
 
