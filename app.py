@@ -231,10 +231,7 @@ def run_app(stdscr):
                                               validation_menu_functions.validate_overlaps),
                                    menu_system.MenuAction('Subentity Boundaries', 
                                               validation_menu_functions.validate_subentity_boundaries),
-                                   menu_system.MenuAction('Annotation Boundaries (TODO)', 
-                                              validation_menu_functions.validate_annotation_boundaries),
-                                   menu_system.MenuAction('Negative Length Annotations (TODO)'),
-                                   menu_system.MenuAction('Zero Length Annotations (TODO)'),
+                                   
                                    menu_system.MenuAction('Document Scope',
                                     validation_menu_functions.validate_annotation_scope),
                                    menu_system.MenuAction('Validate Schema', 
