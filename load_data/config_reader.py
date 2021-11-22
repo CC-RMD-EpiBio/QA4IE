@@ -75,7 +75,7 @@ def create_schema(annotation_sections, parser):
         if 'features' in annotation.keys():
             if annotation['features']:
                 for feature in annotation['features'].split('||'):
-                    entity.features[feature.split(':')[0]] = feature.split(':')[1].split('|') 
+                    entity.features[feature.split(':=:')[0]] = feature.split(':=:')[1].split('|') 
 
         schema.add_entry(entity)
 
