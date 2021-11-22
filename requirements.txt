@@ -1,0 +1,5 @@
+pandas
+numpy
+lxml==4.3.3
+xlsxwriter
+scikit-learn==0.20.3
