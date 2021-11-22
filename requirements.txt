@@ -1,9 +1,0 @@
-pathlib
-pandas
-numpy
-collections
-sklearn
-itertools
-lxml
-difflib
-xlsxwriter
