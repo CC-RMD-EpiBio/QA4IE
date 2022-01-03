@@ -45,25 +45,25 @@ to install all packages.
  [type_main]
  overlaps =
  sub_entities= type_a|type_b|type_c
- features= foo:b|a|r||foo_2:b_2|a_2|r_2
+ features= att_1:=:val_1|val_2|val_3||att_2:=:val_1|val_2
  
  [type_a]
  overlaps = type_b|type_c
- features= foo:b|a|r
+ features= att_1:=:val_1|val_2|val_3||att_2:=:val_1|val_2
  
  [type_b]
  overlaps = type_a|type_c
- features= foo:b|a|r
+ features= att_1:=:val_1|val_2|val_3||att_2:=:val_1|val_2
 
  [type_c]
  overlaps = type_a|type_b
- features= foo:b|a|r
+ features= att_1:=:val_1|val_2|val_3||att_2:=:val_1|val_2
  ```
 Under each annotation type there is up to 3 options that one could add. Where overlaps should contain thee other annotation types for which an overlap is allowed. This option is only necessary for main entities and not sub entities. The code will determine hierarchical overlaps and allow them based on the information from the sub_entities. 
 
 The sub_entities should only go under an annotation that is considered to be a main or parent entity of other sub entities and should be defined in the config file. The order of these entities in the config file does not affect the code at all. 
 
-To add features to a specific entity to have to used several separators. Colons (`:`) will separate the attribute name from the possible values. Pipes (`|`) will separate each value for a specific attribute. Double pipes (`||`) separate different attributes in the features dictionary
+To add features to a specific entity to have to used several separators. (`:=:`) will separate the attribute name from the possible values. (`|`) will separate each value for a specific attribute. (`||`) separate different attributes in the features dictionary
 
 ## Demo script/data
 
