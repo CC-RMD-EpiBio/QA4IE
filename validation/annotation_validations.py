@@ -267,6 +267,34 @@ def validate_annotation_scope(annotations = [], text = ''):
                 conflicts[annotation['mention']] = [annotation]
 
     return conflicts
+
+
+def validate_zero_length(annotations = []):
+
+    conflicts = {}
+
+    for annotation in annotations:
+        if annotation['end'] - annotation['start'] == 0:
+            try:
+                conflicts[annotation['mention']].append(annotation)
+            except KeyError as e:
+                conflicts[annotation['mention']] = [annotation]
+
+    return conflicts
+
+
+def validate_negative_length(annotations = []):
+
+    conflicts = {}
+
+    for annotation in annotations:
+        if annotation['end'] - annotation['start'] < 0:
+            try:
+                conflicts[annotation['mention']].append(annotation)
+            except KeyError as e:
+                conflicts[annotation['mention']] = [annotation]
+
+    return conflicts
                     
 
 

@@ -52,6 +52,7 @@
 import os, sys
 import curses
 import locale
+
 from itertools import combinations
 from load_data import settings
 from menu import menu_system
@@ -59,6 +60,7 @@ from validation import validation_menu_functions
 from error_checks import error_checks_menu_functions
 from stats import statistics_menu_functions
 from evaluation import evaluation_menu_functions
+from discrepancy_analysis import discrepancy_analysis_menu_functions
 
 
 sys.setrecursionlimit(10**6)
@@ -160,10 +162,10 @@ def run_app(stdscr):
                                                              file_name_options.return_options),
                                       menu_system.MenuAction(set_name_options.title,
                                                              set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
+                                      menu_system.MenuAction(annotator_options_no_general.title, 
+                                                             annotator_options_no_general.return_options),
+                                      menu_system.MenuAction(annotator_options_no_general.title, 
+                                                             annotator_options_no_general.return_options),
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options),
                                       menu_system.MenuAction(measure_options.title, 
@@ -175,10 +177,10 @@ def run_app(stdscr):
                                                              file_name_options.return_options),
                                       menu_system.MenuAction(set_name_options.title,
                                                              set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
+                                      menu_system.MenuAction(annotator_options_no_general.title, 
+                                                             annotator_options_no_general.return_options),
+                                      menu_system.MenuAction(annotator_options_no_general.title, 
+                                                             annotator_options_no_general.return_options),
                                       menu_system.MenuAction(annotation_types_options.title, 
                                                              annotation_types_options.return_options)],
                              slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
@@ -231,9 +233,9 @@ def run_app(stdscr):
                                               validation_menu_functions.validate_overlaps),
                                    menu_system.MenuAction('Subentity Boundaries', 
                                               validation_menu_functions.validate_subentity_boundaries),
-                                   menu_system.MenuAction('Annotation Boundaries'),
-                                   menu_system.MenuAction('Zero Length Annotations'),
-                                   menu_system.MenuAction('Negative Length Annotations'),
+                                   menu_system.MenuAction('Annotation Boundaries', validation_menu_functions.validate_annotation_boundaries),
+                                   menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                                   menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
 
                                    menu_system.MenuAction('Document Scope',
                                     validation_menu_functions.validate_annotation_scope),
@@ -248,9 +250,9 @@ def run_app(stdscr):
         validation_menu = menu_system.Menu(title='Annotation Validations', 
                   options=[menu_system.MenuAction('Annotation Overlaps', 
                                       validation_menu_functions.validate_overlaps),
-                           menu_system.MenuAction('Annotation Boundaries'),
-                           menu_system.MenuAction('Zero Length Annotations'),
-                           menu_system.MenuAction('Negative Length Annotations'),
+                           menu_system.MenuAction('Annotation Boundaries', validation_menu_functions.validate_annotation_boundaries),
+                           menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                           menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
                            menu_system.MenuAction('Document Scope',
                             validation_menu_functions.validate_annotation_scope),
                            menu_system.MenuAction('Validate Schema', 
@@ -266,25 +268,29 @@ def run_app(stdscr):
 
     if settings.task == 'sequence_labelling':
       entity_level_menu = menu_system.Menu(title='Entity Level', 
-                                    options=[menu_system.MenuAction('Evaluate')], 
+                                    options=[menu_system.MenuAction('Evaluate', evaluation_menu_functions.entity_eval),
+                                             menu_system.MenuAction('Generate Report', evaluation_menu_functions.generate_entity_level_report)], 
                                     tool_bar = entity_lvl_tool_bar,
                                     screen=stdscr,
                                     inherit_settings=True)
 
       token_level_menu = menu_system.Menu(title='Token Level', 
                                           options=[menu_system.MenuAction('Evaluate', 
-                                                  evaluation_menu_functions.token_eval)], 
+                                                  evaluation_menu_functions.token_eval),
+                                                  menu_system.MenuAction('Generate Report', 
+                                                  evaluation_menu_functions.generate_token_level_report)], 
                                           tool_bar = token_lvl_tool_bar,
                                           screen=stdscr,
                                           inherit_settings=True)
+
       evaluation_menu = menu_system.Menu(title='Evaluation', 
                                          options=[entity_level_menu, token_level_menu], 
                                          screen=stdscr,
                                          inherit_settings=True)
     if settings.task == 'classification':
       cohens_kappa_menu = menu_system.Menu(title='Cohens Kappa', 
-                                          options=[menu_system.MenuAction('Evaluate',
-                                            evaluation_menu_functions.cohens_kappa)], 
+                                          options=[menu_system.MenuAction('Evaluate'),
+                                                   menu_system.MenuAction('Generate Report')], 
                                           tool_bar = cohens_kappa_tool_bar,
                                           screen=stdscr,
                                           inherit_settings=True)
@@ -294,7 +300,8 @@ def run_app(stdscr):
                                          inherit_settings=True)
 
     discrepancy_menu = menu_system.Menu(title='Discrepancy Analysis', 
-                                       options=[menu_system.MenuAction('Compare')], 
+                                       options=[menu_system.MenuAction('Compare', discrepancy_analysis_menu_functions.compare_annotations),
+                                                menu_system.MenuAction('Generate Report', discrepancy_analysis_menu_functions.generate_discrepancy_report)], 
                                        tool_bar = discrepancy_tool_bar,
                                        screen=stdscr,
                                        inherit_settings=True)
@@ -361,22 +368,27 @@ def run_app(stdscr):
 
 def generate_all_reports():
     error_checks_menu_functions.generate_error_checks_report()
+
     validation_menu_functions.generate_validation_report()
     statistics_menu_functions.generate_statistics_report()
+    evaluation_menu_functions.generate_token_level_report()
+    evaluation_menu_functions.generate_entity_level_report()
+    discrepancy_analysis_menu_functions.generate_discrepancy_report()
 
-    return 'report generated in {}'.format(settings.output_dir)
+    return 'reports generated in {}'.format(settings.output_dir)
 
 
 def main():
   try:
-    if len(sys.argv) == 1:
+   
+    if len(sys.argv) == 2:
       path = sys.argv[1]
     else:
       path = ' '.join([x for x in sys.argv[1:]])
     
     settings.init(path)
   except IndexError as e:
-      print('Usage: python {} <path_to_file>'.format( __file__))
+      print('Usage: python {} <path_to_config_file>'.format(__file__))
 
   else:
     try:

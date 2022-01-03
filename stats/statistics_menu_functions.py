@@ -968,6 +968,42 @@ def generate_statistics_report(filters=[]):
 
     total_mention_counts = []
 
+    output = ''
+    stat_mention_count_print = {}
+
+    annotations = [a for f, a_c in settings.corpus.items() 
+                                    for a_name, d_c in a_c.items() 
+                                    for s, ans in d_c['annotation_sets'].items()
+                                    for a in ans]
+
+    counts = annotation_statistics.count_mentions(annotations=annotations,
+                                                  schema=settings.schema.get_simple_schema(),
+                                                  include_features = False)
+
+    for t, stats in counts.items():
+
+        try:
+            token_summary = 'mean ({}) median ({}) sd ({}) min ({}) max ({})'.format(round(stats['token_length_arithmetic_mean']),
+                                                                               round(stats['token_length_median']),
+                                                                               round(stats['token_length_sd']),
+                                                                               round(stats['token_length_min']),
+                                                                               round(stats['token_length_max']))
+            stat_mention_count_print[t] = token_summary
+
+        except KeyError:
+            
+            stat_mention_count_print = {t : token_summary}
+
+    for anno, counts in collections.OrderedDict(sorted(stat_mention_count_print.items())).items():
+        output += '{} : {}\n'.format(anno,
+                            ''.join(['{} \n'.format(counts)]))
+
+    with open(statistics_path / 'statistics_summary.txt', 'w') as text_file:
+        text_file.write('{}'.format(output))
+
+    
+
+
     for file_name, annotators in settings.corpus.items():
         for annotator, document in annotators.items():
             for set_name, annotations in document['annotation_sets'].items():
@@ -1010,8 +1046,8 @@ def generate_statistics_report(filters=[]):
                                                       'token_length_min',
                                                       'token_length_max'])
 
-    writer = pd.ExcelWriter(statistics_path / 'statistics_report.xlsx', engine='xlsxwriter')
-    mention_features_counts_report.to_excel(writer, sheet_name='mention_lvl_stats', index=False)
-    writer.save()
+    mention_features_counts_report.to_csv(statistics_path / 'statistics_report.csv', index=False)
+
+
 
     return 'report generated in {}'.format(settings.output_dir)

@@ -102,5 +102,5 @@ def config_check(configuration):
     if not flag:                    
         scan_folder(configuration['annotation_dir'])
 
-    assert not flag, 'issues found'
+    #assert not flag, 'issues found'
     #check if all schema file is valid through checking overlaps and sub_entities    

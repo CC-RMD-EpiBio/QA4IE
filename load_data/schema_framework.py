@@ -87,8 +87,26 @@ class Schema():
     def len(self):
         return len(self.entities)
 
+    def get_main_entity_names(self):
+        parents = []
+        for k, v in self.entities.items():
+            if not v.has_parent_entity():
+                parents.append(v.name)
+        return parents
+
     def get_type(self, t):
         return self.entities[t]
+
+    def get_entity_names_in_order(self):
+        names = []
+
+        for k, v in self.entities.items():
+            if not v.has_parent_entity():
+                names.append(v.name)
+                for i, j in v.sub_entities.items():
+                    names.append(j.name)
+        return names
+
 
     def get_overlaps(self):
         temp = {}

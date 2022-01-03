@@ -1530,7 +1530,616 @@ def validate_annotation_scope(filters=[]):
                     #     return 'Sub-entity partial overlaps found'
                     # else:
                     #     return 'No sub-entity partial overlaps found'
+  
+def validate_annotation_zero_length(filters=[]):
+
+    # 1) filter data based on filters
+    # 2) run THIS qa function
+    # 3) return string of output
     
+    file = filters[0].title
+    annotation_set = filters[1].title
+    annotator_name = filters[2].title
+    annotation_type = filters[3].title
+
+
+    if annotation_type == 'all_types': # all annotation types
+        if file == 'corpus': # all notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      for s, ans in d_c['annotation_sets'].items():
+                        conflicts = annotation_validations.validate_zero_length(ans)
+                        if conflicts:
+                            count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      for s, ans in d_c['annotation_sets'].items():
+                        if s == annotation_set:
+                          conflicts = annotation_validations.validate_zero_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      if a_name == annotator_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                          conflicts = annotation_validations.validate_zero_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      if a_name == annotator_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                            conflicts = annotation_validations.validate_zero_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                  
+        else: # individual notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                       
+                        for s, ans in d_c['annotation_sets'].items():
+                          
+                          conflicts = annotation_validations.validate_zero_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        
+                        for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                          
+                            conflicts = annotation_validations.validate_zero_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                            conflicts = annotation_validations.validate_zero_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              conflicts = annotation_validations.validate_zero_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+
+    else: # individual annotation types
+        if file == 'corpus': # all notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      
+                      for s, ans in d_c['annotation_sets'].items():
+                          ans = [a for a in ans if a['mention'] == annotation_type]
+                          conflicts = annotation_validations.validate_zero_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      
+                      for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_zero_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      if annotator_name == a_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_zero_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      if annotator_name == a_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_zero_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                
+        else: # individual notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                      
+                        for s, ans in d_c['annotation_sets'].items():
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_zero_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items():
+                    if f == file:
+                      for a_name, d_c in a_c.items():
+                        
+                        for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_zero_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_zero_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                              if s == annotation_set:
+                                ans = [a for a in ans if a['mention'] == annotation_type]
+                                conflicts = annotation_validations.validate_zero_length(ans)
+                                if conflicts:
+                                    count += 1
+
+                  if count:
+                      return 'Zero length issues found'
+                  else:
+                      return 'No Zero length issues found'
+                        #conflict_count = 0
+                    #     output = ''
+                    #     if annotation_type in list(conflicts.keys()):
+                    #         conflicts = {annotation_type:conflicts[annotation_type]}
+                    #     else:
+                    #         conflicts = {}
+                    #     if conflicts:
+                    #         count+= 1
+                    #     for n, conflict in conflicts.items():
+                            
+                    #         for annotation in conflict:
+                                   
+                    #             output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                    #                                                   annotation['start'],
+                    #                                                   annotation['end'],
+                    #                                                   annotation['text_span'])
+
+
+                    # if count:
+                    #     return 'Sub-entity partial overlaps found'
+                    # else:
+                    #     return 'No sub-entity partial overlaps found'
+    
+def validate_annotation_negative_length(filters=[]):
+
+    # 1) filter data based on filters
+    # 2) run THIS qa function
+    # 3) return string of output
+    
+    file = filters[0].title
+    annotation_set = filters[1].title
+    annotator_name = filters[2].title
+    annotation_type = filters[3].title
+
+    
+    if annotation_type == 'all_types': # all annotation types
+        if file == 'corpus': # all notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      for s, ans in d_c['annotation_sets'].items():
+                        conflicts = annotation_validations.validate_negative_length(ans)
+                        if conflicts:
+                            count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      for s, ans in d_c['annotation_sets'].items():
+                        if s == annotation_set:
+                          conflicts = annotation_validations.validate_negative_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      if a_name == annotator_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                          conflicts = annotation_validations.validate_negative_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    for a_name, d_c in a_c.items(): 
+                      if a_name == annotator_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                            conflicts = annotation_validations.validate_negative_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                  
+        else: # individual notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                       
+                        for s, ans in d_c['annotation_sets'].items():
+                          
+                          conflicts = annotation_validations.validate_negative_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        
+                        for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                          
+                            conflicts = annotation_validations.validate_negative_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                            conflicts = annotation_validations.validate_negative_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              conflicts = annotation_validations.validate_negative_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+
+    else: # individual annotation types
+        if file == 'corpus': # all notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      
+                      for s, ans in d_c['annotation_sets'].items():
+                          ans = [a for a in ans if a['mention'] == annotation_type]
+                          conflicts = annotation_validations.validate_negative_length(ans)
+                          if conflicts:
+                              count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      
+                      for s, ans in d_c['annotation_sets'].items():
+                          if s == annotation_set:
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_negative_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      if annotator_name == a_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_negative_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                  
+                    for a_name, d_c in a_c.items(): 
+                      if annotator_name == a_name:
+                        for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_negative_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                
+        else: # individual notes
+            if annotator_name == 'team': # all annotators
+                if annotation_set == 'all_sets': # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                      
+                        for s, ans in d_c['annotation_sets'].items():
+                            ans = [a for a in ans if a['mention'] == annotation_type]
+                            conflicts = annotation_validations.validate_negative_length(ans)
+                            if conflicts:
+                                count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items():
+                    if f == file:
+                      for a_name, d_c in a_c.items():
+                        
+                        for s, ans in d_c['annotation_sets'].items():
+                            if s == annotation_set:
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_negative_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+            else: # individual annotators
+                if annotation_set == 'all_sets':  # all annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                              ans = [a for a in ans if a['mention'] == annotation_type]
+                              conflicts = annotation_validations.validate_negative_length(ans)
+                              if conflicts:
+                                  count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                else: # individual annotation sets
+                  count = 0
+                  for f, a_c in settings.corpus.items(): 
+                    if f == file:
+                      for a_name, d_c in a_c.items(): 
+                        if a_name == annotator_name:
+                          for s, ans in d_c['annotation_sets'].items():
+                              if s == annotation_set:
+                                ans = [a for a in ans if a['mention'] == annotation_type]
+                                conflicts = annotation_validations.validate_negative_length(ans)
+                                if conflicts:
+                                    count += 1
+
+                  if count:
+                      return 'Negative length issues found'
+                  else:
+                      return 'No Negative length issues found'
+                        #conflict_count = 0
+                    #     output = ''
+                    #     if annotation_type in list(conflicts.keys()):
+                    #         conflicts = {annotation_type:conflicts[annotation_type]}
+                    #     else:
+                    #         conflicts = {}
+                    #     if conflicts:
+                    #         count+= 1
+                    #     for n, conflict in conflicts.items():
+                            
+                    #         for annotation in conflict:
+                                   
+                    #             output += '\n{} ({}-{})\n{}\n'.format(annotation['mention'],
+                    #                                                   annotation['start'],
+                    #                                                   annotation['end'],
+                    #                                                   annotation['text_span'])
+
+
+                    # if count:
+                    #     return 'Sub-entity partial overlaps found'
+                    # else:
+                    #     return 'No sub-entity partial overlaps found'
 
 def validate_annotation_boundaries(filters=[]):
 
@@ -1543,158 +2152,58 @@ def validate_annotation_boundaries(filters=[]):
     annotator_name = filters[2].title
     annotation_type = filters[3].title
 
-    if annotation_type == 'all_types': # all annotation types
-        if file == 'corpus': # all notes
-            if annotator_name == 'team': # all annotators
-                if annotation_set == 'all_sets': # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                    for a_name, d_c in a_c.items() 
-                                    for s, ans in d_c['annotation_sets'].items()
-                                    for a in ans]
+    sets_with_types = {}
+    all_sets = list(set([s for f, a_c in settings.corpus.items() 
+                  for a_name, d_c in a_c.items() 
+                  for s, ans in d_c['annotation_sets'].items()
+                  ]))
 
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans if s == annotation_set]
+    # for set_ in all_sets:
+    #   sets_with_types[set_] = []
+    count = 0
+    out = ''
+    if file == 'corpus':
+      for f, a_c in settings.corpus.items(): 
+        for a_name, d_c in a_c.items():
+          temp = []
+          for s, ans in d_c['annotation_sets'].items():
+            
+            temp.append(list(set([a['mention'] for a in ans])))
 
+          for x in temp[0]:
+            
+              # out += '{}\n'.format(' '.join([y for x in temp[1:] for y in x]))
+            if x in [y for x in temp[1:] for y in x]:
+              count += 1
+    else:
+        for f, a_c in settings.corpus.items(): 
+          if f == file:
+            for a_name, d_c in a_c.items():
+              temp = []
+              for s, ans in d_c['annotation_sets'].items():
+                temp.append(list(set([a['mention'] for a in ans])))
 
-                    return ''
-            else: # individual annotators
-                if annotation_set == 'all_sets':  # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans  if a_name == annotator_name]
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans     if a_name == annotator_name and
-                                                         s == annotation_set]
-
-                    return ''
+              for x in temp[0]:
                 
-        else: # individual notes
-            if annotator_name == 'team': # all annotators
-                if annotation_set == 'all_sets': # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans if f == file]
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans        if f == file and
-                                                            s == annotation_set]
+                  # out += '{}\n'.format(' '.join([y for x in temp[1:] for y in x]))
+                if x in [y for x in temp[1:] for y in x]:
+                  count += 1
 
-                    return ''
-            else: # individual annotators
-                if annotation_set == 'all_sets':  # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans           if f == file and
-                                                               a_name == annotator_name]
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans    if f == file and
-                                                        a_name == annotator_name and
-                                                        s == annotation_set]
-                    return ''
+    if count:
+      out += 'Annotation boundaries found\n'
+    else:
+      out += 'No Annotation boundaries found\n'
 
-    else: # individual annotation types
-        if file == 'corpus': # all notes
-            if annotator_name == 'team': # all annotators
-                if annotation_set == 'all_sets': # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans if a['mention'] == annotation_type]
 
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans        if a['mention'] == annotation_type and
-                                                            s == annotation_set]
+    return out
 
-                    return ''
-            else: # individual annotators
-                if annotation_set == 'all_sets':  # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans           if a['mention'] == annotation_type and
-                                                               a_name == annotator_name]
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans        if a['mention'] == annotation_type and
-                                                            a_name == annotator_name and
-                                                            s == annotation_set]
-                    return ''
-                
-        else: # individual notes
-            if annotator_name == 'team': # all annotators
-                if annotation_set == 'all_sets': # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans       if a['mention'] == annotation_type and
-                                                           f == file]
 
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans               if a['mention'] == annotation_type and
-                                                                f == file and
-                                                                s == annotation_set]
-                    return ''
-            else: # individual annotators
-                if annotation_set == 'all_sets':  # all annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items() \
-                                     for a in ans    if a['mention'] == annotation_type and
-                                                        f == file and
-                                                        a_name == annotator_name]
-                    return ''
-                else: # individual annotation sets
-                    annotations = [a for f, a_c in settings.corpus.items() 
-                                     for a_name, d_c in a_c.items() 
-                                     for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans                if a['mention'] == annotation_type and
-                                                                    f == file and
-                                                                    a_name == annotator_name and 
-                                                                    s == annotation_set]
 
-                    # h = settings.schema.get_type(annotation_type)    
-                    # if annotations:                                           
 
-                    #     if h.has_sub_entities():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.name,
-                    #                                                                             h.get_sub_entity_names())
-                    #         print(partial_overlaps)
-                    #     elif h.has_parent_entity():
-                    #         partial_overlaps = annotation_validations.partial_subentity_overlap(annotations, 
-                    #                                                                             h.get_parent_entity_name(),
-                    #                                                                             [h.name])
-                    #         print(partial_overlaps)
-                    return ''
+
+    #return '{}'.format(' '.join([x for x in all_sets]))
+
+   
 
 
 def validate_schema_values(filters=[]):
@@ -2041,7 +2550,6 @@ def validate_schema_values(filters=[]):
                         return 'No invalid annotations found'
 
 
-
 def generate_validation_report():
 
     validation_path = Path(settings.output_dir / 'validations')
@@ -2051,6 +2559,10 @@ def generate_validation_report():
     total_outbound_subentities = []
     total_subentity_partial_overlaps = []
     total_invalid_annotations = []
+    total_document_scope = []
+    total_negative_length = []
+    total_zero_length = []
+    total_document_scope = []
 
     for n, ovlps in settings.schema.get_overlaps().items():
         ovlps = [str(o) for o in ovlps]
@@ -2082,6 +2594,24 @@ def generate_validation_report():
                         for n, e in conflicts.items():
                             total_subentity_partial_overlaps.append([file_name, annotator, set_name, n, e])
 
+
+                conflicts = annotation_validations.validate_annotation_scope(annotations, document['text'])
+
+                for n, e in conflicts.items():
+                    total_document_scope.append([file_name, annotator, set_name, n, e])
+
+                
+                conflicts = annotation_validations.validate_negative_length(annotations)
+
+                for n, e in conflicts.items():
+                    total_negative_length.append([file_name, annotator, set_name, n, e])
+
+                conflicts = annotation_validations.validate_zero_length(annotations)
+
+                for n, e in conflicts.items():
+                    total_zero_length.append([file_name, annotator, set_name, n, e])
+                        
+
                 schema = settings.schema.get_simple_schema()
                 conflicts = annotation_validations.validate_schema(annotations, schema)
                 for n, e in conflicts.items():
@@ -2094,30 +2624,40 @@ def generate_validation_report():
     sub_entity_outbound_report = pd.DataFrame(total_outbound_subentities, 
                                                   columns = ['file_name', 'annotator', 
                                                              'set_name', 'annotation_type',
-                                                             'overlaps'])
+                                                             'outbound_subentities'])
+
+    document_scope_report = pd.DataFrame(total_document_scope, 
+                                              columns = ['file_name', 'annotator', 
+                                                         'set_name', 'annotation_type',
+                                                         'document_scope'])
 
     sub_entity_partial_overlap_report = pd.DataFrame(total_subentity_partial_overlaps, 
                                                   columns = ['file_name', 'annotator', 
                                                              'set_name', 'annotation_type',
-                                                             'overlaps'])
+                                                             'sub_entity_partial_overlap'])
 
     invalid_annotations_report = pd.DataFrame(total_invalid_annotations, 
                                                   columns = ['file_name', 'annotator', 
                                                              'set_name', 'annotation_type',
-                                                             'overlaps'])
+                                                             'invalid_annotations'])
 
-    # #out_of_bounds_annotations_report = out_bound_annotation(print_results=False)
+    zero_length_report = pd.DataFrame(total_zero_length, 
+                                              columns = ['file_name', 'annotator', 
+                                                         'set_name', 'annotation_type',
+                                                         'zero_length'])
+    negative_length_report = pd.DataFrame(total_negative_length, 
+                                              columns = ['file_name', 'annotator', 
+                                                         'set_name', 'annotation_type',
+                                                         'negative_length'])
 
+    overlap_report.to_csv(validation_path  / 'overlap_report.csv', index=False)
+    zero_length_report.to_csv(validation_path  / 'zero_length_report.csv', index=False)
+    negative_length_report.to_csv(validation_path  / 'negative_length_report.csv', index=False)
+    document_scope_report.to_csv(validation_path  / 'document_scope_report.csv', index=False)
+    sub_entity_outbound_report.to_csv(validation_path  / 'out_of_boundary_sub_entity_report.csv', index=False)
+    sub_entity_partial_overlap_report.to_csv(validation_path  / 'sub_entity_partial_overlap_report.csv', index=False)
+    invalid_annotations_report.to_csv(validation_path  / 'invalid_annotation_report.csv', index=False)
 
-   
-    writer = pd.ExcelWriter(validation_path / 'validation_report.xlsx', engine='xlsxwriter')
-
-    
-    overlap_report.to_excel(writer, sheet_name='overlaps', index=False)
-    sub_entity_outbound_report.to_excel(writer, sheet_name='outbounds_sub_entity', index=False)
-    sub_entity_partial_overlap_report.to_excel(writer, sheet_name='sub_entity_partial_overlap', index=False)
-    invalid_annotations_report.to_excel(writer, sheet_name='invalid_annotations', index=False)
-    writer.save()
 
     return 'report generated in {}'.format(settings.output_dir)
 

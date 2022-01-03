@@ -63,12 +63,14 @@ def init(config_path=None):
     global logger
 
     # load config file
-    base_dir = Path(__file__)
+    #base_dir = Path(__file__)
     
     try:
+        #print(config_path)
         config_info = config_reader.read_config_file_information(config_path)
-        config_check.config_check(config_info)
-
+        
+        #config_check.config_check(config_info)
+        
         schema = config_info['schema']
         encoding = config_info['encoding']
         try:

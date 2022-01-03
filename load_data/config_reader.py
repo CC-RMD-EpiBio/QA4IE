@@ -55,7 +55,7 @@ from pathlib import Path
 
 def create_schema(annotation_sections, parser):
 
-    assert annotation_sections, 'please provide section names'
+    #assert annotation_sections, 'please provide section names'
 
     schema = schema_framework.Schema(name = 'annotation_schema')
 
@@ -87,7 +87,7 @@ def read_config_file_information(path_to_config=None):
 
     path_to_config = Path() if path_to_config is None else Path(path_to_config)
     
-    assert path_to_config.is_file(), 'file does not exist'
+    #assert path_to_config.is_file(), 'file does not exist'
 
     parser = configparser.RawConfigParser()   
     
@@ -103,6 +103,8 @@ def read_config_file_information(path_to_config=None):
     encoding = parser['required']['encoding'] # encoding to put into a required section
 
     annotation_schema = create_schema(config_annotation_sections, parser)
+
+    
 
     return {'annotation_dir' : annotations_dir, 
             'output_dir':output_dir, 
