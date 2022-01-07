@@ -225,6 +225,7 @@ def generate_discrepancy_report(filters=[]):
     discrepancy_analisys_path.mkdir(parents=True, exist_ok=True)
     document_annotations = {}
     aligned_discrepancies = {}
+    total_discrepancies = {}
     df_list = []
     for file_name, annotators in settings.corpus.items():
         for annotator_name, annotator_contents in annotators.items():
@@ -261,13 +262,31 @@ def generate_discrepancy_report(filters=[]):
             else:
                 aligned_discrepancies[k] = temp[k]
 
-        discrepancy_analysis.determine_discrepancies(temp)
+        temp_text_disc, temp_feature_disc = discrepancy_analysis.determine_discrepancies(temp)
+        for x in temp_text_disc:
+            try:
+                total_discrepancies['text_discrepancies'].append(x)
+            except KeyError as e:
+                total_discrepancies['text_discrepancies'] = [x]
+        for x in temp_feature_disc:
+            try:
+                total_discrepancies['feature_discrepancies'].append(x)
+            except KeyError as e:
+                total_discrepancies['feature_discrepancies'] = [x]
+
         discrepancy_analysis.format_cells(temp)
         df = discrepancy_analysis.create_df(temp)
         df_list.append(df)
 
     df = pd.concat(df_list)
 
+    with open(discrepancy_analisys_path  / 'discrepancy_summary.txt', 'w') as text_file:
+        for x in total_discrepancies:
+          text_file.write('{}\n'.format(x))
+          for y, z in dict(Counter(total_discrepancies[x])).items():
+            text_file.write('\t{} : {}\n'.format(y, z))
+  
+    
     df.to_csv(discrepancy_analisys_path / 'discrepancy_analysis.csv', index=False)
 
 

@@ -196,7 +196,7 @@ def generate_error_checks_report():
     # 3) return string of output
 
     
-    error_checks_path = Path(settings.output_dir / 'error_checks')
+    error_checks_path = Path(settings.output_dir / 'document_validations')
     error_checks_path.mkdir(parents=True, exist_ok=True)
 
     for file_name, annotators in settings.corpus.items():

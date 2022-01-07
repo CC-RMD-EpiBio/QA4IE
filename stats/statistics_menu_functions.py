@@ -968,40 +968,7 @@ def generate_statistics_report(filters=[]):
 
     total_mention_counts = []
 
-    output = ''
-    stat_mention_count_print = {}
-
-    annotations = [a for f, a_c in settings.corpus.items() 
-                                    for a_name, d_c in a_c.items() 
-                                    for s, ans in d_c['annotation_sets'].items()
-                                    for a in ans]
-
-    counts = annotation_statistics.count_mentions(annotations=annotations,
-                                                  schema=settings.schema.get_simple_schema(),
-                                                  include_features = False)
-
-    for t, stats in counts.items():
-
-        try:
-            token_summary = 'mean ({}) median ({}) sd ({}) min ({}) max ({})'.format(round(stats['token_length_arithmetic_mean']),
-                                                                               round(stats['token_length_median']),
-                                                                               round(stats['token_length_sd']),
-                                                                               round(stats['token_length_min']),
-                                                                               round(stats['token_length_max']))
-            stat_mention_count_print[t] = token_summary
-
-        except KeyError:
-            
-            stat_mention_count_print = {t : token_summary}
-
-    for anno, counts in collections.OrderedDict(sorted(stat_mention_count_print.items())).items():
-        output += '{} : {}\n'.format(anno,
-                            ''.join(['{} \n'.format(counts)]))
-
-    with open(statistics_path / 'statistics_summary.txt', 'w') as text_file:
-        text_file.write('{}'.format(output))
-
-    
+    summary_counts = {}
 
 
     for file_name, annotators in settings.corpus.items():
@@ -1012,6 +979,17 @@ def generate_statistics_report(filters=[]):
                                                              include_features = False)
 
                 for t, stats in counts.items():
+
+                    try:
+                        summary_counts[annotator][t] += stats['count']
+                    except KeyError as e:
+                        try:
+                            summary_counts[annotator][t] = stats['count']
+                        except KeyError:
+                            summary_counts[annotator] = {t:stats['count']}
+
+
+
 
                     total_mention_counts.append([file_name, annotator, set_name, 
                                                 t,
@@ -1047,6 +1025,14 @@ def generate_statistics_report(filters=[]):
                                                       'token_length_max'])
 
     mention_features_counts_report.to_csv(statistics_path / 'statistics_report.csv', index=False)
+
+    with open(statistics_path  / 'statistics_summary.txt', 'w') as text_file:
+        for x in summary_counts:
+
+          text_file.write('{}\n'.format(x))
+          for i, j in summary_counts[x].items():
+            text_file.write('\t{} : {} \n'.format(i, j))
+
 
 
 

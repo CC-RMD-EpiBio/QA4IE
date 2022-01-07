@@ -369,7 +369,12 @@ def token_eval(filters=[]):
                     response_labels = [ent_type if ent_type in x else 'O' for x in response_bio]
 
                     if not len(key_labels) == len(response_labels):
-                      return 'text difference found'
+                      if len(key_labels) > len(response_labels):
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          response_labels.append('O')
+                      else:
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          key_labels.append('O')
                     temp_cm = confusion_matrix(key_labels, response_labels, labels=[ent_type, 'O'])
                     if cm is None:
                       cm = temp_cm
@@ -401,7 +406,12 @@ def token_eval(filters=[]):
                     response_labels = [ent_type if ent_type in x else 'O' for x in response_bio]
 
                     if not len(key_labels) == len(response_labels):
-                      return 'text difference found'
+                      if len(key_labels) > len(response_labels):
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          response_labels.append('O')
+                      else:
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          key_labels.append('O')
                     temp_cm = confusion_matrix(key_labels, response_labels, labels=[ent_type, 'O'])
                     if cm is None:
                       cm = temp_cm
@@ -431,7 +441,12 @@ def token_eval(filters=[]):
                     response_labels = [entity_type if entity_type in x else 'O' for x in response_bio]
 
                     if not len(key_labels) == len(response_labels):
-                      return 'text difference found'
+                      if len(key_labels) > len(response_labels):
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          response_labels.append('O')
+                      else:
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          key_labels.append('O')
                     cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
                   else: # individual sets
                     key_annotations = [  
@@ -457,7 +472,12 @@ def token_eval(filters=[]):
                     response_labels = [entity_type if entity_type in x else 'O' for x in response_bio]
 
                     if not len(key_labels) == len(response_labels):
-                      return 'text difference found'
+                      if len(key_labels) > len(response_labels):
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          response_labels.append('O')
+                      else:
+                        for i in range(abs(len(key_labels) - len(response_labels))):
+                          key_labels.append('O')
                     cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
  
                     
@@ -503,7 +523,12 @@ def token_eval(filters=[]):
                       response_labels = [ent_type if ent_type in x else 'O' for x in response_bio]
 
                       if not len(key_labels) == len(response_labels):
-                        return 'text difference found'
+                        if len(key_labels) > len(response_labels):
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            response_labels.append('O')
+                        else:
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            key_labels.append('O')
                       temp_cm = confusion_matrix(key_labels, response_labels, labels=[ent_type, 'O'])
                       if cm is None:
                         cm = temp_cm
@@ -535,7 +560,12 @@ def token_eval(filters=[]):
                       response_labels = [ent_type if ent_type in x else 'O' for x in response_bio]
 
                       if not len(key_labels) == len(response_labels):
-                        return 'text difference found'
+                        if len(key_labels) > len(response_labels):
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            response_labels.append('O')
+                        else:
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            key_labels.append('O')
                       temp_cm = confusion_matrix(key_labels, response_labels, labels=[ent_type, 'O'])
                       if cm is None:
                         cm = temp_cm
@@ -565,7 +595,12 @@ def token_eval(filters=[]):
                       response_labels = [entity_type if entity_type in x else 'O' for x in response_bio]
 
                       if not len(key_labels) == len(response_labels):
-                        return 'text difference found'
+                        if len(key_labels) > len(response_labels):
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            response_labels.append('O')
+                        else:
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            key_labels.append('O')
                       cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
                     else: # individual sets
                       key_annotations = [  
@@ -591,7 +626,12 @@ def token_eval(filters=[]):
                       response_labels = [entity_type if entity_type in x else 'O' for x in response_bio]
 
                       if not len(key_labels) == len(response_labels):
-                        return 'text difference found'
+                        if len(key_labels) > len(response_labels):
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            response_labels.append('O')
+                        else:
+                          for i in range(abs(len(key_labels) - len(response_labels))):
+                            key_labels.append('O')
                       cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
     out = ''
                   
@@ -610,8 +650,11 @@ def generate_token_level_report(filters=[]):
   token_level_path = Path(settings.output_dir / 'evaluation')
   token_level_path.mkdir(parents=True, exist_ok=True)
   out = []
+  total_cm_dictionary = {}
+  
   for file_name, annotators in settings.corpus.items():
     for key_name, response_name in combinations(list(annotators.keys()),2):
+      #cm_total = None
 
       key_file = settings.corpus[file_name][key_name]
       response_file = settings.corpus[file_name][response_name]
@@ -644,11 +687,36 @@ def generate_token_level_report(filters=[]):
         response_labels = [ent_type if ent_type in x else 'O' for x in response_bio]
 
         if not len(key_labels) == len(response_labels):
-          continue
+          if len(key_labels) > len(response_labels):
+            for i in range(abs(len(key_labels) - len(response_labels))):
+              response_labels.append('O')
+          else:
+            for i in range(abs(len(key_labels) - len(response_labels))):
+              key_labels.append('O')
         cm = confusion_matrix(key_labels, response_labels, labels=[ent_type, 'O'])
+        try:
+          total_cm_dictionary['{}_{}'.format(key_name, response_name)] += cm
+        except KeyError as e:
+          total_cm_dictionary['{}_{}'.format(key_name, response_name)] = cm
         tn, fp, fn, tp = cm.ravel()
         results = annotation_evaluation.calculate_token_performance(cm)
         out.append([file_name, key_name, response_name, ent_type, tp, tn, fp, fn, results['precision'], results['recall'], results['f1']])
+
+
+
+  with open(token_level_path  / 'token_level_eval_summary.txt', 'w') as text_file:
+    
+    for x in total_cm_dictionary:
+      cm_total = total_cm_dictionary[x]
+      tn, fp, fn, tp = cm_total.ravel()
+      results = annotation_evaluation.calculate_token_performance(cm_total)
+
+      text_file.write('{}\n'.format(x))
+      text_file.write('\ttn : {}\n\tfp : {}\n\tfn : {}\n\ttp: {}\n'.format(tn, fp, fn, tp))
+      for i, j in results.items():
+        text_file.write('\t{} : {} \n'.format(i, j))
+
+
 
   df = pd.DataFrame(out, columns=['file_name', 'key', 'response', 'type', 'tp', 'tn', 'fp', 'fn', 'precision', 'recall', 'f1'])      
 
@@ -714,7 +782,12 @@ def generate_entity_level_report(filters=[]):
 
   with open(entity_level_path  / 'entity_level_eval_summary.txt', 'w') as text_file:
     for x in classifications_total:
-      text_file.write('{} : {} {}\n'.format(x, classifications_total[x],annotation_evaluation.calculate_entity_performance(classifications_total[x])))
+
+      text_file.write('{}\n'.format(x))
+      for i, j in classifications_total[x].items():
+        text_file.write('\t{} : {} \n'.format(i, j))
+      for i, j in annotation_evaluation.calculate_entity_performance(classifications_total[x]).items():
+        text_file.write('\t{} : {} \n'.format(i, j))
 
   df = pd.DataFrame(out, columns=['file_name', 'key', 'response', 'type', 'correct', 'partial', 'missing', 'false_positive', 'precision', 'recall', 'f1'])      
 

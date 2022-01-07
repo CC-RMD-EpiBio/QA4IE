@@ -2552,7 +2552,7 @@ def validate_schema_values(filters=[]):
 
 def generate_validation_report():
 
-    validation_path = Path(settings.output_dir / 'validations')
+    validation_path = Path(settings.output_dir / 'annotation_validations')
     validation_path.mkdir(parents=True, exist_ok=True)
     overlaps_to_validate = {}
     total_overlaps = []
@@ -2616,7 +2616,15 @@ def generate_validation_report():
                 conflicts = annotation_validations.validate_schema(annotations, schema)
                 for n, e in conflicts.items():
                     total_invalid_annotations.append([file_name, annotator, set_name, n, e])
-                        
+
+    with open(validation_path / 'annotation_validation_summary.txt', 'w') as text_file:
+      text_file.write('{} : {} \n'.format('overlaps', len(total_overlaps)))
+      text_file.write('{} : {} \n'.format('sub entity boundaries', len(total_outbound_subentities)))
+      text_file.write('{} : {} \n'.format('document scope', len(total_document_scope)))
+      text_file.write('{} : {} \n'.format('sub entity partial overlaps', len(total_subentity_partial_overlaps)))
+      text_file.write('{} : {} \n'.format('invalid annotations', len(total_invalid_annotations)))
+      text_file.write('{} : {} \n'.format('zero length annotations', len(total_zero_length)))
+      text_file.write('{} : {} \n'.format('negative length annotations', len(total_negative_length)))            
     overlap_report = pd.DataFrame(total_overlaps, columns = ['file_name', 'annotator', 
                                                              'set_name', 'annotation_type',
                                                              'overlaps'])
