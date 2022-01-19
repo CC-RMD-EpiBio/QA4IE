@@ -167,9 +167,9 @@ def transform_to_bio(tokens, annotations, ann_types, delimiter='\t'):
 
       if not anns:
           return 'O'
-      tag_parts = ['B-{}'.format(camelcase(ann['mention'])) 
+      tag_parts = ['B-{}'.format(ann['mention'])
                           if ann['start'] in range(token[0], token[1]) 
-                          else 'I-{}'.format(camelcase(ann['mention'])) 
+                          else 'I-{}'.format(ann['mention'])
                           for ann in anns]
 
       return concatenation_char.join(tag_parts)

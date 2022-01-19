@@ -159,10 +159,12 @@ def entity_eval(filters=[]):
                                        ]
 
                    
-                    classifications = annotation_evaluation.determine_entity_classification(key_annotations, 
-                                                                                            response_annotations, 
-                                                                                            key_name, 
-                                                                                            response_name)
+                    temp_classifications = annotation_evaluation.determine_entity_classification( key_annotations, 
+                                                                                                  response_annotations, 
+                                                                                                  key_name, 
+                                                                                                  response_name)
+                    for x in temp_classifications:
+                      classifications[x] += temp_classifications[x]
 
                   else: # individual sets
                     key_annotations = [  
@@ -182,10 +184,12 @@ def entity_eval(filters=[]):
                                        ]
 
                                           # with tokens create a 'bio' like representation
-                    classifications = annotation_evaluation.determine_entity_classification(key_annotations, 
-                                                                                            response_annotations, 
-                                                                                            key_name, 
-                                                                                            response_name)
+                    temp_classifications = annotation_evaluation.determine_entity_classification( key_annotations, 
+                                                                                                  response_annotations, 
+                                                                                                  key_name, 
+                                                                                                  response_name)
+                    for x in temp_classifications:
+                      classifications[x] += temp_classifications[x]
                     
     else: #individual files
         if key_name == 'team':
@@ -418,8 +422,9 @@ def token_eval(filters=[]):
                     else:
                       cm += temp_cm
                   
-              else: # individual annotations
+              else: # individual annotation types
                   if set_name == 'all_sets':
+
                     key_annotations = [  
                                           a 
                                           for set_n, annotations in key_file['annotation_sets'].items() 
@@ -436,10 +441,11 @@ def token_eval(filters=[]):
 
                     # with tokens create a 'bio' like representation
                     key_bio = annotation_evaluation.transform_to_bio(key_tokens, key_annotations, [entity_type])
+
                     key_labels = [entity_type if entity_type in x else 'O' for x in key_bio]
                     response_bio = annotation_evaluation.transform_to_bio(response_tokens, response_annotations, [entity_type])
                     response_labels = [entity_type if entity_type in x else 'O' for x in response_bio]
-
+                   
                     if not len(key_labels) == len(response_labels):
                       if len(key_labels) > len(response_labels):
                         for i in range(abs(len(key_labels) - len(response_labels))):
@@ -447,6 +453,7 @@ def token_eval(filters=[]):
                       else:
                         for i in range(abs(len(key_labels) - len(response_labels))):
                           key_labels.append('O')
+
                     cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
                   else: # individual sets
                     key_annotations = [  
