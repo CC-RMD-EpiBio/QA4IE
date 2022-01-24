@@ -2166,7 +2166,11 @@ def validate_annotation_boundaries(filters=[]):
       for f, a_c in settings.corpus.items(): 
         for a_name, d_c in a_c.items():
           temp = []
+
           for s, ans in d_c['annotation_sets'].items():
+            if s == 'default_annotation_set':
+              if len(ans) > 0:
+                count += 1
             
             temp.append(list(set([a['mention'] for a in ans])))
 
@@ -2181,6 +2185,9 @@ def validate_annotation_boundaries(filters=[]):
             for a_name, d_c in a_c.items():
               temp = []
               for s, ans in d_c['annotation_sets'].items():
+                if s == 'default_annotation_set':
+                  if len(ans) > 0:
+                    count += 1
                 temp.append(list(set([a['mention'] for a in ans])))
 
               for x in temp[0]:
@@ -2194,16 +2201,9 @@ def validate_annotation_boundaries(filters=[]):
     else:
       out += 'No Annotation boundaries found\n'
 
-
     return out
 
 
-
-
-
-    #return '{}'.format(' '.join([x for x in all_sets]))
-
-   
 
 
 def validate_schema_values(filters=[]):
@@ -2556,6 +2556,7 @@ def generate_validation_report():
     validation_path.mkdir(parents=True, exist_ok=True)
     overlaps_to_validate = {}
     total_overlaps = []
+    total_annotation_boundaries = []
     total_outbound_subentities = []
     total_subentity_partial_overlaps = []
     total_invalid_annotations = []
@@ -2571,51 +2572,86 @@ def generate_validation_report():
 
     for file_name, annotators in settings.corpus.items():
         for annotator, document in annotators.items():
-            for set_name, annotations in document['annotation_sets'].items():
-                overlaps = annotation_validations.annotation_overlaps(annotations=annotations, 
-                                                                      annotation_types = overlaps_to_validate)
-                
-                for t, o in overlaps.items():
-                    if o:
-                        for x in o:
-                            total_overlaps.append([file_name, annotator, set_name, t, x])
+                          # for set_ in all_sets:
+                #   sets_with_types[set_] = []
+          
 
-                for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
-                        conflicts = annotation_validations.outbound_subentities(annotations, 
-                                                         main_type = e.name, 
-                                                         sub_entities = e.get_sub_entity_names())
-                        for n, e in conflicts.items():
-                            total_outbound_subentities.append([file_name, annotator, set_name, n, e])
+          temp = []
+          for s, ans in document['annotation_sets'].items():
+            
+            temp.append(list(set([a['mention'] for a in ans])))
 
-                for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
-                        conflicts = annotation_validations.partial_subentity_overlap(annotations, 
-                                                         main_type = e.name, 
-                                                         sub_entities = e.get_sub_entity_names())
-                        for n, e in conflicts.items():
-                            total_subentity_partial_overlaps.append([file_name, annotator, set_name, n, e])
+            if s == 'default_annotation_set':
+              if len(ans) > 0:
+                for x in ans:
+                  total_annotation_boundaries.append([file_name, annotator, s, x['mention']])
 
 
-                conflicts = annotation_validations.validate_annotation_scope(annotations, document['text'])
 
-                for n, e in conflicts.items():
-                    total_document_scope.append([file_name, annotator, set_name, n, e])
+          for x in temp[0]:
+            
+              # out += '{}\n'.format(' '.join([y for x in temp[1:] for y in x]))
 
-                
-                conflicts = annotation_validations.validate_negative_length(annotations)
+            if x in [y for x in temp[1:] for y in x]:
+              if not [file_name, annotator, set_name, x] in total_annotation_boundaries:
+                total_annotation_boundaries.append([file_name, annotator, set_name, x])
 
-                for n, e in conflicts.items():
-                    total_negative_length.append([file_name, annotator, set_name, n, e])
+              
+          
 
-                conflicts = annotation_validations.validate_zero_length(annotations)
+          for set_name, annotations in document['annotation_sets'].items():
+              overlaps = annotation_validations.annotation_overlaps(annotations=annotations, 
+                                                                    annotation_types = overlaps_to_validate)
+              
+              for t, o in overlaps.items():
+                  if o:
+                      for x in o:
+                          total_overlaps.append([file_name, annotator, set_name, t, x])
 
-                for n, e in conflicts.items():
-                    total_zero_length.append([file_name, annotator, set_name, n, e])
-                        
+              for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                      conflicts = annotation_validations.outbound_subentities(annotations, 
+                                                       main_type = e.name, 
+                                                       sub_entities = e.get_sub_entity_names())
+                      for n, e in conflicts.items():
+                          total_outbound_subentities.append([file_name, annotator, set_name, n, e])
 
-                schema = settings.schema.get_simple_schema()
-                conflicts = annotation_validations.validate_schema(annotations, schema)
-                for n, e in conflicts.items():
-                    total_invalid_annotations.append([file_name, annotator, set_name, n, e])
+              for e in [e for n, e in settings.schema.entities.items() if e.is_parent_entity()]:
+                      conflicts = annotation_validations.partial_subentity_overlap(annotations, 
+                                                       main_type = e.name, 
+                                                       sub_entities = e.get_sub_entity_names())
+                      for n, e in conflicts.items():
+                          total_subentity_partial_overlaps.append([file_name, annotator, set_name, n, e])
+
+
+              conflicts = annotation_validations.validate_annotation_scope(annotations, document['text'])
+
+              for n, e in conflicts.items():
+                  total_document_scope.append([file_name, annotator, set_name, n, e])
+
+              
+              conflicts = annotation_validations.validate_negative_length(annotations)
+
+              for n, e in conflicts.items():
+                  total_negative_length.append([file_name, annotator, set_name, n, e])
+
+              conflicts = annotation_validations.validate_zero_length(annotations)
+
+              for n, e in conflicts.items():
+                  total_zero_length.append([file_name, annotator, set_name, n, e])
+
+
+              all_sets = list(set([s for f, a_c in settings.corpus.items() 
+                            for a_name, d_c in a_c.items() 
+                            for s, ans in d_c['annotation_sets'].items()
+                            ]))
+
+
+                      
+
+              schema = settings.schema.get_simple_schema()
+              conflicts = annotation_validations.validate_schema(annotations, schema)
+              for n, e in conflicts.items():
+                  total_invalid_annotations.append([file_name, annotator, set_name, n, e])
 
     with open(validation_path / 'annotation_validation_summary.txt', 'w') as text_file:
       text_file.write('{} : {} \n'.format('overlaps', len(total_overlaps)))
@@ -2624,10 +2660,14 @@ def generate_validation_report():
       text_file.write('{} : {} \n'.format('sub entity partial overlaps', len(total_subentity_partial_overlaps)))
       text_file.write('{} : {} \n'.format('invalid annotations', len(total_invalid_annotations)))
       text_file.write('{} : {} \n'.format('zero length annotations', len(total_zero_length)))
-      text_file.write('{} : {} \n'.format('negative length annotations', len(total_negative_length)))            
+      text_file.write('{} : {} \n'.format('negative length annotations', len(total_negative_length)))    
+      text_file.write('{} : {} \n'.format('annotation boundaries', len(total_annotation_boundaries)))        
     overlap_report = pd.DataFrame(total_overlaps, columns = ['file_name', 'annotator', 
                                                              'set_name', 'annotation_type',
                                                              'overlaps'])
+
+    outbound_report = pd.DataFrame(total_annotation_boundaries, columns = ['file_name', 'annotator', 
+                                                         'set_name', 'annotation_type'])
 
     sub_entity_outbound_report = pd.DataFrame(total_outbound_subentities, 
                                                   columns = ['file_name', 'annotator', 
@@ -2659,6 +2699,7 @@ def generate_validation_report():
                                                          'negative_length'])
 
     overlap_report.to_csv(validation_path  / 'overlap_report.csv', index=False)
+    outbound_report.to_csv(validation_path  / 'out_of_bound_annotations_report.csv', index=False)
     zero_length_report.to_csv(validation_path  / 'zero_length_report.csv', index=False)
     negative_length_report.to_csv(validation_path  / 'negative_length_report.csv', index=False)
     document_scope_report.to_csv(validation_path  / 'document_scope_report.csv', index=False)
