@@ -209,6 +209,13 @@ def calculate_entity_performance(counts = {}, method = 'average'):
   assert method in ['average', 'strict', 'lenient'], 'please provide a valid method'
   assert counts, 'please provide a dictionary of counts'
 
+  if (counts['correct'] + counts['false_positive'] + counts['missing'] + counts['partial']) == 0:
+    return {
+          'precision':1.00,
+          'recall':1.00,
+          'f1':1.00
+          }
+
   constants = {'strict':0, 'average':0.5, 'lenient': 1}
 
   tp = counts['correct'] + (constants[method] * counts['partial'])

@@ -454,7 +454,11 @@ def token_eval(filters=[]):
                         for i in range(abs(len(key_labels) - len(response_labels))):
                           key_labels.append('O')
 
-                    cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
+                    temp_cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
+                    if cm is None:
+                      cm = temp_cm
+                    else:
+                      cm += temp_cm
                   else: # individual sets
                     key_annotations = [  
                                         a 
@@ -485,7 +489,11 @@ def token_eval(filters=[]):
                       else:
                         for i in range(abs(len(key_labels) - len(response_labels))):
                           key_labels.append('O')
-                    cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
+                    temp_cm = confusion_matrix(key_labels, response_labels, labels=[entity_type, 'O'])
+                    if cm is None:
+                      cm = temp_cm
+                    else:
+                      cm += temp_cm
  
                     
     else: #individual files
