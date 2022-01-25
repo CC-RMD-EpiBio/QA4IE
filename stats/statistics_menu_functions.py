@@ -1024,16 +1024,16 @@ def generate_statistics_report(filters=[]):
                                                       'token_length_min',
                                                       'token_length_max'])
 
-    mention_features_counts_report.to_csv(statistics_path / 'statistics_report.csv', index=False)
+    try:
+        mention_features_counts_report.to_csv(statistics_path / 'statistics_report.csv', index=False)
 
-    with open(statistics_path  / 'statistics_summary.txt', 'w') as text_file:
-        for x in summary_counts:
+        with open(statistics_path  / 'statistics_summary.txt', 'w') as text_file:
+            for x in summary_counts:
 
-          text_file.write('{}\n'.format(x))
-          for i, j in summary_counts[x].items():
-            text_file.write('\t{} : {} \n'.format(i, j))
+              text_file.write('{}\n'.format(x))
+              for i, j in summary_counts[x].items():
+                text_file.write('\t{} : {} \n'.format(i, j))
 
-
-
-
-    return 'report generated in {}'.format(settings.output_dir)
+        return 'report generated in {}'.format(settings.output_dir)
+    except BlockingIOError as e:
+        return '{}'.format(str(e))
