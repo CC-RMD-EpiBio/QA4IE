@@ -280,14 +280,15 @@ def generate_discrepancy_report(filters=[]):
 
     df = pd.concat(df_list)
 
-    with open(discrepancy_analisys_path  / 'discrepancy_summary.txt', 'w') as text_file:
-        for x in total_discrepancies:
-          text_file.write('{}\n'.format(x))
-          for y, z in dict(Counter(total_discrepancies[x])).items():
-            text_file.write('\t{} : {}\n'.format(y, z))
+
   
-    
-    df.to_csv(discrepancy_analisys_path / 'discrepancy_analysis.csv', index=False)
-
-
-    return 'report generated in {}'.format(settings.output_dir)
+    try:
+        with open(discrepancy_analisys_path  / 'discrepancy_summary.txt', 'w') as text_file:
+            for x in total_discrepancies:
+              text_file.write('{}\n'.format(x))
+              for y, z in dict(Counter(total_discrepancies[x])).items():
+                text_file.write('\t{} : {}\n'.format(y, z))
+        df.to_csv(discrepancy_analisys_path / 'discrepancy_analysis.csv', index=False)
+        return 'report generated in {}'.format(settings.output_dir)
+    except BlockingIOError as e:
+        return '{}'.format(str(e))

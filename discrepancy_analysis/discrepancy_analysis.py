@@ -255,11 +255,19 @@ def determine_discrepancies(dic):
 
 		temp_row = [x[y] for x in rows]
 		
-		for a,b in zip([len(x['text_span']) for x in temp_row[1:] if x is not None], [len(x['text_span']) for x in temp_row[:-1] if x is not None]):
-			if not a == b:
-				mention_discrepancy.append('length')
-				discrepancy_print ='length\n'
-				mention_discrepancy.append('length')
+
+		# for a, b in zip([x for x in temp_row[0:] if not x is None], [x for x in temp_row[:-1] if not x is None]):
+		# 	if not a['text_span'] == b['text_span']:
+		# 		mention_discrepancy.append('length')
+		# 		discrepancy_print +='length\n'
+
+
+		text_spans = list(set([x['text_span'] for x in temp_row if not x is None]))
+
+		if len(text_spans) > 1:
+			mention_discrepancy.append('length')
+			discrepancy_print +='length\n'
+
 
 		if None in temp_row:
 			discrepancy_print += 'not annotated by all\n'
@@ -331,72 +339,5 @@ def format_cells(dict_):
 	                                                                rows[y][x]['id'],
                                                                   '\n'.join(['{} : {}'.format(k, 
                                                                                             v) for k, v in rows[y][x]['features'].items()]))
-
-# def main():
-#   # test case on 2 files
-
-#   schema = Schema(name = 'annotation_schema')
-
-#   mobility = Entity(name='Self-care/Domestic life')
-#   assistance = Entity(name='Assistance')
-#   action = Entity(name='Action')
-#   quantification = Entity(name='Quantification')
-#   score_definition = Entity(name='Score definition')
-#   instructions_questions = Entity(name='Instructions/Questions')
-
-#   mobility.sub_entities[action.name] = action
-#   mobility.sub_entities[quantification.name] = quantification
-#   mobility.sub_entities[assistance.name] = assistance
-
-#   schema.add_entry(mobility)
-#   schema.add_entry(assistance)
-#   schema.add_entry(action)
-#   schema.add_entry(quantification)
-#   schema.add_entry(score_definition)
-#   schema.add_entry(instructions_questions)
-
-#   file_path = '/Volumes/rmd-data/EpiBioStat/NLP/Annotation team/SELF CARE & DOMESTIC LIFE/GATE_OT_JONA_PEI-SHU_MARYANNE_RAFAEL_Annotation_For_IAA_schema 10-07-2019 V4(30)/XML_Files/JCM/OT_Adult_Evaluation/26849.xml'
-#   file_path2 = '/Volumes/rmd-data/EpiBioStat/NLP/Annotation team/SELF CARE & DOMESTIC LIFE/GATE_OT_JONA_PEI-SHU_MARYANNE_RAFAEL_Annotation_For_IAA_schema 10-07-2019 V4(30)/XML_Files/MS/OT_Adult_Evaluation/26849.xml'
-#   file_path3 = '/Volumes/rmd-data/EpiBioStat/NLP/Annotation team/SELF CARE & DOMESTIC LIFE/GATE_OT_JONA_PEI-SHU_MARYANNE_RAFAEL_Annotation_For_IAA_schema 10-07-2019 V4(30)/XML_Files/PSH/OT_Adult_Evaluation/26849.xml'
-#   file_path4 = '/Volumes/rmd-data/EpiBioStat/NLP/Annotation team/SELF CARE & DOMESTIC LIFE/GATE_OT_JONA_PEI-SHU_MARYANNE_RAFAEL_Annotation_For_IAA_schema 10-07-2019 V4(30)/XML_Files/RJS/OT_Adult_Evaluation/26849.xml'
-  
-#   anno1_file = read_gate_xml(file_path, annotator='jcm')
-
-#   anno2_file = read_gate_xml(file_path2, annotator='ms')
-
-#   anno3_file = read_gate_xml(file_path3, annotator='psh')
-
-#   anno4_file = read_gate_xml(file_path4, annotator='rjs')
-
-#   anno1_annotations = [a for s, ans in anno1_file['annotation_sets'].items() for a in ans]
-#   anno2_annotations = [a for s, ans in anno2_file['annotation_sets'].items() for a in ans]
-#   anno3_annotations = [a for s, ans in anno3_file['annotation_sets'].items() for a in ans]
-#   anno4_annotations = [a for s, ans in anno4_file['annotation_sets'].items() for a in ans]
-
-
-#   document_annotations = [apply_hierarchical_structure(schema.entities, x) for x in [anno1_annotations, anno2_annotations, anno3_annotations, anno4_annotations]]
-
-
-#   document_annotations = [y for x in document_annotations for y in x]
-
-
-#   clusters = cluster_annotations(document_annotations)
-
-#   aligned_discrepancies = align_all_clusters(clusters, schema.get_entity_names(), file = '26849.xml', all_annotators=['jcm', 'ms', 'psh', 'rjs'])
-
-#   text_disc_distribution, feature_disc_distribution = determine_discrepancies(aligned_discrepancies)
-
-#   print('text discrepancies:')
-#   print(dict(Counter(text_disc_distribution)))
-#   print('feature discrepancies:')
-#   print(dict(Counter(feature_disc_distribution)))
-
-
-#   # generating report
-#   format_cells(aligned_discrepancies) # "pretty prints" the annotations
-
-#   df = create_df(aligned_discrepancies)
-
-#   df.to_csv('/Users/jimenezsilvara/Desktop/test_discrepancy_file.csv', index=False)
 
 
