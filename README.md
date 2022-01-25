@@ -2,9 +2,6 @@
 
 This open source package implements a series of components required for comprehensive quality assurance on annotations created using GATE
 
-This system was described in the following paper:
-
-+ paper link.
 
 ## Setup/Installation
 
@@ -16,15 +13,15 @@ to install all packages.
 
 ## Package components
 
-- **Error Checks:** description.
+- **Document Validation:**
 
-- **Validations:** description.
+- **Annotation Validation:**
 
-- **Statistics:** description.
+- **Statistics:** 
  
-- **Evaluation:** description.
+- **Evaluation:** 
 
-- **Discrepancy Analysis:** description.
+- **Discrepancy Analysis:** 
 
   
  ## Setting the config file
