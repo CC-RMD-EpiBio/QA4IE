@@ -32,7 +32,7 @@ to install all packages.
  
 -**Output Directory:** the absolute path to a results/report directory.
  
--**Task:** this section should either be `sequence_labeling` or `classification`
+-**Task:** this section should be `sequence_labeling`. In the future, there will be an additional option for `classification`.
   
 -**Encoding:** the encoding of the xml files
  
