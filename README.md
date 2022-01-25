@@ -69,7 +69,7 @@ To add features to a specific entity to have to used several separators. (`:=:`)
 
 This package includes 1 small dataset for code demonstration purposes:
 
-- ```demo_data/demo_dataset_1``` dataset description
+- ```data/annotations``` synthetic notes annotated using the mobility schema
 
 To use the tool you will first need to update the information inside the config file. Afterwards, to run the tool just run,
 ```
