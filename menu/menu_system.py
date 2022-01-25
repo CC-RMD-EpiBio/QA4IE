@@ -266,6 +266,8 @@ class Menu():
         self.highlighted_option = self.options[list(self.options.keys())[0]]
         self.tool_bar = tool_bar
 
+        self.print_history = {}
+
         self.create_links()
 
         #self.update_inherited_settings()
@@ -504,13 +506,23 @@ class Menu():
                         self.screen.addstr(len(self.options.keys()) + 5, 0, '{}'.format('Exit'))
 
             if isinstance(self.previous_execution, MenuAction):
-                if self.previous_execution.title == 'Exit':
-                    self.previous_execution.execute_action()
-                if self.previous_execution.title == 'Generate Reports':
-                    self.previous_execution.execute_action()
+                # if self.previous_execution.title == 'Exit':
+                #     self.previous_execution.execute_action()
 
                 if self.tool_bar: 
-                    action = self.previous_execution.execute_action(self.tool_bar.options)
+                    try:
+                        temp_key = '{}_{}'.format(self.previous_execution.title,
+                                                  '_'.join([x.title for x in self.tool_bar.options]))
+                        #self.print_history[temp_key] = 
+                        #if temp_key in self.print_history.keys():
+                        action = self.print_history[temp_key]
+
+                    except KeyError as e:
+                        temp_key = '{}_{}'.format(self.previous_execution.title,
+                                                  '_'.join([x.title for x in self.tool_bar.options]))
+                        self.print_history[temp_key] = self.previous_execution.execute_action(self.tool_bar.options)
+                        action = self.print_history[temp_key]
+                    #action = self.previous_execution.execute_action(self.tool_bar.options)
                     if not action is None:
                        
                         self.height, self.width = self.screen.getmaxyx()
@@ -537,8 +549,18 @@ class Menu():
                         except TypeError as e:
                             pass
                 else:
+                    try:
+                        temp_key = '{}'.format(self.previous_execution.title)
+                        #self.print_history[temp_key] = 
+                        #if temp_key in self.print_history.keys():
+                        action = self.print_history[temp_key]
+                        
+                    except KeyError as e:
+                        temp_key = '{}'.format(self.previous_execution.title)
+                        self.print_history[temp_key] = self.previous_execution.execute_action()
+                        action = self.print_history[temp_key]
 
-                    action = self.previous_execution.execute_action()
+                    #action = self.previous_execution.execute_action()
                     if not action is None:
                        
                         self.height, self.width = self.screen.getmaxyx()
