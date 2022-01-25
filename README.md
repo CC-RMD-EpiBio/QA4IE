@@ -13,15 +13,15 @@ to install all packages.
 
 ## Package components
 
-- **Document Validation:**
+- **Document Validation**
 
-- **Annotation Validation:**
+- **Annotation Validation**
 
-- **Statistics:** 
+- **Statistics** 
  
-- **Evaluation:** 
+- **Evaluation** 
 
-- **Discrepancy Analysis:** 
+- **Discrepancy Analysis** 
 
   
  ## Setting the config file
