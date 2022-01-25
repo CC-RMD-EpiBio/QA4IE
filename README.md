@@ -28,13 +28,13 @@ to install all packages.
  
  The code is completely reliant on information gathered from a config file. The config file for QA4IE is structured to contain the following information:
  
- -**Annotation Directory:** the absolute path to the annotations in xml format. These annotations should be saved with a specific structure in order to work. It needs to be a single directory that contains multiple sub directories. These sub directories should contain the annotations from each annotators and should be named in a way that represents each annotator. A caveat to consider is that the xml files themselves should be consistently named, in a way that the only difference between the paths should be the file's parent directory. As an example consider the following, `annotations/anno1/file_1.xml` and `annotations/anno2/file_1.xml`. If the files are named differently, the code will treat them as different files. In the case of an annotator containing different files than others, these files will be ignored by the tool. 
+ - **Annotation Directory:** the absolute path to the annotations in xml format. These annotations should be saved with a specific structure in order to work. It needs to be a single directory that contains multiple sub directories. These sub directories should contain the annotations from each annotators and should be named in a way that represents each annotator. A caveat to consider is that the xml files themselves should be consistently named, in a way that the only difference between the paths should be the file's parent directory. As an example consider the following, `annotations/anno1/file_1.xml` and `annotations/anno2/file_1.xml`. If the files are named differently, the code will treat them as different files. In the case of an annotator containing different files than others, these files will be ignored by the tool. 
  
--**Output Directory:** the absolute path to a results/report directory.
+- **Output Directory:** the absolute path to a results/report directory.
  
--**Task:** this section should be `sequence_labeling`. In the future, there will be an additional option for `classification`.
+- **Task:** this section should be `sequence_labeling`. In the future, there will be an additional option for `classification`.
   
--**Encoding:** the encoding of the xml files
+- **Encoding:** the encoding of the xml files
  
  The config file allows to add an unlimited amount of annotation types. The following is an example of how to create these types in the config file.
  
@@ -72,7 +72,7 @@ To use the tool you will first need to update the information inside the config 
 ```
 python app.py <path_to_config_file>
 ```
-where the path_to_config_file is a placeholder for the absolute path to the config file
+where `<path_to_config_file>` is a placeholder for the absolute path to the config file
 
 ## Reference
 
