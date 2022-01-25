@@ -11,7 +11,7 @@ pip3 install -r requirements.txt
 ```
 to install all packages.
 
-## Package components
+## Tool components
 
 - **Document Validation**
 
