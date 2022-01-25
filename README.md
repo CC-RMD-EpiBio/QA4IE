@@ -67,12 +67,9 @@ To add features to a specific entity to have to used several separators. (`:=:`)
 
 ## Demo script/data
 
-This package includes `n` small datasets for code demonstration purposes:
+This package includes 1 small dataset for code demonstration purposes:
 
 - ```demo_data/demo_dataset_1``` dataset description
-- ```demo_data/demo_dataset_2``` dataset description
-- ```demo_data/demo_dataset_3``` dataset description
-- ```demo_data/demo_dataset_n``` dataset description
 
 To use the tool you will first need to update the information inside the config file. Afterwards, to run the tool just run,
 ```
