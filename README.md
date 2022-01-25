@@ -1,4 +1,4 @@
-# QA4IE: A Quality Assurance Tool for Information Extraction and Text Classification
+# QA4IE: A Quality Assurance Tool for Information Extraction
 
 This open source package implements a series of components required for comprehensive quality assurance on annotations created using GATE
 
