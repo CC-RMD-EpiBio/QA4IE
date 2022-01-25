@@ -719,24 +719,29 @@ def generate_token_level_report(filters=[]):
 
 
 
-  with open(token_level_path  / 'token_level_eval_summary.txt', 'w') as text_file:
-    
-    for x in total_cm_dictionary:
-      cm_total = total_cm_dictionary[x]
-      tn, fp, fn, tp = cm_total.ravel()
-      results = annotation_evaluation.calculate_token_performance(cm_total)
-
-      text_file.write('{}\n'.format(x))
-      text_file.write('\ttn : {}\n\tfp : {}\n\tfn : {}\n\ttp: {}\n'.format(tn, fp, fn, tp))
-      for i, j in results.items():
-        text_file.write('\t{} : {} \n'.format(i, j))
+  
 
 
 
   df = pd.DataFrame(out, columns=['file_name', 'key', 'response', 'type', 'tp', 'tn', 'fp', 'fn', 'precision', 'recall', 'f1'])      
+  try:
+    with open(token_level_path  / 'token_level_eval_summary.txt', 'w') as text_file:
+    
+      for x in total_cm_dictionary:
+        cm_total = total_cm_dictionary[x]
+        tn, fp, fn, tp = cm_total.ravel()
+        results = annotation_evaluation.calculate_token_performance(cm_total)
 
-  df.to_csv(token_level_path / 'token_level_eval.csv', index=False)
-  return 'report generated in {}'.format(settings.output_dir)
+        text_file.write('{}\n'.format(x))
+        text_file.write('\ttn : {}\n\tfp : {}\n\tfn : {}\n\ttp: {}\n'.format(tn, fp, fn, tp))
+        for i, j in results.items():
+          text_file.write('\t{} : {} \n'.format(i, j))
+    df.to_csv(token_level_path / 'token_level_eval.csv', index=False)
+
+    return 'report generated in {}'.format(settings.output_dir)
+  except BlockingIOError as e:
+      return '{}'.format(str(e))
+  
 
 
 def generate_entity_level_report(filters=[]):
@@ -805,7 +810,18 @@ def generate_entity_level_report(filters=[]):
         text_file.write('\t{} : {} \n'.format(i, j))
 
   df = pd.DataFrame(out, columns=['file_name', 'key', 'response', 'type', 'correct', 'partial', 'missing', 'false_positive', 'precision', 'recall', 'f1'])      
+  try:
+    with open(entity_level_path  / 'entity_level_eval_summary.txt', 'w') as text_file:
+      for x in classifications_total:
 
-  df.to_csv(entity_level_path  / 'entity_level_eval.csv', index=False)
-  return 'report generated in {}'.format(settings.output_dir)
+        text_file.write('{}\n'.format(x))
+        for i, j in classifications_total[x].items():
+          text_file.write('\t{} : {} \n'.format(i, j))
+        for i, j in annotation_evaluation.calculate_entity_performance(classifications_total[x]).items():
+          text_file.write('\t{} : {} \n'.format(i, j))
+    df.to_csv(entity_level_path  / 'entity_level_eval.csv', index=False)
+    return 'report generated in {}'.format(settings.output_dir)
+
+  except BlockingIOError as e:
+    return '{}'.format(str(e))
 
