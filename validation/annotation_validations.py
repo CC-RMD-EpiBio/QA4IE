@@ -240,6 +240,13 @@ def validate_schema(annotations = [], schema = {}):
                     conflicts[annotation['mention']].append(annotation)
                 except KeyError as e:
                     conflicts[annotation['mention']] = [annotation]
+            else:
+                if not len(list(annotation['features'].keys())) == len(list(schema_features.keys())):
+                    try:
+                        conflicts[annotation['mention']].append(annotation)
+                    except KeyError as e:
+                        conflicts[annotation['mention']] = [annotation]
+
                                          
 
 

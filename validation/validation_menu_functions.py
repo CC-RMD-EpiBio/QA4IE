@@ -1558,7 +1558,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1572,7 +1572,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -1587,7 +1587,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   
                   count = 0
@@ -1603,7 +1603,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                   
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -1622,7 +1622,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1639,7 +1639,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -1655,7 +1655,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1671,7 +1671,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
 
     else: # individual annotation types
         if file == 'corpus': # all notes
@@ -1691,7 +1691,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1708,7 +1708,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -1725,7 +1725,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1742,7 +1742,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -1761,7 +1761,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items():
@@ -1778,7 +1778,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -1795,7 +1795,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1812,7 +1812,7 @@ def validate_annotation_zero_length(filters=[]):
                   if count:
                       return 'Zero length issues found'
                   else:
-                      return 'No Zero length issues found'
+                      return 'No zero length issues found'
                         #conflict_count = 0
                     #     output = ''
                     #     if annotation_type in list(conflicts.keys()):
@@ -1863,7 +1863,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1877,7 +1877,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -1892,7 +1892,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   
                   count = 0
@@ -1908,7 +1908,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                   
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -1927,7 +1927,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1944,7 +1944,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -1960,7 +1960,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -1976,7 +1976,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
 
     else: # individual annotation types
         if file == 'corpus': # all notes
@@ -1996,7 +1996,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -2013,7 +2013,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -2030,7 +2030,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -2047,7 +2047,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 
         else: # individual notes
             if annotator_name == 'team': # all annotators
@@ -2066,7 +2066,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items():
@@ -2083,7 +2083,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
             else: # individual annotators
                 if annotation_set == 'all_sets':  # all annotation sets
                   count = 0
@@ -2100,7 +2100,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                 else: # individual annotation sets
                   count = 0
                   for f, a_c in settings.corpus.items(): 
@@ -2117,7 +2117,7 @@ def validate_annotation_negative_length(filters=[]):
                   if count:
                       return 'Negative length issues found'
                   else:
-                      return 'No Negative length issues found'
+                      return 'No negative length issues found'
                         #conflict_count = 0
                     #     output = ''
                     #     if annotation_type in list(conflicts.keys()):
@@ -2199,11 +2199,9 @@ def validate_annotation_boundaries(filters=[]):
     if count:
       out += 'Annotation boundaries found\n'
     else:
-      out += 'No Annotation boundaries found\n'
+      out += 'No annotation boundaries found\n'
 
     return out
-
-
 
 
 def validate_schema_values(filters=[]):
@@ -2653,15 +2651,7 @@ def generate_validation_report():
               for n, e in conflicts.items():
                   total_invalid_annotations.append([file_name, annotator, set_name, n, e])
 
-    with open(validation_path / 'annotation_validation_summary.txt', 'w') as text_file:
-      text_file.write('{} : {} \n'.format('overlaps', len(total_overlaps)))
-      text_file.write('{} : {} \n'.format('sub entity boundaries', len(total_outbound_subentities)))
-      text_file.write('{} : {} \n'.format('document scope', len(total_document_scope)))
-      text_file.write('{} : {} \n'.format('sub entity partial overlaps', len(total_subentity_partial_overlaps)))
-      text_file.write('{} : {} \n'.format('invalid annotations', len(total_invalid_annotations)))
-      text_file.write('{} : {} \n'.format('zero length annotations', len(total_zero_length)))
-      text_file.write('{} : {} \n'.format('negative length annotations', len(total_negative_length)))    
-      text_file.write('{} : {} \n'.format('annotation boundaries', len(total_annotation_boundaries)))        
+      
     overlap_report = pd.DataFrame(total_overlaps, columns = ['file_name', 'annotator', 
                                                              'set_name', 'annotation_type',
                                                              'overlaps'])
@@ -2697,17 +2687,28 @@ def generate_validation_report():
                                               columns = ['file_name', 'annotator', 
                                                          'set_name', 'annotation_type',
                                                          'negative_length'])
+    try:
+      with open(validation_path / 'annotation_validation_summary.txt', 'w') as text_file:
+        text_file.write('{} : {} \n'.format('overlaps', len(total_overlaps)))
+        text_file.write('{} : {} \n'.format('sub entity boundaries', len(total_outbound_subentities)))
+        text_file.write('{} : {} \n'.format('document scope', len(total_document_scope)))
+        text_file.write('{} : {} \n'.format('sub entity partial overlaps', len(total_subentity_partial_overlaps)))
+        text_file.write('{} : {} \n'.format('invalid annotations', len(total_invalid_annotations)))
+        text_file.write('{} : {} \n'.format('zero length annotations', len(total_zero_length)))
+        text_file.write('{} : {} \n'.format('negative length annotations', len(total_negative_length)))    
+        text_file.write('{} : {} \n'.format('annotation boundaries', len(total_annotation_boundaries)))  
+      overlap_report.to_csv(validation_path  / 'overlap_report.csv', index=False)
+      outbound_report.to_csv(validation_path  / 'out_of_bound_annotations_report.csv', index=False)
+      zero_length_report.to_csv(validation_path  / 'zero_length_report.csv', index=False)
+      negative_length_report.to_csv(validation_path  / 'negative_length_report.csv', index=False)
+      document_scope_report.to_csv(validation_path  / 'document_scope_report.csv', index=False)
+      sub_entity_outbound_report.to_csv(validation_path  / 'out_of_boundary_sub_entity_report.csv', index=False)
+      sub_entity_partial_overlap_report.to_csv(validation_path  / 'sub_entity_partial_overlap_report.csv', index=False)
+      invalid_annotations_report.to_csv(validation_path  / 'invalid_annotation_report.csv', index=False)
 
-    overlap_report.to_csv(validation_path  / 'overlap_report.csv', index=False)
-    outbound_report.to_csv(validation_path  / 'out_of_bound_annotations_report.csv', index=False)
-    zero_length_report.to_csv(validation_path  / 'zero_length_report.csv', index=False)
-    negative_length_report.to_csv(validation_path  / 'negative_length_report.csv', index=False)
-    document_scope_report.to_csv(validation_path  / 'document_scope_report.csv', index=False)
-    sub_entity_outbound_report.to_csv(validation_path  / 'out_of_boundary_sub_entity_report.csv', index=False)
-    sub_entity_partial_overlap_report.to_csv(validation_path  / 'sub_entity_partial_overlap_report.csv', index=False)
-    invalid_annotations_report.to_csv(validation_path  / 'invalid_annotation_report.csv', index=False)
-
-
-    return 'report generated in {}'.format(settings.output_dir)
+      return 'report generated in {}'.format(settings.output_dir)
+    except BlockingIOError as e:
+        return '{}'.format(str(e))
+    
 
 
