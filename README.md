@@ -71,7 +71,7 @@ This package includes 1 small dataset for code demonstration purposes:
 
 - ```data/annotations``` synthetic notes annotated using the mobility schema
 
-To use the tool you will first need to update the information inside the config file. Afterwards, to run the tool just run,
+To use the tool you will first need to update the information inside the config file. Including the absolute paths for your input and output directories. Afterwards, to run the tool just run,
 ```
 python app.py <path_to_config_file>
 ```
