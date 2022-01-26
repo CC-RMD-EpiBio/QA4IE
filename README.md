@@ -23,6 +23,14 @@ to install all packages.
 
 - **Discrepancy Analysis** 
 
+- **Generate Report** 
+
+- **Corpus Viewer** 
+
+- **Schema** 
+
+- **Help** 
+
   
  ## Setting the config file
  
