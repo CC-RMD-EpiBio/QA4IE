@@ -23,11 +23,11 @@ to install all packages.
 
 - **Discrepancy Analysis** 
 
-- **Generate Report** 
+- **Generate Reports** 
 
 - **Corpus Viewer** 
 
-- **Schema** 
+- **Annotation Schema** 
 
 - **Help** 
 
