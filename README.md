@@ -82,6 +82,11 @@ python app.py <path_to_config_file>
 ```
 where `<path_to_config_file>` is a placeholder for the absolute path to the config file
 
+## Demo Video 
+
+https://user-images.githubusercontent.com/76070145/151435139-af97fdb1-fda3-437f-9156-0c0bc62a853a.mov
+
+
 ## Reference
 
 If you use this software in your own work, please cite the following paper:
