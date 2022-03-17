@@ -52,7 +52,7 @@
 import os, sys
 import curses
 import locale
-
+import warnings
 from itertools import combinations
 from load_data import settings
 from menu import menu_system
@@ -63,6 +63,7 @@ from evaluation import evaluation_menu_functions
 from discrepancy_analysis import discrepancy_analysis_menu_functions
 
 
+warnings.filterwarnings("ignore")
 sys.setrecursionlimit(10**6)
 
 def run_app(stdscr):
@@ -105,6 +106,8 @@ def run_app(stdscr):
 
     file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
     set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
+
+
     if len(file_names) > 1:
       file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names[1:])
     else:
@@ -193,10 +196,8 @@ def run_app(stdscr):
                                       menu_system.MenuAction(annotator_options.title, 
                                                              annotator_options.return_options),
                                       menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotation_types_options.title, 
-                                                             annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
+                                                             annotator_options.return_options)],
+                             slots = ['File', 'Set Name', 'Key', 'Response'])
 
     discrepancy_tool_bar = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
                              options=[menu_system.MenuAction(file_name_options.title, 
@@ -289,11 +290,12 @@ def run_app(stdscr):
                                          inherit_settings=True)
     if settings.task == 'classification':
       cohens_kappa_menu = menu_system.Menu(title='Cohens Kappa', 
-                                          options=[menu_system.MenuAction('Evaluate'),
+                                          options=[menu_system.MenuAction('Evaluate', evaluation_menu_functions.cohen_kappa_eval),
                                                    menu_system.MenuAction('Generate Report')], 
                                           tool_bar = cohens_kappa_tool_bar,
                                           screen=stdscr,
                                           inherit_settings=True)
+
       evaluation_menu = menu_system.Menu(title='Evaluation', 
                                          options=[cohens_kappa_menu], 
                                          screen=stdscr,
@@ -306,20 +308,34 @@ def run_app(stdscr):
                                        screen=stdscr,
                                        inherit_settings=True)
 
-    statistics_menu = menu_system.Menu(title='Statistics', 
-                                       options=[menu_system.MenuAction('Entity Distribution',
-                                                statistics_menu_functions.count_entities),
-                                                menu_system.MenuAction('Entity/Features Distribution',
-                                                statistics_menu_functions.count_entities_with_features),
-                                                menu_system.MenuAction('Entity Token Length Distribution',
-                                                statistics_menu_functions.entity_token_stats),
-                                                menu_system.MenuAction('Entity/Features Token Length Distribution',
-                                                statistics_menu_functions.entity_with_features_token_stats),
-                                                menu_system.MenuAction('Generate Report',
-                                                statistics_menu_functions.generate_statistics_report)], 
-                                       tool_bar = statistics_tool_bar,
-                                       screen=stdscr,
-                                       inherit_settings=True)
+    if [e for n, e in settings.schema.entities.items() if e.features]:
+
+      statistics_menu = menu_system.Menu(title='Statistics', 
+                                         options=[menu_system.MenuAction('Entity Distribution',
+                                                  statistics_menu_functions.count_entities),
+                                                  menu_system.MenuAction('Entity/Features Distribution',
+                                                  statistics_menu_functions.count_entities_with_features),
+                                                  menu_system.MenuAction('Entity Token Length Distribution',
+                                                  statistics_menu_functions.entity_token_stats),
+                                                  menu_system.MenuAction('Entity/Features Token Length Distribution',
+                                                  statistics_menu_functions.entity_with_features_token_stats),
+                                                  menu_system.MenuAction('Generate Report',
+                                                  statistics_menu_functions.generate_statistics_report)], 
+                                         tool_bar = statistics_tool_bar,
+                                         screen=stdscr,
+                                         inherit_settings=True)
+    else:
+      statistics_menu = menu_system.Menu(title='Statistics', 
+                                   options=[menu_system.MenuAction('Entity Distribution',
+                                            statistics_menu_functions.count_entities),
+                                            menu_system.MenuAction('Entity Token Length Distribution',
+                                            statistics_menu_functions.entity_token_stats),
+                                            menu_system.MenuAction('Generate Report',
+                                            statistics_menu_functions.generate_statistics_report)], 
+                                   tool_bar = statistics_tool_bar,
+                                   screen=stdscr,
+                                   inherit_settings=True)
+
 
 
     help_menu = menu_system.HelpMenu(title='Help',
@@ -367,6 +383,9 @@ def run_app(stdscr):
       curses.endwin() 
 
 def generate_all_reports():
+
+
+  try:
     error_checks_menu_functions.generate_error_checks_report()
 
     validation_menu_functions.generate_validation_report()
@@ -376,6 +395,9 @@ def generate_all_reports():
     discrepancy_analysis_menu_functions.generate_discrepancy_report()
 
     return 'reports generated in {}'.format(settings.output_dir)
+
+  except BlockingIOError as e:
+    return '{}'.format(str(e))
 
 
 def main():
@@ -387,6 +409,8 @@ def main():
       path = ' '.join([x for x in sys.argv[1:]])
     
     settings.init(path)
+
+
   except IndexError as e:
       print('Usage: python {} <path_to_config_file>'.format(__file__))
 
