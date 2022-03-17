@@ -52,7 +52,42 @@
 
 from tokenizer import tokenizer
 from collections import Counter
+import numpy as np
 from sklearn.metrics import confusion_matrix
+
+def cohens_kappa(key, response, lbs):
+
+  cm = confusion_matrix(key, response, labels = lbs)
+
+  true_positives = cm[0,0]
+  false_postives = cm[1,0]
+  false_negatives = cm[0,1]
+  true_negatives = cm[1,1]
+
+  total_true = true_positives + true_negatives
+  total_false = false_postives + false_negatives
+  total = total_true + total_false
+
+  a_0 = (true_positives + true_negatives) / total
+  cat_1 = (2 * true_positives) / ((2 * true_positives) + false_postives + false_negatives)
+  cat_2 = (2 * true_negatives) / (false_postives + false_negatives + (2 * true_negatives))
+
+  expected_matrix = np.array([[sum(cm[0,:])/total, sum(cm[:,0])/total],
+                              [sum(cm[1,:])/total, sum(cm[:,1])/total]])
+
+  a_e = (expected_matrix[0,0] * expected_matrix[0,1]) + (expected_matrix[1,0] * expected_matrix[1,1])
+  
+  cohens_kappa = (a_0 - a_e) / (1 - a_e)
+
+ 
+
+
+  return {'confusion_matrix':cm,
+          'observed_agreement':round(total_true /total, 4), 
+          'positive_specific_agreement':round(cat_2, 4), 
+          'negative_specific_agreement':round(cat_1, 4), 
+          'chance_agreement':round(a_e, 4), 
+          'cohens_kappa':cohens_kappa}
 
 def pretty_print_cm(cm, key_labels, response_labels):
   '''

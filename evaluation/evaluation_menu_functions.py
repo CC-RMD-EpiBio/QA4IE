@@ -347,7 +347,6 @@ def token_eval(filters=[]):
               response_text = response_file['text']
               response_tokens =  tokenizer.tokenizer(response_text)
 
-
               if entity_type == 'all_types':
                 if set_name == 'all_sets':
                   
@@ -365,6 +364,7 @@ def token_eval(filters=[]):
                                         for a in annotations 
                                         if  a['mention'] == ent_type
                                        ]
+
 
                     # with tokens create a 'bio' like representation
                     key_bio = annotation_evaluation.transform_to_bio(key_tokens, key_annotations, [ent_type])
@@ -659,6 +659,172 @@ def token_eval(filters=[]):
     out += '\n'.join(['{} : {:.3f}'.format(x, y) for x, y in results.items()])
 
     return out
+
+
+def cohen_kappa_eval(filters =[]):
+  document_name = filters[0].title
+  set_name = filters[1].title
+  key_name = filters[2].title
+  response_name = filters[3].title
+  #entity_type = filters[4].title
+  # some code
+  if document_name == 'corpus':
+      #return ''
+      if key_name == 'team':
+          return ''
+      else: #individual keys
+          if response_name == 'team':
+              return ''
+          else: # individual response
+            if set_name == 'all_sets':
+              key_anns = []
+              response_anns = []
+              labels = settings.schema.get_entity_names_in_order()
+              for file_name, annotators in settings.corpus.items():
+
+                key_file = annotators[key_name]
+                response_file = annotators[response_name]
+
+                key_anns.append([v for k, v in key_file['annotation_sets'].items()] )
+                response_anns.append([v for k, v in response_file['annotation_sets'].items()] )
+
+              #return '{}'.format(key_anns[0][0])
+
+
+              key_labels = [z['mention'] for x in key_anns 
+                                         for y in x 
+                                         for z in y
+                                         if z['mention'] in labels]
+              response_labels = [z['mention'] for x in response_anns 
+                                              for y in x 
+                                              for z in y
+                                              if z['mention'] in labels]
+              
+
+              
+              #return '{}'.format(' '.join(key_labels))
+                  
+              scores = annotation_evaluation.cohens_kappa(key_labels, 
+                                                          response_labels, 
+                                                          lbs=labels)
+            
+
+              out = ''
+
+              for k, v in scores.items():
+                if k == 'confusion_matrix':
+                  out += annotation_evaluation.pretty_print_cm(v, 
+                                                               ['true_key', 'false_key'], 
+                                                               ['true_response', 'false_response'])
+                else:
+                  out += '{} : {}\n'.format(k, v)
+
+
+              return '{}'.format(out)
+            else:
+              key_anns = []
+              response_anns = []
+              labels = settings.schema.get_entity_names_in_order()
+              for file_name, annotators in settings.corpus.items():
+
+                key_file = annotators[key_name]
+                response_file = annotators[response_name]
+
+                key_anns.append(key_file['annotation_sets'][set_name])
+                response_anns.append(response_file['annotation_sets'][set_name])
+
+              
+              key_labels = [y['mention'] for x in key_anns for y in x if y['mention'] in labels]
+              response_labels = [y['mention'] for x in response_anns for y in x if y['mention'] in labels]
+
+              #return '{} {}'.format(len(key_labels), len(response_labels))
+                  
+              scores = annotation_evaluation.cohens_kappa(key_labels, 
+                                                          response_labels, 
+                                                          lbs=labels)
+            
+
+              out = ''
+
+              for k, v in scores.items():
+                if k == 'confusion_matrix':
+                  out += annotation_evaluation.pretty_print_cm(v, 
+                                                               ['true_key', 'false_key'], 
+                                                               ['true_response', 'false_response'])
+                else:
+                  out += '{} : {}\n'.format(k, v)
+
+
+              return '{}'.format(out)
+  else:
+    if key_name == 'team':
+          return ''
+    else: #individual keys
+        if response_name == 'team':
+            return ''
+        else: # individual response
+          if set_name == 'all_sets':
+            key_anns = []
+            response_anns = []
+            labels = settings.schema.get_entity_names_in_order()
+           
+
+            key_file = settings.corpus[document_name][key_name]
+            response_file = settings.corpus[document_name][response_name]
+
+            key_anns.append([v for k, v in key_file['annotation_sets'].items()] )
+            response_anns.append([v for k, v in response_file['annotation_sets'].items()] )
+
+            key_labels = [z['mention'] for x in key_anns 
+                                       for y in x 
+                                       for z in y
+                                       if z['mention'] in labels]
+            response_labels = [z['mention'] for x in response_anns 
+                                            for y in x 
+                                            for z in y
+                                            if z['mention'] in labels]
+            
+
+                
+            scores = annotation_evaluation.cohens_kappa(key_labels, 
+                                                        response_labels, 
+                                                        lbs=labels)
+          
+
+            out = ''
+
+            for k, v in scores.items():
+              if k == 'confusion_matrix':
+                out += annotation_evaluation.pretty_print_cm(v, 
+                                                             ['true_key', 'false_key'], 
+                                                             ['true_response', 'false_response'])
+              else:
+                out += '{} : {}\n'.format(k, v)
+
+
+            return '{}'.format(out)
+          else:
+            key_file = settings.corpus[document_name][key_name]
+            response_file = settings.corpus[document_name][response_name]
+
+            labels = settings.schema.get_entity_names_in_order()
+            key_labels = [x['mention'] for x in key_file['annotation_sets'][set_name]]
+            response_labels = [x['mention'] for x in response_file['annotation_sets'][set_name]]
+            scores = annotation_evaluation.cohens_kappa(key_labels, 
+                                                       response_labels, 
+                                                       lbs=labels)
+            out = ''
+            for k, v in scores.items():
+              if k == 'confusion_matrix':
+                out += annotation_evaluation.pretty_print_cm(v, 
+                                                             ['true_key', 'false_key'], 
+                                                             ['true_response', 'false_response'])
+              else:
+                out += '{} : {}\n'.format(k, v)
+            return '{}'.format(out)
+
+
+
 
 def generate_token_level_report(filters=[]):
 
