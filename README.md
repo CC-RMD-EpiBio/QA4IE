@@ -87,6 +87,84 @@ where `<path_to_config_file>` is a placeholder for the absolute path to the conf
 https://user-images.githubusercontent.com/76070145/151435139-af97fdb1-fda3-437f-9156-0c0bc62a853a.mov
 
 
+## Links
+'''
+GATE  
+
+The Annotation Diﬀ Tool   
+
+https://gate.ac.uk/sale/tao/splitch10.html#x14-26300010.2 
+
+Corpus Quality Assurance 
+
+https://gate.ac.uk/sale/tao/splitch10.html#x14-26700010.3 
+
+Corpus Benchmark Tool 
+
+https://gate.ac.uk/sale/tao/splitch10.html#x14-27500010.4 
+
+A Plugin Computing Inter-Annotator Agreement (IAA) 
+
+https://gate.ac.uk/sale/tao/splitch10.html#x14-28000010.5 
+
+Quality Assurance Summariser for Teamware 
+
+https://gate.ac.uk/sale/tao/splitch10.html#x14-28600010.7 
+
+ERAS   
+
+https://github.com/jonatasgrosman/eras 
+
+Brat  
+
+https://brat.nlplab.org 
+
+LightTag 
+
+https://www.lighttag.io 
+
+MAT 
+
+http://mat-annotation.sourceforge.net 
+
+Tagtog 
+
+https://www.tagtog.net 
+
+TextAE 
+
+https://github.com/pubannotation/textae 
+
+Watson KS 
+
+https://www.ibm.com/cloud/watson-knowledge-studio 
+
+WebAnno 
+
+https://webanno.github.io/webanno/ 
+
+Prodigy  
+
+https://prodi.gy 
+
+SLATE  
+
+https://github.com/jkkummerfeld/slate 
+
+Knowtator  
+
+http://knowtator.sourceforge.net 
+
+INCEpTION 
+
+https://inception-project.github.io 
+
+QA4IE 
+
+https://github.com/CC-RMD-EpiBio/QA4IE 
+
+'''
+
 ## Reference
 
 If you use this software in your own work, please cite the following paper:
