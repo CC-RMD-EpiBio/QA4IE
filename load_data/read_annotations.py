@@ -56,7 +56,7 @@
 from lxml import etree
 
 
-def read_gate_xml(file_path, exclude_sets = [], annotator = None, encoding = 'utf-8'):
+def read_gate_xml(file_path, include_sets = [], annotator = None, encoding = 'utf-8', schema=None, merge_sets = False):
     """
     Given a a path to an gate xml, generate a object representation of it
     :param file_path: a pathlib object that points to the annotation file
@@ -72,27 +72,55 @@ def read_gate_xml(file_path, exclude_sets = [], annotator = None, encoding = 'ut
     document_contents = {}
     tree = etree.parse(str(file_path))
     root = tree.getroot()
-    document_contents['text'] = etree.tostring(tree.find('TextWithNodes'), encoding=encoding, 
-                                                                           method='text', 
-                                                                           with_tail = False).decode()
+    # document_contents['text'] = etree.tostring(tree.find('TextWithNodes'), encoding=encoding, 
+    #                                                                        method='text', 
+    #                                                                        with_tail = False).decode()
+   
+    
+    text_with_nodes = tree.findall('.//TextWithNodes')[0]
+    document_contents['text'] = ''.join(text_with_nodes.itertext())
+
+
     document_contents['annotation_sets'] = {}
 
+
     for annotation_set in tree.findall("./AnnotationSet"):
-        if annotation_set.attrib == "":
+        
+        if not annotation_set.attrib.values():
             set_name = 'default_annotation_set'
         else:
-            set_name = annotation_set.attrib['Name']
+            
+            if annotation_set.attrib.values()[0] == '':
+                set_name = 'default_annotation_set'
+            else:
+                set_name = annotation_set.attrib.values()[0]
 
-        if set_name in exclude_sets:
-            continue # skip this section
+        if include_sets:
+            #print(include_sets)
+            #raise ValueError('hey! listen!')
+            if not set_name in include_sets:
+                continue # skip this section
 
         document_contents['annotation_sets'][set_name] = []
+        
 
+        
         for annotation in annotation_set.findall(".Annotation"):
             annotation_dict = {}
             attributes = annotation.attrib
+            current_type = attributes['Type'].replace('-', '').replace('/', '').replace(' ', '').lower()
             
-            annotation_dict['mention'] = attributes['Type']
+            if schema:
+                if not current_type in [x.name for x in schema.entities.values()]:
+                    if not current_type in [y for x in schema.entities.values() for y in x.alt_names]:
+                        continue
+
+            if schema:
+                for x in schema.entities.values():
+                    if current_type in x.alt_names:
+                        current_type = x.name
+
+            annotation_dict['mention'] = current_type 
             annotation_dict['start'] = int(attributes['StartNode'])
             annotation_dict['end'] = int(attributes['EndNode'])
             annotation_dict['id'] = attributes['Id']
@@ -100,13 +128,35 @@ def read_gate_xml(file_path, exclude_sets = [], annotator = None, encoding = 'ut
 
             features = {}
             for att, val in zip(annotation.findall("./Feature/Name"), annotation.findall("./Feature/Value")):
-                features[att.text] = val.text
+                features[att.text.replace('-', '').replace('/', '').replace(' ', '').lower()] = val.text.replace('-', '').replace('/', '').replace(' ', '').lower()
 
             annotation_dict['features'] = features
             annotation_dict['annotator'] = annotator
 
+
             document_contents['annotation_sets'][set_name].append(annotation_dict)
 
+    if merge_sets:
+        
+        temp = []
+        try:
+            for x, y in document_contents['annotation_sets'].items():
+                for z in y:
+                    temp.append(z)
+
+        except IndexError as e:
+            #raise ValueError('{}'.format(e))
+            temp = []
+        # print('NEW FILE')
+        # print(temp)
+        
+        del document_contents['annotation_sets']
+        document_contents['annotation_sets'] = {merge_sets :temp}
+        #raise ValueError('{}'.format(document_contents['annotation_sets'].keys()))
+
+    #print(include_sets)
+    #print(list(document_contents['annotation_sets'].keys()))
+    #raise ValueError('hey! listen!')
     return document_contents
 
 

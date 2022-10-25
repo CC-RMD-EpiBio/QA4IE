@@ -107,15 +107,94 @@ def count_mentions(annotations = [], schema = {}, include_features = True):
     return counts
 
 
-def count_hierarchical_relationships(annotations = [], schema = None, annotation_type = 'all'):
+def count_hierarchical_relationships(annotations = [], current_type = None):
+    def overlap(a, l):
+        '''
+            finds overlaps between a list of annotations and a single annotation
+            :param a: a single annotation
+            :type dict
+
+            :param b: a list of annotations
+            type list
+
+            :return conflicts: the conflicts found for this check       
+        '''
+        #assert a, 'please provide an annotationn'
+        #assert l, 'please provide a list of annotations'
+        
+        res = []
+        for t in l:
+            if(t['end'] > a['start'] and t['start'] < a['end'] 
+                                     and not (t['id'] == a['id']) 
+                                     and (t['annotator'] == a['annotator'])):
+                res.append(t)
+        return res
+
+    out = {}
+
+    # current_type = schema[annotation_type]
+    if current_type.is_parent_entity():
+        #return '{}'.format(current_type.name)
+        out[current_type.name] = {}
+       
+        for sub in list(current_type.sub_entities.keys()):
+            
+        #     # get subentities of this type
 
 
-    if not annotation_type == 'all':
-        current_type = schema[annotation_type]
-        if current_type.is_parent_entity():
-            current_type.get_sub_entity()
-        if current_type.is_sub_entity():
-            current_type.get_parrent_entity()
+            out[current_type.name][sub] = 0
+            
+            subs_of_type = [s for s in annotations if s['mention'] == sub]
+
+            #return '{}'.format([s['mention'] for s in annotations])
+            filtered_annotations = [a for a in annotations if a['mention'] == current_type.name]
+            
+            for sub_entity in subs_of_type:
+                if overlap(sub_entity, filtered_annotations):
+                    out[current_type.name][sub] +=1
+            try:
+                out[current_type.name][sub] = out[current_type.name][sub] / len(filtered_annotations)
+            except ZeroDivisionError:
+                out[current_type.name][sub] = 0
+
+    
+        return out
+
+
+
+
+        
+    if current_type.is_sub_entity():
+        main_type = current_type.get_parent_entity().name
+        out[main_type] = {}
+       
+        sub = current_type.name
+            
+        #     # get subentities of this type
+
+
+        out[main_type][sub] = 0
+        
+        subs_of_type = [s for s in annotations if s['mention'] == sub]
+
+        #return '{}'.format([s['mention'] for s in annotations])
+        filtered_annotations = [a for a in annotations if a['mention'] == main_type]
+        
+        for sub_entity in subs_of_type:
+            if overlap(sub_entity, filtered_annotations):
+                out[main_type][sub] +=1
+        try:
+            out[main_type][sub] = out[main_type][sub] / len(filtered_annotations)
+        except ZeroDivisionError:
+            out[main_type][sub] = 0
+
+    
+        return out
+
+
+    else:
+        return {}
+
 
 
 

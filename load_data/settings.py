@@ -59,28 +59,51 @@ def init(config_path=None):
     global task 
     global corpus
     global schema
+    global merge_sets
     global output_dir
     global logger
 
     # load config file
-    base_dir = Path(__file__)
+    #base_dir = Path(__file__)
     
     try:
+        #print(config_path)
         config_info = config_reader.read_config_file_information(config_path)
-        config_check.config_check(config_info)
-
+        
+        
+        
         schema = config_info['schema']
+        set_names = config_info['set_names']
+        merge_sets = config_info['merge_set_names']
         encoding = config_info['encoding']
-        try:
-            corpus = create_corpus.create_corpus(annotations_dir=Path(config_info['annotation_dir']),
-                                                 strict_matches=True,
-                                                 encoding = encoding)
-        except LookupError as e:
-            raise
         task = config_info['task']
         output_dir = Path(config_info['output_dir'])
+        annotations_dir = config_info['annotation_dir']
+
+        try:
+            corpus = create_corpus.create_corpus(annotations_dir=Path(annotations_dir),
+                                                 strict_matches=True,
+                                                 encoding = encoding,
+                                                 filter_sets=set_names,
+                                                 schema=schema,
+                                                 merge_sets=merge_sets)
+
+            if not schema:
+                
+                if not set_names:
+                    raise ValueError('Set Name Required')
+                #if len(set_names) > 1:
+                    #raise ValueError('Only One Set Name Can Be Used If Schema Types Are Absent')
+                #raise ValueError('Schema Not Found In Config File')
+                schema = config_reader.determine_entity_relations(corpus, set_names)
+            
+                #raise ValueError('Schema Not Found In Config File')
+            
+        except LookupError as e:
+            raise ValueError('Data Not Structured Properly')
+
     except AssertionError as e:
-        raise 
+        raise ValueError('Config File Not Found')
 
   
 

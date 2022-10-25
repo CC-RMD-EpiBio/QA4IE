@@ -52,6 +52,7 @@
 import os, sys
 import curses
 import locale
+import warnings
 from itertools import combinations
 from load_data import settings
 from menu import menu_system
@@ -59,325 +60,513 @@ from validation import validation_menu_functions
 from error_checks import error_checks_menu_functions
 from stats import statistics_menu_functions
 from evaluation import evaluation_menu_functions
+from discrepancy_analysis import discrepancy_analysis_menu_functions
 
 
-sys.setrecursionlimit(10**6)
+warnings.filterwarnings("ignore")
+sys.setrecursionlimit(10**6) # had issues with infinite recusion limits. Had to extend it to accomodate for it
 
 def run_app(stdscr):
-    if len(list(settings.corpus.keys())) == 1:
-        file_names = list(settings.corpus.keys())
-    else:
-        file_names = ['corpus'] + list(settings.corpus.keys())
 
-    if len(list(set([n for f, c in settings.corpus.items() 
-                                           for a, b in c.items() 
-                                           for n in b['annotation_sets']]))) == 1:
-        set_names = list(set([n for f, c in settings.corpus.items() 
-                                               for a, b in c.items() 
-                                               for n in b['annotation_sets']]))
-    else:
-        set_names = ['all_sets'] + list(set([n for f, c in settings.corpus.items() 
-                                               for a, b in c.items() 
-                                               for n in b['annotation_sets']]))
+  
+  # depending on certain characteristics of the config file
+  # the tool will automatically adjust for different possibilities
+  if len(list(settings.corpus.keys())) == 1:
+      file_names = list(settings.corpus.keys())
+  else:
+      file_names = ['corpus'] + list(settings.corpus.keys())
 
-   
-    if len(list(set([a for k, v in settings.corpus.items()
-                                        for a in v.keys()]))) == 1:
-        annotators = list(set([a for k, v in settings.corpus.items() 
-                                            for a in v.keys()]))
-    else:
-        annotators = ['team'] + list(set([a for k, v in settings.corpus.items() 
-                                            for a in v.keys()]))
-
-    if len(['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]) == 1:
-        annotator_pairs = ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
-    else:
-        annotator_pairs = ['team'] +  ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
-
-    if len(settings.schema.get_entity_names()) == 1:
-        annotation_types = settings.schema.get_entity_names()
-    else:
-        annotation_types = ['all_types'] + settings.schema.get_entity_names()
+  if len(list(set([n for f, c in settings.corpus.items() 
+                                         for a, b in c.items() 
+                                         for n in b['annotation_sets']]))) == 1:
+      set_names = list(set([n for f, c in settings.corpus.items() 
+                                             for a, b in c.items() 
+                                             for n in b['annotation_sets']]))
 
 
-
-    file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
-    set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
-    if len(file_names) > 1:
-      file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names[1:])
-    else:
-      file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names)
-    if len(set_names) > 1:
-      set_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=set_names[1:])
-    else:
-      set_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=set_names)
-    annotator_options = menu_system.MenuToolBarOptions(option_rack=annotators)
-    if len(annotators) > 1:
-      annotator_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotators[1:])
-    else:
-      annotator_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotators)
-    annotator_pair_options = menu_system.MenuToolBarOptions(option_rack=annotator_pairs)
-    annotation_types_options = menu_system.MenuToolBarOptions(option_rack=annotation_types)
-    if len(annotation_types) > 1:
-      annotation_types_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotation_types[1:])
-    else:
-      annotation_types_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotation_types)
-    measure_options = menu_system.MenuToolBarOptions(option_rack=['Average', 'Strict', 'Lenient'])
-
-    error_checks_tool_bar = menu_system.MenuToolBar(title = 'Error Checks Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(annotator_pair_options.title, 
-                                                             annotator_pair_options.return_options)],
-                             slots = ['File', 'Annotator Pair'])
+  else:
+      set_names = ['all_sets'] + list(set([n for f, c in settings.corpus.items() 
+                                             for a, b in c.items() 
+                                             for n in b['annotation_sets']]))
 
 
-    corpus_viewer_tool_bar = menu_system.MenuToolBar(title = 'Corpus Viewer Tool Bar',
-                           options=[menu_system.MenuAction(file_name_options_no_general.title, 
-                                                           file_name_options_no_general.return_options),
+      if len(set_names) == 1:
+        raise ValueError('{} Set Names Not Found In Data'.format(set_names))
+
+
+ 
+  if len(list(set([a for k, v in settings.corpus.items()
+                                      for a in v.keys()]))) == 1:
+      annotators = list(set([a for k, v in settings.corpus.items() 
+                                          for a in v.keys()]))
+  else:
+      annotators = ['team'] + list(set([a for k, v in settings.corpus.items() 
+                                          for a in v.keys()]))
+
+  if len(['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]) == 1:
+      annotator_pairs = ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
+  else:
+      annotator_pairs = ['team'] +  ['{}-{}'.format(x, y) for x, y in combinations(annotators[1:], 2)]
+
+  if len(settings.schema.get_entity_names()) == 1:
+      annotation_types = settings.schema.get_entity_names()
+  else:
+      annotation_types = ['all_types'] + settings.schema.get_entity_names()
+
+
+
+  file_name_options = menu_system.MenuToolBarOptions(option_rack=file_names)
+  set_name_options = menu_system.MenuToolBarOptions(option_rack=set_names)
+
+
+  if len(file_names) > 1:
+    file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names[1:])
+  else:
+    file_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=file_names)
+  if len(set_names) > 1:
+    set_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=set_names[1:])
+  else:
+    set_name_options_no_general = menu_system.MenuToolBarOptions(option_rack=set_names)
+  annotator_options = menu_system.MenuToolBarOptions(option_rack=annotators)
+  if len(annotators) > 1:
+    annotator_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotators[1:])
+  else:
+    annotator_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotators)
+  annotator_pair_options = menu_system.MenuToolBarOptions(option_rack=annotator_pairs)
+  annotation_types_options = menu_system.MenuToolBarOptions(option_rack=annotation_types)
+  if len(annotation_types) > 1:
+    annotation_types_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotation_types[1:])
+  else:
+    annotation_types_options_no_general = menu_system.MenuToolBarOptions(option_rack=annotation_types)
+  measure_options = menu_system.MenuToolBarOptions(option_rack=['Average', 'Strict', 'Lenient'])
+
+  error_checks_tool_bar = menu_system.MenuToolBar(title = 'Error Checks Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(annotator_pair_options.title, 
+                                                           annotator_pair_options.return_options)],
+                           slots = ['File', 'Annotator Pair'])
+
+
+  corpus_viewer_tool_bar = menu_system.MenuToolBar(title = 'Corpus Viewer Tool Bar',
+                         options=[menu_system.MenuAction(file_name_options_no_general.title, 
+                                                         file_name_options_no_general.return_options),
+                                  menu_system.MenuAction(annotator_options_no_general.title, 
+                                                         annotator_options_no_general.return_options),
+                                  menu_system.MenuAction(set_name_options_no_general.title,
+                                                         set_name_options_no_general.return_options),
+                                  menu_system.MenuAction(annotation_types_options_no_general.title, 
+                                                         annotation_types_options_no_general.return_options)],
+                         slots = ['File', 'Annotator', 'Set Name', 'Annotation Type'])
+
+
+
+  validation_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(set_name_options.title,
+                                                           set_name_options.return_options),
+                                    menu_system.MenuAction(annotator_options.title, 
+                                                           annotator_options.return_options),
+                                    menu_system.MenuAction(annotation_types_options.title, 
+                                                           annotation_types_options.return_options)],
+                           slots = ['File', 'Set Name', 'Annotator', 'Annotation Type'])
+
+  entity_lvl_tool_bar = menu_system.MenuToolBar(title = 'Entity Level Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(set_name_options.title,
+                                                           set_name_options.return_options),
                                     menu_system.MenuAction(annotator_options_no_general.title, 
                                                            annotator_options_no_general.return_options),
-                                    menu_system.MenuAction(set_name_options_no_general.title,
-                                                           set_name_options_no_general.return_options),
-                                    menu_system.MenuAction(annotation_types_options_no_general.title, 
-                                                           annotation_types_options_no_general.return_options)],
-                           slots = ['File', 'Annotator', 'Set Name', 'Annotation Type'])
+                                    menu_system.MenuAction(annotator_options_no_general.title, 
+                                                           annotator_options_no_general.return_options),
+                                    menu_system.MenuAction(annotation_types_options.title, 
+                                                           annotation_types_options.return_options),
+                                    menu_system.MenuAction(measure_options.title, 
+                                                           measure_options.return_options)],
+                           slots = ['File', 'Set Name', 'Key', 'Response', 'Annotation Type', 'Measure'])
+
+  token_lvl_tool_bar = menu_system.MenuToolBar(title = 'Token Level Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(set_name_options.title,
+                                                           set_name_options.return_options),
+                                    menu_system.MenuAction(annotator_options_no_general.title, 
+                                                           annotator_options_no_general.return_options),
+                                    menu_system.MenuAction(annotator_options_no_general.title, 
+                                                           annotator_options_no_general.return_options),
+                                    menu_system.MenuAction(annotation_types_options.title, 
+                                                           annotation_types_options.return_options)],
+                           slots = ['File', 'Set Name', 'Key', 'Response', 'Annotation Type'])
+
+  cohens_kappa_tool_bar = menu_system.MenuToolBar(title = 'Cohens Kappa Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(set_name_options.title,
+                                                           set_name_options.return_options),
+                                    menu_system.MenuAction(annotator_options.title, 
+                                                           annotator_options.return_options),
+                                    menu_system.MenuAction(annotator_options.title, 
+                                                           annotator_options.return_options)],
+                           slots = ['File', 'Set Name', 'Key', 'Response'])
+
+  discrepancy_tool_bar = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(annotator_pair_options.title, 
+                                                           annotator_pair_options.return_options)],
+                           slots = ['File', 'Annotator Pair'])
 
 
-    validation_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(set_name_options.title,
-                                                             set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotation_types_options.title, 
-                                                             annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Annotator', 'Entity'])
+  discrepancy_tool_bar_for_classification = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
+                                                                   options=[menu_system.MenuAction(file_name_options.title, 
+                                                                                                   file_name_options.return_options),
+                                                                            menu_system.MenuAction(annotator_pair_options.title, 
+                                                                                                   annotator_pair_options.return_options)],
+                                                                   slots = ['File', 'Annotator Pair'])
 
-    entity_lvl_tool_bar = menu_system.MenuToolBar(title = 'Entity Level Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(set_name_options.title,
-                                                             set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotation_types_options.title, 
-                                                             annotation_types_options.return_options),
-                                      menu_system.MenuAction(measure_options.title, 
-                                                             measure_options.return_options)],
-                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity', 'Measure'])
-
-    token_lvl_tool_bar = menu_system.MenuToolBar(title = 'Token Level Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(set_name_options.title,
-                                                             set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotation_types_options.title, 
-                                                             annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
-
-    cohens_kappa_tool_bar = menu_system.MenuToolBar(title = 'Cohens Kappa Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(set_name_options.title,
-                                                             set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotation_types_options.title, 
-                                                             annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Key', 'Response', 'Entity'])
-
-    discrepancy_tool_bar = menu_system.MenuToolBar(title = 'Discrepancy Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(annotator_pair_options.title, 
-                                                             annotator_pair_options.return_options)],
-                             slots = ['File', 'Annotator Pair'])
-
-    statistics_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
-                             options=[menu_system.MenuAction(file_name_options.title, 
-                                                             file_name_options.return_options),
-                                      menu_system.MenuAction(set_name_options.title,
-                                                             set_name_options.return_options),
-                                      menu_system.MenuAction(annotator_options.title, 
-                                                             annotator_options.return_options),
-                                      menu_system.MenuAction(annotation_types_options.title, 
-                                                             annotation_types_options.return_options)],
-                             slots = ['File', 'Set Name', 'Annotator', 'Entity'])
+  statistics_tool_bar = menu_system.MenuToolBar(title = 'Validation Menu Tool Bar',
+                           options=[menu_system.MenuAction(file_name_options.title, 
+                                                           file_name_options.return_options),
+                                    menu_system.MenuAction(set_name_options.title,
+                                                           set_name_options.return_options),
+                                    menu_system.MenuAction(annotator_options.title, 
+                                                           annotator_options.return_options),
+                                    menu_system.MenuAction(annotation_types_options.title, 
+                                                           annotation_types_options.return_options)],
+                           slots = ['File', 'Set Name', 'Annotator', 'Annotation Type'])
 
 
-    error_checks_menu = menu_system.Menu(title='Document Validations', 
-                      options=[menu_system.MenuAction('Text Differences', 
-                                                      error_checks_menu_functions.check_text_differences),
-                               menu_system.MenuAction('Set Name Differences', 
-                                                      error_checks_menu_functions.check_set_name_differences,),
-                               menu_system.MenuAction('Generate Report', 
-                                                      error_checks_menu_functions.generate_error_checks_report)], 
-                      tool_bar=error_checks_tool_bar,
-                      screen=stdscr,
-                      inherit_settings=True)
+  error_checks_menu = menu_system.Menu(title='Document Validations', 
+                    options=[menu_system.MenuAction('Text Differences', 
+                                                    error_checks_menu_functions.check_text_differences),
+                             menu_system.MenuAction('Set Name Differences', 
+                                                    error_checks_menu_functions.check_set_name_differences,),
+                             menu_system.MenuAction('Generate Report', 
+                                                    error_checks_menu_functions.generate_error_checks_report)], 
+                    tool_bar=error_checks_tool_bar,
+                    screen=stdscr,
+                    inherit_settings=True)
+  if not settings.merge_sets:
     if [y for x, y in settings.schema.entities.items() if y.is_sub_entity()]:
-        validation_menu = menu_system.Menu(title='Annotation Validations', 
-                          options=[menu_system.MenuAction('Annotation Overlaps', 
-                                              validation_menu_functions.validate_overlaps),
-                                   menu_system.MenuAction('Subentity Boundaries', 
-                                              validation_menu_functions.validate_subentity_boundaries),
-                                   menu_system.MenuAction('Annotation Boundaries (TODO)', 
-                                              validation_menu_functions.validate_annotation_boundaries),
-                                   menu_system.MenuAction('Negative Length Annotations (TODO)'),
-                                   menu_system.MenuAction('Zero Length Annotations (TODO)'),
-                                   menu_system.MenuAction('Document Scope',
-                                    validation_menu_functions.validate_annotation_scope),
-                                   menu_system.MenuAction('Validate Schema', 
-                                              validation_menu_functions.validate_schema_values),
-                                   menu_system.MenuAction('Generate Report', 
-                                              validation_menu_functions.generate_validation_report)], 
-                          tool_bar=validation_tool_bar,
-                          screen=stdscr,
-                          inherit_settings=True)
-    else:
-        validation_menu = menu_system.Menu(title='Annotation Validations', 
+        if not settings.schema.name == 'automatic_annotation_schema':
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+                            options=[menu_system.MenuAction('Annotation Overlaps', 
+                                                validation_menu_functions.validate_overlaps),
+                                     menu_system.MenuAction('Subentity Boundaries', 
+                                                validation_menu_functions.validate_subentity_boundaries),
+                                     menu_system.MenuAction('Annotation Boundaries', validation_menu_functions.validate_annotation_boundaries),
+                                     menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                                     menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+
+                                     menu_system.MenuAction('Document Scope',
+                                      validation_menu_functions.validate_annotation_scope),
+                                     menu_system.MenuAction('Validate Schema', 
+                                                validation_menu_functions.validate_schema_values),
+                                     menu_system.MenuAction('Generate Report', 
+                                                validation_menu_functions.generate_validation_report)], 
+                            tool_bar=validation_tool_bar,
+                            screen=stdscr,
+                            inherit_settings=True)
+
+        else:
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
                   options=[menu_system.MenuAction('Annotation Overlaps', 
                                       validation_menu_functions.validate_overlaps),
-                           menu_system.MenuAction('Annotation Boundaries (TODO)', 
-                                      validation_menu_functions.validate_annotation_boundaries),
-                           menu_system.MenuAction('Negative Length Annotations (TODO)'),
-                           menu_system.MenuAction('Zero Length Annotations (TODO)'),
+                           menu_system.MenuAction('Subentity Boundaries', 
+                                      validation_menu_functions.validate_subentity_boundaries),
+                           menu_system.MenuAction('Annotation Boundaries', validation_menu_functions.validate_annotation_boundaries),
+                           menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                           menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+
                            menu_system.MenuAction('Document Scope',
                             validation_menu_functions.validate_annotation_scope),
-                           menu_system.MenuAction('Validate Schema', 
-                                      validation_menu_functions.validate_schema_values),
+                           
                            menu_system.MenuAction('Generate Report', 
                                       validation_menu_functions.generate_validation_report)], 
                   tool_bar=validation_tool_bar,
                   screen=stdscr,
                   inherit_settings=True)
+    else:
+        if not settings.schema.name == 'automatic_annotation_schema':
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+                    options=[menu_system.MenuAction('Annotation Overlaps', 
+                                        validation_menu_functions.validate_overlaps),
+                             menu_system.MenuAction('Annotation Boundaries', validation_menu_functions.validate_annotation_boundaries),
+                             menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                             menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+                             menu_system.MenuAction('Document Scope',
+                              validation_menu_functions.validate_annotation_scope),
+                             menu_system.MenuAction('Validate Schema', 
+                                        validation_menu_functions.validate_schema_values),
+                             menu_system.MenuAction('Generate Report', 
+                                        validation_menu_functions.generate_validation_report)], 
+                    tool_bar=validation_tool_bar,
+                    screen=stdscr,
+                    inherit_settings=True)
+        else:
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+            options=[menu_system.MenuAction('Annotation Overlaps', 
+                                validation_menu_functions.validate_overlaps),
+                     menu_system.MenuAction('Annotation Boundaries', validation_menu_functions.validate_annotation_boundaries),
+                     menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                     menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+                     menu_system.MenuAction('Document Scope',
+                      validation_menu_functions.validate_annotation_scope),
+                     menu_system.MenuAction('Generate Report', 
+                                validation_menu_functions.generate_validation_report)], 
+            tool_bar=validation_tool_bar,
+            screen=stdscr,
+            inherit_settings=True)
+
+  else:  
+    if [y for x, y in settings.schema.entities.items() if y.is_sub_entity()]:
+        if not settings.schema.name == 'automatic_annotation_schema':
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+                            options=[menu_system.MenuAction('Annotation Overlaps', 
+                                                validation_menu_functions.validate_overlaps),
+                                     menu_system.MenuAction('Subentity Boundaries', 
+                                                validation_menu_functions.validate_subentity_boundaries),
+                                     menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                                     menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+
+                                     menu_system.MenuAction('Document Scope',
+                                      validation_menu_functions.validate_annotation_scope),
+                                     menu_system.MenuAction('Validate Schema', 
+                                                validation_menu_functions.validate_schema_values),
+                                     menu_system.MenuAction('Generate Report', 
+                                                validation_menu_functions.generate_validation_report)], 
+                            tool_bar=validation_tool_bar,
+                            screen=stdscr,
+                            inherit_settings=True)
+
+        else:
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+                  options=[menu_system.MenuAction('Annotation Overlaps', 
+                                      validation_menu_functions.validate_overlaps),
+                           menu_system.MenuAction('Subentity Boundaries', 
+                                      validation_menu_functions.validate_subentity_boundaries),
+                           menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                           menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+
+                           menu_system.MenuAction('Document Scope',
+                            validation_menu_functions.validate_annotation_scope),
+                           
+                           menu_system.MenuAction('Generate Report', 
+                                      validation_menu_functions.generate_validation_report)], 
+                  tool_bar=validation_tool_bar,
+                  screen=stdscr,
+                  inherit_settings=True)
+    else:
+        if not settings.schema.name == 'automatic_annotation_schema':
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+                    options=[menu_system.MenuAction('Annotation Overlaps', 
+                                        validation_menu_functions.validate_overlaps),
+                             menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                             menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+                             menu_system.MenuAction('Document Scope',
+                              validation_menu_functions.validate_annotation_scope),
+                             menu_system.MenuAction('Validate Schema', 
+                                        validation_menu_functions.validate_schema_values),
+                             menu_system.MenuAction('Generate Report', 
+                                        validation_menu_functions.generate_validation_report)], 
+                    tool_bar=validation_tool_bar,
+                    screen=stdscr,
+                    inherit_settings=True)
+        else:
+          validation_menu = menu_system.Menu(title='Annotation Validations', 
+            options=[menu_system.MenuAction('Annotation Overlaps', 
+                                validation_menu_functions.validate_overlaps),
+                     menu_system.MenuAction('Zero Length Annotations', validation_menu_functions.validate_annotation_zero_length),
+                     menu_system.MenuAction('Negative Length Annotations', validation_menu_functions.validate_annotation_negative_length),
+                     menu_system.MenuAction('Document Scope',
+                      validation_menu_functions.validate_annotation_scope),
+                     menu_system.MenuAction('Generate Report', 
+                                validation_menu_functions.generate_validation_report)], 
+            tool_bar=validation_tool_bar,
+            screen=stdscr,
+            inherit_settings=True)     
 
 
+  if settings.task == 'sequence_labelling':
+    entity_level_menu = menu_system.Menu(title='Entity Level', 
+                                  options=[menu_system.MenuAction('Evaluate', evaluation_menu_functions.entity_eval),
+                                           menu_system.MenuAction('Generate Report', evaluation_menu_functions.generate_entity_level_report)], 
+                                  tool_bar = entity_lvl_tool_bar,
+                                  screen=stdscr,
+                                  inherit_settings=True)
 
+    token_level_menu = menu_system.Menu(title='Token Level', 
+                                        options=[menu_system.MenuAction('Evaluate', 
+                                                evaluation_menu_functions.token_eval),
+                                                menu_system.MenuAction('Generate Report', 
+                                                evaluation_menu_functions.generate_token_level_report)], 
+                                        tool_bar = token_lvl_tool_bar,
+                                        screen=stdscr,
+                                        inherit_settings=True)
 
-    if settings.task == 'sequence_labelling':
-      entity_level_menu = menu_system.Menu(title='Entity Level', 
-                                    options=[menu_system.MenuAction('Evaluate')], 
-                                    tool_bar = entity_lvl_tool_bar,
-                                    screen=stdscr,
-                                    inherit_settings=True)
-
-      token_level_menu = menu_system.Menu(title='Token Level', 
-                                          options=[menu_system.MenuAction('Evaluate', 
-                                                  evaluation_menu_functions.token_eval)], 
-                                          tool_bar = token_lvl_tool_bar,
-                                          screen=stdscr,
-                                          inherit_settings=True)
-      evaluation_menu = menu_system.Menu(title='Evaluation', 
-                                         options=[entity_level_menu, token_level_menu], 
-                                         screen=stdscr,
-                                         inherit_settings=True)
-    if settings.task == 'classification':
-      cohens_kappa_menu = menu_system.Menu(title='Cohens Kappa', 
-                                          options=[menu_system.MenuAction('Evaluate',
-                                            evaluation_menu_functions.cohens_kappa)], 
-                                          tool_bar = cohens_kappa_tool_bar,
-                                          screen=stdscr,
-                                          inherit_settings=True)
-      evaluation_menu = menu_system.Menu(title='Evaluation', 
-                                         options=[cohens_kappa_menu], 
-                                         screen=stdscr,
-                                         inherit_settings=True)
-
-    discrepancy_menu = menu_system.Menu(title='Discrepancy Analysis', 
-                                       options=[menu_system.MenuAction('Compare')], 
-                                       tool_bar = discrepancy_tool_bar,
+    evaluation_menu = menu_system.Menu(title='Evaluation', 
+                                       options=[entity_level_menu, token_level_menu], 
                                        screen=stdscr,
                                        inherit_settings=True)
 
+
+    discrepancy_menu = menu_system.Menu(title='Discrepancy Analysis', 
+                                 options=[menu_system.MenuAction('Compare', discrepancy_analysis_menu_functions.compare_annotations),
+                                          menu_system.MenuAction('Generate Report', discrepancy_analysis_menu_functions.generate_discrepancy_report)], 
+                                 tool_bar = discrepancy_tool_bar,
+                                 screen=stdscr,
+                                 inherit_settings=True)
+
+  if settings.task == 'classification':
+    # todo: 
+    # write function for classification reporting
+    cohens_kappa_menu = menu_system.Menu(title='Cohens Kappa', 
+                                        options=[menu_system.MenuAction('Evaluate', 
+
+                                                                        evaluation_menu_functions.cohen_kappa_eval),
+                                                 menu_system.MenuAction('Generate Report', 
+                                                                        evaluation_menu_functions.generate_cohen_kappa_report)], 
+                                        tool_bar = cohens_kappa_tool_bar,
+                                        screen=stdscr,
+                                        inherit_settings=True)
+
+    evaluation_menu = menu_system.Menu(title='Evaluation', 
+                                       options=[cohens_kappa_menu], 
+                                       screen=stdscr,
+                                       inherit_settings=True)
+
+    discrepancy_menu = menu_system.Menu(title='Discrepancy Analysis', 
+                                       options=[menu_system.MenuAction('Compare', 
+                                        discrepancy_analysis_menu_functions.compare_annotations_for_classification),
+                                                menu_system.MenuAction('Generate Report', 
+                                                  discrepancy_analysis_menu_functions.generate_discrepancy_report_for_classification)], 
+                                       tool_bar = discrepancy_tool_bar_for_classification,
+                                       screen=stdscr,
+                                       inherit_settings=True)
+
+  if [e for n, e in settings.schema.entities.items() if e.features]:
+
     statistics_menu = menu_system.Menu(title='Statistics', 
-                                       options=[menu_system.MenuAction('Entity Distribution',
+                                       options=[menu_system.MenuAction('Annotation Type Distribution',
                                                 statistics_menu_functions.count_entities),
-                                                menu_system.MenuAction('Entity/Features Distribution',
+                                                menu_system.MenuAction('Annotation Type/Features Distribution',
                                                 statistics_menu_functions.count_entities_with_features),
-                                                menu_system.MenuAction('Entity Token Length Distribution',
+                                                menu_system.MenuAction('Annotation Type Token Length Distribution',
                                                 statistics_menu_functions.entity_token_stats),
-                                                menu_system.MenuAction('Entity/Features Token Length Distribution',
+                                                menu_system.MenuAction('Annotation Type/Features Token Length Distribution',
                                                 statistics_menu_functions.entity_with_features_token_stats),
+                                                menu_system.MenuAction('Annotation Type/Subentity Counts', 
+                                                statistics_menu_functions.hierarchical_relationship_counts),
                                                 menu_system.MenuAction('Generate Report',
                                                 statistics_menu_functions.generate_statistics_report)], 
                                        tool_bar = statistics_tool_bar,
                                        screen=stdscr,
                                        inherit_settings=True)
+  else:
+    statistics_menu = menu_system.Menu(title='Statistics', 
+                                 options=[menu_system.MenuAction('Annotation Type Distribution',
+                                          statistics_menu_functions.count_entities),
+                                          menu_system.MenuAction('Annotation Type Token Length Distribution',
+                                          statistics_menu_functions.entity_token_stats),
+                                          menu_system.MenuAction('Generate Report',
+                                          statistics_menu_functions.generate_statistics_report)], 
+                                 tool_bar = statistics_tool_bar,
+                                 screen=stdscr,
+                                 inherit_settings=True)
 
 
-    help_menu = menu_system.HelpMenu(title='Help',
-                                     screen=stdscr,
-                                     inherit_settings=True)
+
+  help_menu = menu_system.HelpMenu(title='Help',
+                                   screen=stdscr,
+                                   inherit_settings=True)
 
 
 
 
-    schema_viewer = menu_system.SchemaMenu(title='Annotation Schema',
-                                           options=[],
-                                           screen=stdscr,
-                                           inherit_settings=True)
+  schema_viewer = menu_system.SchemaMenu(title='Annotation Schema',
+                                         options=[],
+                                         screen=stdscr,
+                                         inherit_settings=True)
 
 
-    corpus_viewer = menu_system.CorpusViewerMenu(title='Corpus Viewer',
-                                     options=[],
-                                     screen=stdscr,
-                                     tool_bar = corpus_viewer_tool_bar,
-                                     inherit_settings=True)
+  corpus_viewer = menu_system.CorpusViewerMenu(title='Corpus Viewer',
+                                   options=[],
+                                   screen=stdscr,
+                                   tool_bar = corpus_viewer_tool_bar,
+                                   inherit_settings=True)
 
 
-    main_menu =  menu_system.Menu(title='QA4IE Main Menu', 
-                      options=[error_checks_menu, 
-                               validation_menu, 
-                               statistics_menu,
-                               evaluation_menu, 
-                               discrepancy_menu, 
-                               menu_system.MenuAction('Generate Reports', generate_all_reports),
-                               corpus_viewer,
-                               schema_viewer,
-                               help_menu], 
-                      screen=stdscr)
+  main_menu =  menu_system.Menu(title='QA4IE Main Menu', 
+                    options=[error_checks_menu, 
+                             validation_menu, 
+                             statistics_menu,
+                             evaluation_menu,
+                             discrepancy_menu,
+                             menu_system.MenuAction('Generate Reports', generate_all_reports),
+                             corpus_viewer,
+                             schema_viewer,
+                             help_menu], 
+                    screen=stdscr)
 
+  # runs the menu
+  try:
     try:
-      try:
-        curses.noecho()
-        curses.curs_set(0)
+      curses.noecho()
+      curses.curs_set(0)
 
-        main_menu.run_menu()
-      except curses.error as e:
-        print(e)
-    finally:
-      curses.nocbreak(); stdscr.keypad(0); curses.echo(); curses.curs_set(1)
-      curses.endwin() 
+      main_menu.run_menu()
+    except curses.error as e:
+      print(e)
+  finally:
+    curses.nocbreak(); stdscr.keypad(0); curses.echo(); curses.curs_set(1)
+    curses.endwin() 
 
 def generate_all_reports():
-    error_checks_menu_functions.generate_error_checks_report()
-    validation_menu_functions.generate_validation_report()
-    statistics_menu_functions.generate_statistics_report()
 
-    return 'report generated in {}'.format(settings.output_dir)
+
+  if settings.task == 'sequence_labelling':
+    try:
+      error_checks_menu_functions.generate_error_checks_report()
+
+      validation_menu_functions.generate_validation_report()
+      statistics_menu_functions.generate_statistics_report()
+      evaluation_menu_functions.generate_token_level_report()
+      evaluation_menu_functions.generate_entity_level_report()
+      discrepancy_analysis_menu_functions.generate_discrepancy_report()
+
+      return 'reports generated in {}'.format(settings.output_dir)
+
+    except BlockingIOError as e: # just in case the csv file is open
+      return '{}'.format(str(e))
+  elif settings.task == 'classification':
+      error_checks_menu_functions.generate_error_checks_report()
+      validation_menu_functions.generate_validation_report()
+      statistics_menu_functions.generate_statistics_report()
+      # todo:
+      # evaluation_menu_functions.generate_cohen_kappa_report()
+      discrepancy_analysis_menu_functions.generate_discrepancy_report_for_classification()
+
+      return 'reports generated in {}'.format(settings.output_dir)
 
 
 def main():
   try:
-    if len(sys.argv) == 1:
+   
+    if len(sys.argv) == 2:
       path = sys.argv[1]
     else:
       path = ' '.join([x for x in sys.argv[1:]])
+
     
     settings.init(path)
+
+
   except IndexError as e:
-      print('Usage: python {} <path_to_file>'.format( __file__))
+
+      print(e)
+      print('Usage: python {} <path_to_config_file>'.format(__file__))
 
   else:
     try:

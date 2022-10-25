@@ -196,30 +196,33 @@ def generate_error_checks_report():
     # 3) return string of output
 
     
-    error_checks_path = Path(settings.output_dir / 'error_checks')
+    error_checks_path = Path(settings.output_dir / 'document_validations')
     error_checks_path.mkdir(parents=True, exist_ok=True)
+    try:
+        for file_name, annotators in settings.corpus.items():
+            for anno_1, anno_2 in combinations(annotators, 2):
+                text_conflicts = document_errors.compare_texts(annotators[anno_1]['text'], 
+                                                               annotators[anno_2]['text'])
 
-    for file_name, annotators in settings.corpus.items():
-        for anno_1, anno_2 in combinations(annotators, 2):
-            text_conflicts = document_errors.compare_texts(annotators[anno_1]['text'], 
-                                                           annotators[anno_2]['text'])
+                if text_conflicts:
+                    txt_path = error_checks_path / 'txt_differences' 
+                    txt_path.mkdir(parents=True, exist_ok=True)
+                    with open(txt_path / '{}_{}-{}.txt'.format(file_name, anno_1, anno_2), 'w') as txt_file:
+                        print('\n'.join([t for t in text_conflicts]), file=txt_file)
 
-            if text_conflicts:
-                txt_path = error_checks_path / 'txt_differences' 
-                txt_path.mkdir(parents=True, exist_ok=True)
-                with open(txt_path / '{}_{}-{}.txt'.format(file_name, anno_1, anno_2), 'w') as txt_file:
-                    print('\n'.join([t for t in text_conflicts]), file=txt_file)
+        for file_name, annotators in settings.corpus.items():
+            for anno_1, anno_2 in combinations(annotators, 2):
+                set_name_conflicts = document_errors.compare_set_names(annotators[anno_1]['annotation_sets'].keys(), 
+                                                                       annotators[anno_2]['annotation_sets'].keys())
+                
+                if set_name_conflicts:
+                    txt_path = error_checks_path / 'set_name_differences' 
+                    txt_path.mkdir(parents=True, exist_ok=True)
+                    with open(txt_path / '{}_{}-{}.txt'.format(file_name, anno_1, anno_2), 'w') as txt_file:
+                        print(', '.join([s for s in set_name_conflicts]), file=txt_file)
 
-    for file_name, annotators in settings.corpus.items():
-        for anno_1, anno_2 in combinations(annotators, 2):
-            set_name_conflicts = document_errors.compare_set_names(annotators[anno_1]['annotation_sets'].keys(), 
-                                                                   annotators[anno_2]['annotation_sets'].keys())
-            
-            if set_name_conflicts:
-                txt_path = error_checks_path / 'set_name_differences' 
-                txt_path.mkdir(parents=True, exist_ok=True)
-                with open(txt_path / '{}_{}-{}.txt'.format(file_name, anno_1, anno_2), 'w') as txt_file:
-                    print(', '.join([s for s in set_name_conflicts]), file=txt_file)
+    except BlockingIOError as e:
+        return '{}'.format(str(e))
 
 
 

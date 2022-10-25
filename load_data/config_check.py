@@ -49,10 +49,8 @@
 #
 ###############################################################################
 
-from os.path import *
 import os
-from os import access, R_OK
-
+from pathlib import Path
 
 # configuration = {}
 # config_path = r'config.config'
@@ -62,45 +60,101 @@ from os import access, R_OK
 
 
 def config_check(configuration):
-    print("Performing Config Checks")
-    print("{}\n".format('_'*30))
 
-    flag = 0
-    print("Checking if configuration is valid\n")
-    if not configuration:
-        flag = 1
-        print("Configuration not read correctly")
-    #check if task is correct
-    tasks=["sequence_labelling","classification"]
-    print("Checking if task is valid\n")
-    if configuration['task'] not in tasks:
-        flag = 1
-        print(configuration['task'])
-        print("The task listed is not valid, please only enter sequence_labelling or classification")
-    print("Checking if annotation directory is valid\n")
-    if not exists(configuration['annotation_dir']):
-        flag = 1
-        print("The annotation_file_location is not a valid file location")
-    if not isdir(configuration['annotation_dir']):
-        flag = 1
-        print("The annotation_file_location is not a valid directory")
-    print("Checking if annotation files are available and readable")
-    def scan_folder(parent):
-    # iterate over all the files in directory 'parent'
-        #print("These are all annotation files:")
-        flag = 0
-        for file_name in os.listdir(parent):
-            if not exists(file_name):
-                print(file_name)
-                file_name=str(parent)+"/"+file_name
-                if not file_name[0] == '.':
-                    for file in os.listdir(file_name):
-                        if file.endswith(".xml"):
-                            full_file= file_name + str(file)
-                            access(full_file, R_OK)
-                            print(file)
-    if not flag:                    
-        scan_folder(configuration['annotation_dir'])
 
-    assert not flag, 'issues found'
-    #check if all schema file is valid through checking overlaps and sub_entities    
+    if 'required' not in configuration.sections():
+        raise ValueError('Config file Missing Required Section')
+
+    # if len(configuration.sections()) == 2:
+    #     if 'required' in configuration.sections() and 'optional' in configuration.sections():
+    #         raise ValueError('Config File Missing Schema Section')
+
+    if len(configuration.sections()) == 1:
+        if 'optional' in configuration.sections():
+            raise ValueError('Config File Missing Schema and Required Sections')
+        if 'required' in configuration.sections():
+            raise ValueError('Config File Missing Schema Section')
+
+    # ['annotations_dir', 'output_dir', 'task', 'encoding']
+    if not len(list(configuration['required'])) == 4:
+        raise ValueError('''Errors in Required Section of the Config File
+                            \nRequired Section Should Only Contain {}'''.format(', '.join(['annotations_dir', 'output_dir', 
+    
+                                                                                          'task', 'encoding'])))
+    
+   
+    if not configuration['required']['task'] in ['sequence_labelling', 'classification']:
+        raise ValueError('{} is Not A Valid Task\n Please Use {}'.format(configuration['required']['task'],
+                                                                        ', '.join(['sequence_labelling', 'classification'])))
+
+    if not configuration['required']['encoding'] in ['UTF-8', 'Windows-1252']: 
+        raise ValueError('{} is Not A Valid Encoding\n Please Use {}'.format(configuration['required']['encoding'],
+                                                                        ', '.join(['UTF-8', 'Windows-1252'])))
+
+
+    if not Path(configuration['required']['annotations_dir']).is_dir():
+        raise ValueError('{} Is Not A Valid Path'.format(configuration['required']['annotations_dir']))
+
+    if not Path(configuration['required']['output_dir']).is_dir():
+        raise ValueError('{} Is Not A Valid Path'.format(configuration['required']['output_dir']))
+
+
+
+    try:
+        if len(list(configuration['optional'])) > 2:
+            raise ValueError('''Errors in Optional Section of the Config File
+                                \nOptional Section Should Only Contain {}'''.format(', '.join(['set_names', 'merge_sets_as'])))
+    except KeyError:
+        pass
+
+    config_annotation_sections = [x for x in configuration.sections() if x not in ['required', 'optional']]
+
+    annotation_type_values = {'overlaps':None,
+                              'sub_entities':None,
+                              'features':None,
+                              'alt_names':None}
+
+    for x in config_annotation_sections:
+        if len(list(configuration[x])) >= 1:
+            for y in list(configuration[x]):
+                try:
+                    annotation_type_values[y]
+                except KeyError:
+                    raise ValueError('{} is Not A Valid Option For Annotation Types'.format(y))
+
+                try:
+                    overlaps = configuration[x]['overlaps']
+                    if type(overlaps) == str:
+                        overlaps = [overlaps]
+                    #if not overlaps == ['']:
+                        #for overlap in overlaps:
+                            #if not overlap in config_annotation_sections:
+                                #raise ValueError('Type {} Is Not Defined In The Schema'.format(overlap))
+                    
+                except KeyError:
+                    pass
+                try:
+                    sub_entities = configuration[x]['sub_entities'].split('|')
+                    if type(sub_entities) == str:
+                        sub_entities = [sub_entities]
+                    if not sub_entities == ['']:
+                        if x in sub_entities:
+                            raise ValueError('Type Can\'t Be It\'s Own Sub Entity')
+                        for sub_entity in sub_entities:
+                            if not sub_entity in config_annotation_sections:
+                                raise ValueError('Type {} Is Not Defined In The Schema'.format(sub_entity))
+                except KeyError:
+                    pass               
+
+
+
+                
+
+
+    
+
+    #raise ValueError('im config check')
+ 
+
+
+

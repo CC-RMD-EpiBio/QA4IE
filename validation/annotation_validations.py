@@ -88,7 +88,9 @@ def annotation_overlaps(annotations = [], annotation_types = {}):
         
         res = []
         for t in l:
-            if(t['end'] > a['start'] and t['start'] < a['end'] and not t['id'] == a['id']):
+            if(t['end'] > a['start'] and t['start'] < a['end'] 
+                                     and not (t['id'] == a['id']) 
+                                     and (t['annotator'] == a['annotator'])):
                 res.append(t)
         return res
 
@@ -240,6 +242,13 @@ def validate_schema(annotations = [], schema = {}):
                     conflicts[annotation['mention']].append(annotation)
                 except KeyError as e:
                     conflicts[annotation['mention']] = [annotation]
+            else:
+                if not len(list(annotation['features'].keys())) == len(list(schema_features.keys())):
+                    try:
+                        conflicts[annotation['mention']].append(annotation)
+                    except KeyError as e:
+                        conflicts[annotation['mention']] = [annotation]
+
                                          
 
 
@@ -261,6 +270,34 @@ def validate_annotation_scope(annotations = [], text = ''):
             except KeyError as e:
                 conflicts[annotation['mention']] = [annotation]
         if annotation['start'] < 0 or annotation['end'] < 0:
+            try:
+                conflicts[annotation['mention']].append(annotation)
+            except KeyError as e:
+                conflicts[annotation['mention']] = [annotation]
+
+    return conflicts
+
+
+def validate_zero_length(annotations = []):
+
+    conflicts = {}
+
+    for annotation in annotations:
+        if annotation['end'] - annotation['start'] == 0:
+            try:
+                conflicts[annotation['mention']].append(annotation)
+            except KeyError as e:
+                conflicts[annotation['mention']] = [annotation]
+
+    return conflicts
+
+
+def validate_negative_length(annotations = []):
+
+    conflicts = {}
+
+    for annotation in annotations:
+        if annotation['end'] - annotation['start'] < 0:
             try:
                 conflicts[annotation['mention']].append(annotation)
             except KeyError as e:

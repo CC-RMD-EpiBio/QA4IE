@@ -808,6 +808,7 @@ def hierarchical_relationship_counts(filters=[]):
     total_mention_counts = []
     output = ''
 
+
     if annotation_type == 'all_types': # all annotation types
         if file == 'corpus': # all notes
             if annotator_name == 'team': # all annotators
@@ -886,13 +887,13 @@ def hierarchical_relationship_counts(filters=[]):
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans if a['mention'] == annotation_type]
+                                     for a in ans ]
 
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans        if a['mention'] == annotation_type and
+                                     for a in ans        if 
                                                             s == annotation_set]
 
             else: # individual annotators
@@ -900,14 +901,14 @@ def hierarchical_relationship_counts(filters=[]):
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans           if a['mention'] == annotation_type and
+                                     for a in ans           if 
                                                                a_name == annotator_name]
 
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans        if a['mention'] == annotation_type and
+                                     for a in ans        if 
                                                             a_name == annotator_name and
                                                             s == annotation_set]
   
@@ -917,14 +918,14 @@ def hierarchical_relationship_counts(filters=[]):
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans       if a['mention'] == annotation_type and
+                                     for a in ans       if 
                                                            f == file]
 
                 else: # individual annotation sets
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() 
-                                     for a in ans               if a['mention'] == annotation_type and
+                                     for a in ans               if
                                                                 f == file and
                                                                 s == annotation_set]
 
@@ -933,7 +934,7 @@ def hierarchical_relationship_counts(filters=[]):
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items() \
-                                     for a in ans    if a['mention'] == annotation_type and
+                                     for a in ans    if 
                                                         f == file and
                                                         a_name == annotator_name]
 
@@ -941,22 +942,30 @@ def hierarchical_relationship_counts(filters=[]):
                     annotations = [a for f, a_c in settings.corpus.items() 
                                      for a_name, d_c in a_c.items() 
                                      for s, ans in d_c['annotation_sets'].items()
-                                     for a in ans                if a['mention'] == annotation_type and
+                                     for a in ans                if
                                                                     f == file and
                                                                     a_name == annotator_name and 
                                                                     s == annotation_set]
+    
     if not annotation_type == 'all_types':
-        schema = settings.schema.get_type(annotation_type)
+        schema = settings.schema.entities[annotation_type]
+        counts = annotation_statistics.count_hierarchical_relationships(annotations, schema)
     else:
-        schema = settings.schema
+        counts = {}
+        for name, entity in settings.schema.entities.items():
+            temp_counts = annotation_statistics.count_hierarchical_relationships(annotations, entity)
 
-
-    counts = annotation_statistics.count_hierarchical_relationships(annotations, schema)
-
-    output = counts
-    # for anno, counts in stat_mention_count_print.items():
-    #     output += '{}\n{}\n'.format(anno, 
-    #                         ''.join(['  {} : {}\n'.format(k, v) for k, v in counts.items()]))
+            if not temp_counts is None:
+                for a, b in temp_counts.items():
+                    try:
+                        counts[a].update(b)
+                    except KeyError:
+                        counts[a] = b
+    #return counts
+    output = ''
+    for a, b in counts.items():
+        output += '{}\n{}\n'.format(a, 
+                            ''.join(['  {} : {}\n'.format(k, v) for k, v in b.items()]))
 
     return output
 
@@ -968,6 +977,9 @@ def generate_statistics_report(filters=[]):
 
     total_mention_counts = []
 
+    summary_counts = {}
+
+
     for file_name, annotators in settings.corpus.items():
         for annotator, document in annotators.items():
             for set_name, annotations in document['annotation_sets'].items():
@@ -976,6 +988,17 @@ def generate_statistics_report(filters=[]):
                                                              include_features = False)
 
                 for t, stats in counts.items():
+
+                    try:
+                        summary_counts[annotator][t] += stats['count']
+                    except KeyError as e:
+                        try:
+                            summary_counts[annotator][t] = stats['count']
+                        except KeyError:
+                            summary_counts[annotator] = {t:stats['count']}
+
+
+
 
                     total_mention_counts.append([file_name, annotator, set_name, 
                                                 t,
@@ -1010,8 +1033,16 @@ def generate_statistics_report(filters=[]):
                                                       'token_length_min',
                                                       'token_length_max'])
 
-    writer = pd.ExcelWriter(statistics_path / 'statistics_report.xlsx', engine='xlsxwriter')
-    mention_features_counts_report.to_excel(writer, sheet_name='mention_lvl_stats', index=False)
-    writer.save()
+    try:
+        mention_features_counts_report.to_csv(statistics_path / 'statistics_report.csv', index=False)
 
-    return 'report generated in {}'.format(settings.output_dir)
+        with open(statistics_path  / 'statistics_summary.txt', 'w') as text_file:
+            for x in summary_counts:
+
+              text_file.write('{}\n'.format(x))
+              for i, j in summary_counts[x].items():
+                text_file.write('\t{} : {} \n'.format(i, j))
+
+        return 'report generated in {}'.format(settings.output_dir)
+    except BlockingIOError as e:
+        return '{}'.format(str(e))

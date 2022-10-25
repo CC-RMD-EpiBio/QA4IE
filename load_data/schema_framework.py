@@ -54,9 +54,12 @@ from pathlib import Path
 
 
 class Schema():
+
+ 
     def __init__(self, name = None, entities = None):
         self.name = name
         self.entities = {} if entities is None else entities
+        
 
     def __repr__(self):
         
@@ -87,8 +90,26 @@ class Schema():
     def len(self):
         return len(self.entities)
 
+    def get_main_entity_names(self):
+        parents = []
+        for k, v in self.entities.items():
+            if not v.has_parent_entity():
+                parents.append(v.name)
+        return parents
+
     def get_type(self, t):
         return self.entities[t]
+
+    def get_entity_names_in_order(self):
+        names = []
+
+        for k, v in self.entities.items():
+            if not v.has_parent_entity():
+                names.append(v.name)
+                for i, j in v.sub_entities.items():
+                    names.append(j.name)
+        return names
+
 
     def get_overlaps(self):
         temp = {}
@@ -120,9 +141,12 @@ class Schema():
 
     def add_entry(self, entry):
         # entry is class entity
+
+
         if not entry.name in self.entities.keys():
             self.entities[entry.name] = entry
             if entry.has_sub_entities():
+
                 for x, y in entry.sub_entities.items(): # is list
                     if x in self.entities.keys():
                         entry.sub_entities[x] = self.entities[x]
@@ -142,8 +166,12 @@ class Schema():
             self.entities[entry.name].overlaps = entry.overlaps
             if self.entities[entry.name].has_parent_entity():
                 entry.parent_entity = self.entities[entry.name].parent_entity
+
             if self.entities[entry.name].has_sub_entities():
                 entry.parent_entity = self.entities[entry.name].sub_entities
+
+        if entry.is_sub_entity() and entry.is_parent_entity():
+            raise ValueError('{} is both a parent and a child'.format(entry.name))
 
     def get_simple_schema(self):
         simple_schema = {}
@@ -157,8 +185,9 @@ class Schema():
 
 
 class Entity():
-    def __init__(self, name = None, features = None, overlaps = None, sub_entities = None, parent_entity = None):
+    def __init__(self, name = None, features = None, overlaps = None, sub_entities = None, parent_entity = None, alt_names=None):
         self.name = name
+        self.alt_names = [] if alt_names is None else alt_names
         self.features = {} if features is None else features
         self.parent_entity = parent_entity
         self.sub_entities = {} if sub_entities is None else sub_entities
